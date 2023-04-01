@@ -12,8 +12,6 @@
 <script setup>
 
 
-  let currentpage = 1
-  const pageLength = 0
   
   // 初期値をセットする場合
   // const [informationhistory, setInformationhistory] = useState({ histories: homepageNewInformations })
