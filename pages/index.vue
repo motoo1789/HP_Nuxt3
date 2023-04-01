@@ -1,37 +1,16 @@
 <template>
   <div>
-    <div class="text-subtitle-2 mb-2">新着情報</div>
-        <v-expansion-panels>
-            <v-expansion-panel
-                v-for="(newinformation, key) in homepageNewInformations"
-                :key="key"
-                
-            >
-                <v-expansion-panel-title>{{ newinformation.updatedate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
-              <v-expansion-panel-text>{{ newinformation.detaile }}</v-expansion-panel-text>
-            </v-expansion-panel>
-        </v-expansion-panels>
-    <!-- <v-table>
-        <tbody>
-            <tr
-            v-for="(newinformation, key) in homepageNewInformations"
-            :key="key"
-            >
-            <td>{{ newinformation.updatedate }}</td>
-            <td>{{ newinformation.abstract }}</td>
-            </tr>
-        </tbody>
-    </v-table> -->
-
-
-    <v-chip variant="text" @click="showNewInformationHistory">
+    <InformationHistoryList currentpage="1"/>
+    
+    <NuxtLink :to="'/informationhistory'">
+      <v-chip variant="text" >
         >> 履歴を見る
-    </v-chip>
+      </v-chip>
+    </NuxtLink>
 
     <v-card
         class="mx-auto"
         shaped="true"
-        
     >
         <v-row class="blue-b" justify="start">
             <v-col class="green-b" cols="7">
@@ -51,56 +30,8 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
+  
+  
 
-// Components
-export default defineComponent({
-  layout: "default",
-  data () {
-    return {
-      homepageNewInformations: [
-        {
-          updatedate: '2023/03/20',
-          abstract: "日本工業大学修了",
-          detaile: "サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年",
-        },
-        {
-          updatedate: '2023/02/20',
-          abstract: "MODELSWARD発表",
-          detaile: "サンプル　fdsafdsadfasサンプル　fdsafdsadfasサンプル　fdsafdsadfasサンプル　fdsafdsadfasサンプル　fdsafdsadfas",
-        },{
-          updatedate: '2023/02/13',
-          abstract: "修士研究公聴会",
-          detaile: "サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年サンプル　新年",
-        },{
-          updatedate: '2023/02/09',
-          abstract: "学部生　卒業研究発表会聴講",
-          detaile: " 林檎ゴリラ　サンプル　fdsfsaf",
-        },{
-          updatedate: '2022/01/01',
-          abstract: "あけましておめでとうございます",
-          detaile: "今年もよろしくお願いします",
-        },
-      ],
-      books: [
-        {page: 1, title:'タイトル1', content:'本の内容1'},
-        {page: 2, title:'タイトル2', content:'本の内容2'}
-      ],
-      index: 0
-      
-    }
-  },
-  methods : {
-      showNewInformationHistory() {
-          console.log("チップをクリックしました")
-          this.$router.push({
-            name:'InformationHistoryList',
-            params:{
-              books: this.books,
-            }
-          })
-      }
-  }
-});
 </script>
