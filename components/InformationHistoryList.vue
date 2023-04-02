@@ -1,11 +1,13 @@
 <template>
+  {{ currentpage }}
   <div>
     <div class="text-subtitle-2 mb-2">新着情報</div>
     <v-expansion-panels>
         <v-expansion-panel
-            v-for="(newinformation, key) in informationhisotory[currentpage].contents"
+            v-for="(newinformation, key) in informationhisotory[currentpage - 1].contents"
             :key="key"
         >
+        <!-- HACK: -するの好きじゃないのでどうにかしたい -->
             <v-expansion-panel-title>{{ newinformation.updatedate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
           <v-expansion-panel-text>{{ newinformation.detaile }}</v-expansion-panel-text>
         </v-expansion-panel>
@@ -24,7 +26,8 @@
 <script  setup>
 import { createURL } from 'ufo';
 
-const {informationhisotory, currentpage} = useInformationHisotry();
+const { informationhisotory } = useInformationHisotry();
+const { currentpage } = useCurrentPage();
  
 // interface Props {
 //   currentpage: number;
@@ -34,9 +37,6 @@ const {informationhisotory, currentpage} = useInformationHisotry();
 //   currentpage: 1
 // });
 
-const tmp = [
-  {a:"aaa",b:"bbb"  }
-]
 
 // const homepageNewInformations =  [
 //         {

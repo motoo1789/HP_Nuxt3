@@ -1,18 +1,24 @@
 <template>
   <div>
-    <InformationHistoryList currentpage="1"/>
+    <InformationHistoryList />
     <v-pagination
         v-model="currentpage"
-        :length=pageLength
+        :length="informationhisotory.length"
         :total-visible="5"
-        @input="onPageChange"
-    ></v-pagination>
+        @click="pushPagination"
+    ></v-pagination> 
+    <!-- HACK:length informationhistoryの存在を知らないといけないのはまずい気がするので後で直す-->
+    
   </div>
 </template>
 <script setup>
+const { currentpage, updatePage } = useCurrentPage();
+const { informationhisotory } = useInformationHisotry();
 
 
-  
+const pushPagination = () => {
+  updatePage(currentpage)
+}
   // 初期値をセットする場合
   // const [informationhistory, setInformationhistory] = useState({ histories: homepageNewInformations })
 </script>

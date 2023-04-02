@@ -1,12 +1,31 @@
+
 export const updatePage = (currentpage: Ref<number>) => {
     return (nextpage: number) => (currentpage.value = nextpage);
 }
 
+export const useCurrentPage = () => {
+  const currentpage = useState('currentpage', () => { return 1 })
+  /*
+    HACK: v-paginationのpageに0がおそらく設定できないのでcurrentpageは1じゃないといけない気がする
+          ただしInformationHistoryListでは配列でcurrentpageを0から使いたいのが問題
+  */
+  const updatePage = (currentpage: Ref<number>) => {
+    return (nextpage: number) => (currentpage.value = nextpage);
+  }
+
+  return {
+    currentpage,
+    updatePage,
+  } 
+   
+}
+
 export const useInformationHisotry = () => {
+    
     const hisotory = useState('hisotory', () => {
         return [
             {
-              page: 0,
+              page: 1,
               contents: [
                 {
                   updatedate: '2023/03/20',
@@ -36,7 +55,7 @@ export const useInformationHisotry = () => {
               ]
             },
             {
-              page: 0 ,
+              page: 2,
               contents: [
                 {
                   updatedate: '2023/03/20',
@@ -66,12 +85,14 @@ export const useInformationHisotry = () => {
     
                 },
               ]
-            }
+            },
+            
           ];
+          
     })
+    // const getPageLength = () => { history.length };
     return { 
-        informationhisotory: readonly(hisotory) ,
-        currentpage: 1,
-        
+        informationhisotory: readonly(hisotory),
     }
+    
   }
