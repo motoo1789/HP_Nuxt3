@@ -74,52 +74,59 @@
             
         </v-card>
     </div>
-  </template>
-  
-  <script>
-  export default {
-      data() {
-          return {
-            tab:false,
-              tabitems : {
-                a:"あ",
-                ka:"か",
-                sa:"さ",
-                ta:"た",
-                na:"な",
-                ha:"は",
-                ma:"ま",
-                ya:"や",
-                ra:"ら",
-                wa:"わ",
+</template>
 
-              },
-              arrayAnimeTitles : {
-                a : ["色づく世界の明日から","アイドルマスター","あんハピ"],
-                ka : ["キャプテンアース","刀語","神様のメモ帳"],
-                sa : ["咲","サクラクエスト"],
-                ta : ["デートアライブ","ダンまち"],
-                na : ["91","ノゲノラ"],
-                ha : ["花咲くいろは","ハナヤマタ"],
-                ma : ["魔法科高校の劣等生","まどマギ"],
-                ya : ["よう実","やがて君になる"],
-                ra : ["リトルバスターズ","ログ・ホライズン"],
-                wa : [],
-              },
-              arrayMangaTitles : ["青のエクソシスト","咲","葬送のフリーレン","ぼっちざろっく",],
-              arrayLightNovelTitles : ["アクセルワールド","ソードアートオンライン","精霊幻想記","ヴァイオレットエヴァーガーデン",]
-              
+<script>
 
-          }
-      },
-      methods: {
-          
-      },
-  }
-  </script>
-  
-  <style>
-  .blue-b{
-        border: 1px blue solid
+
+export default {
+
+
+    data() {
+        return {
+        tab:false,
+            tabitems : {
+            a:"あ",
+            ka:"か",
+            sa:"さ",
+            ta:"た",
+            na:"な",
+            ha:"は",
+            ma:"ま",
+            ya:"や",
+            ra:"ら",
+            wa:"わ",
+
+            },
+            arrayAnimeTitles : {
+            a : ["色づく世界の明日から","アイドルマスター","あんハピ"],
+            ka : ["キャプテンアース","刀語","神様のメモ帳"],
+            sa : ["咲","サクラクエスト"],
+            ta : ["デートアライブ","ダンまち"],
+            na : ["91","ノゲノラ"],
+            ha : ["花咲くいろは","ハナヤマタ"],
+            ma : ["魔法科高校の劣等生","まどマギ"],
+            ya : ["よう実","やがて君になる"],
+            ra : ["リトルバスターズ","ログ・ホライズン"],
+            wa : [],
+            },
+            arrayMangaTitles : ["青のエクソシスト","咲","葬送のフリーレン","ぼっちざろっく",],
+            arrayLightNovelTitles : ["アクセルワールド","ソードアートオンライン","精霊幻想記","ヴァイオレットエヴァーガーデン",]
+            
+
+        }
+    },
+    asyncData() {
+        
     }
-  </style>
+    methods: {
+        
+    },
+}
+</script>
+
+<style>
+.blue-b{
+    border: 1px blue solid
+}
+</style>
