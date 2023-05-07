@@ -5,36 +5,37 @@
                 
                     アニメ
             </v-card-title>
+            
             <v-tabs
                 v-model="tab"
                 bg-color="primary"
                 fixed-tabs
                 show-arrows
             >
+                
                 <v-tab v-for="(tabitem,tabitemkey) in tabitems" :key="tabitemkey" :value=tabitemkey>
                     {{ tabitem }}
+                    {{ tab }}
                 </v-tab>
                 <!-- <v-tab :value=tabitemkey> {{ tabitem }}</v-tab> -->
             </v-tabs>
 
             <v-card-text >
-                <v-window v-model="tab" v-for="(animetitles, animeskey) in arrayAnimeTitles" :key="animeskey">
-                    <v-window-item :value=animeskey> 
+                <v-window v-model="tab" >
+
+                    <v-window-item v-for="(animetitles, animeskey) in arrayAnimeTitles" :key="animeskey"  :value=animeskey> 
                         <v-row>
-                            <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
+                            <v-col v-for="(animetitle, animekey) in animetitles" :key="animekey"
                                 lg="4"    
                                 md="6"
                                 sm="6"
                                 xs="12"
                             >
-                                {{ animetitle }}
+                                {{  animetitle }}
                                 <!-- <v-list :items="animetitles"></v-list> -->
                             </v-col>
                         </v-row>
                         
-                        <!-- <p v-for="(anime, animekey) in animes" :key="animekey" >
-                            {{ anime }}
-                        </p> -->   
                     </v-window-item>
                 </v-window>
             </v-card-text>
@@ -76,46 +77,40 @@
     </div>
   </template>
   
-  <script>
-  export default {
-      data() {
-          return {
-            tab:false,
-              tabitems : {
-                a:"あ",
-                ka:"か",
-                sa:"さ",
-                ta:"た",
-                na:"な",
-                ha:"は",
-                ma:"ま",
-                ya:"や",
-                ra:"ら",
-                wa:"わ",
+  <script setup lang="ts">
 
-              },
-              arrayAnimeTitles : {
-                a : ["色づく世界の明日から","アイドルマスター","あんハピ"],
-                ka : ["キャプテンアース","刀語","神様のメモ帳"],
-                sa : ["咲","サクラクエスト"],
-                ta : ["デートアライブ","ダンまち"],
-                na : ["91","ノゲノラ"],
-                ha : ["花咲くいろは","ハナヤマタ"],
-                ma : ["魔法科高校の劣等生","まどマギ"],
-                ya : ["よう実","やがて君になる"],
-                ra : ["リトルバスターズ","ログ・ホライズン"],
-                wa : [],
-              },
-              arrayMangaTitles : ["青のエクソシスト","咲","葬送のフリーレン","ぼっちざろっく",],
-              arrayLightNovelTitles : ["アクセルワールド","ソードアートオンライン","精霊幻想記","ヴァイオレットエヴァーガーデン",]
+    let tab = ""
+    const tabitems = {
+        a:"あ",
+        ka:"か",
+        sa:"さ",
+        ta:"た",
+        na:"な",
+        ha:"は",
+        ma:"ま",
+        ya:"や",
+        ra:"ら",
+        wa:"わ",
+
+    }
+    const arrayAnimeTitles = {
+        a : ["色づく世界の明日から","アイドルマスター","あんハピ"],
+        ka : ["キャプテンアース","刀語","神様のメモ帳"],
+        sa : ["咲","サクラクエスト"],
+        ta : ["デートアライブ","ダンまち"],
+        na : ["91","ノゲノラ"],
+        ha : ["花咲くいろは","ハナヤマタ"],
+        ma : ["魔法科高校の劣等生","まどマギ"],
+        ya : ["よう実","やがて君になる"],
+        ra : ["リトルバスターズ","ログ・ホライズン"],
+        wa : [],
+    }
+    const arrayMangaTitles = ["青のエクソシスト","咲","葬送のフリーレン","ぼっちざろっく",]
+    const arrayLightNovelTitles = ["アクセルワールド","ソードアートオンライン","精霊幻想記","ヴァイオレットエヴァーガーデン",]
               
 
-          }
-      },
-      methods: {
-          
-      },
-  }
+
+  
   </script>
   
   <style>
