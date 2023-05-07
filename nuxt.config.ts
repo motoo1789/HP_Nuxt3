@@ -12,5 +12,9 @@ export default defineNuxtConfig({
         define: {
           "process.env.DEBUG": false,
         },
-      },
+      
+    },
+    serverMiddleware: [
+      { path: 'api/anime', handler: "~/server/api/anime"}
+    ]
 })
