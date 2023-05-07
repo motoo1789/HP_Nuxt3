@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{ articles }}
         <v-card>
             <v-card-title class="text-center justify-center py-6">
                 
@@ -17,9 +18,15 @@
                 <!-- <v-tab :value=tabitemkey> {{ tabitem }}</v-tab> -->
             </v-tabs>
 
-            <v-card-text >
-                <v-window v-model="tab" v-for="(animetitles, animeskey) in arrayAnimeTitles" :key="animeskey">
+            <!-- <v-card-text>
+                {{ articles }}
+                {{ tmp }}
+                <v-window v-model="tab" v-for="(animetitles, animeskey) in articles" :key="animeskey">
                     <v-window-item :value=animeskey> 
+                        {{ animetitles }}
+                        {{ animetitles.value }}
+                        {{ animetitles.a }}
+                        {{ animetitles.value.a }}
                         <v-row>
                             <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
                                 lg="4"    
@@ -27,6 +34,28 @@
                                 sm="6"
                                 xs="12"
                             >
+                                {{ animetitle }}
+                            <v-list :items="animetitles"></v-list> 
+                            </v-col>
+                        </v-row>
+                        
+                         <p v-for="(anime, animekey) in animes" :key="animekey" >
+                            {{ anime }}
+                        </p>  
+                    </v-window-item>
+                </v-window>
+            </v-card-text> -->
+            <v-card-text>
+                <v-window v-model="tab" v-for="(animetitles, animeskey) in tmp" :key="animeskey">
+
+                    <v-window-item :value=animeskey> 
+                        <v-row>
+                            <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
+                                lg="4"    
+                                md="6"
+                                sm="6"
+                                xs="12"
+                            >   
                                 {{ animetitle }}
                                 <!-- <v-list :items="animetitles"></v-list> -->
                             </v-col>
@@ -40,6 +69,11 @@
             </v-card-text>
         </v-card>
 
+        <div v-for="(aaa, index) in tmp" :key="index">
+            {{ aaa }}
+        </div>
+
+
         <v-card>
             <v-card-title class="text-center justify-center py-6">
                 マンガ・ライトノベル
@@ -47,7 +81,7 @@
             
             <v-container>
                 <v-row>
-                    <v-col v-for="(mangatitle, mangakey) in arrayMangaTitles" :key="mangakey"
+                    <v-col v-for="(mangatitle, mangakey) in hobby.comic" :key="mangakey"
                         lg="4"    
                         md="6"
                         sm="6"
@@ -58,7 +92,7 @@
                 </v-row>
                 <v-divider class="my-2"></v-divider>
                 <v-row>
-                    <v-col v-for="(lightnoveltitle, lightnovelkey) in arrayLightNovelTitles" :key="lightnovelkey"
+                    <v-col v-for="(lightnoveltitle, lightnovelkey) in hobby.novel" :key="lightnovelkey"
                         xs="12"
                         lg="4"    
                         md="6"
@@ -76,53 +110,63 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
+    const { data: articles } = await useFetch('/api/anime');
+    console.log(articles)
+    console.log(articles.value.a)
+    console.log(typeof  articles)
+    const sample = "hello world"
 
+    const tmp = { 
+        a : [ "色づく世界の明日から", 'アイドルマスター', 'あんハピ' ],
+        ka: [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
+        sa: [ '咲', 'サクラクエスト' ],
+        ta: [ 'デートアライブ', 'ダンまち' ],
+        na: [ '91', 'ノゲノラ' ],
+        ha: [ '花咲くいろは', 'ハナヤマタ' ],
+        ma: [ '魔法科高校の劣等生', 'まどマギ' ],
+        ya: [ 'よう実', 'やがて君になる' ],
+        ra: [ 'リトルバスターズ', 'ログ・ホライズン' ],
+        wa: []
+    }  
 
-export default {
+    const tmp2 = { 
+        "a" : [ '色づく世界の明日から', 'アイドルマスター', 'あんハピ' ],
+        "ka": [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
+        "sa": [ '咲', 'サクラクエスト' ],
+        "ta": [ 'デートアライブ', 'ダンまち' ],
+        "na": [ '91', 'ノゲノラ' ],
+        "ha": [ '花咲くいろは', 'ハナヤマタ' ],
+        "ma": [ '魔法科高校の劣等生', 'まどマギ' ],
+        "ya": [ 'よう実', 'やがて君になる' ],
+        "ra": [ 'リトルバスターズ', 'ログ・ホライズン' ],
+        "wa": []
+    }  
 
+    const hobby = {
+        novel: {
 
-    data() {
-        return {
-        tab:false,
-            tabitems : {
-            a:"あ",
-            ka:"か",
-            sa:"さ",
-            ta:"た",
-            na:"な",
-            ha:"は",
-            ma:"ま",
-            ya:"や",
-            ra:"ら",
-            wa:"わ",
-
-            },
-            arrayAnimeTitles : {
-            a : ["色づく世界の明日から","アイドルマスター","あんハピ"],
-            ka : ["キャプテンアース","刀語","神様のメモ帳"],
-            sa : ["咲","サクラクエスト"],
-            ta : ["デートアライブ","ダンまち"],
-            na : ["91","ノゲノラ"],
-            ha : ["花咲くいろは","ハナヤマタ"],
-            ma : ["魔法科高校の劣等生","まどマギ"],
-            ya : ["よう実","やがて君になる"],
-            ra : ["リトルバスターズ","ログ・ホライズン"],
-            wa : [],
-            },
-            arrayMangaTitles : ["青のエクソシスト","咲","葬送のフリーレン","ぼっちざろっく",],
-            arrayLightNovelTitles : ["アクセルワールド","ソードアートオンライン","精霊幻想記","ヴァイオレットエヴァーガーデン",]
-            
+        },
+        comic: {
 
         }
-    },
-    asyncData() {
-        
     }
-    methods: {
-        
-    },
-}
+
+    let tab = false
+
+    const tabitems = {
+        a:"あ",
+        ka:"か",
+        sa:"さ",
+        ta:"た",
+        na:"な",
+        ha:"は",
+        ma:"ま",
+        ya:"や",
+        ra:"ら",
+        wa:"わ",
+    }
+
 </script>
 
 <style>
