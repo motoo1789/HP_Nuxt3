@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{ articles }}
         <v-card>
             <v-card-title class="text-center justify-center py-6">
                 
@@ -12,8 +11,7 @@
                 fixed-tabs
                 show-arrows
             >
-                <v-tab v-for="(tabitem,tabitemkey) in tabitems" :key="tabitemkey" :value=tabitemkey v-on="click()">
-                    {{ tab }}
+                <v-tab v-for="(tabitem,tabitemkey) in tabitems" :key="tabitemkey" :value=tabitemkey>
                     {{ tabitem }}
                 </v-tab>
                 <!-- <v-tab :value=tabitemkey> {{ tabitem }}</v-tab> -->
@@ -21,7 +19,7 @@
 
             <v-card-text>
 
-                <v-window v-model="tab" v-for="(animetitles, animeskey) in articles" :key="animeskey">
+                <v-window v-model="tab" v-for="(animetitles, animeskey) in animes" :key="animeskey">
                     <v-window-item :value=animeskey> 
 
                         <v-row>
@@ -66,7 +64,7 @@
             
             <v-container>
                 <v-row>
-                    <v-col v-for="(mangatitle, mangakey) in hobby.comic" :key="mangakey"
+                    <v-col v-for="(mangatitle, mangakey) in comics" :key="mangakey"
                         lg="4"    
                         md="6"
                         sm="6"
@@ -77,13 +75,11 @@
                 </v-row>
                 <v-divider class="my-2"></v-divider>
                 <v-row>
-                    <v-col v-for="(lightnoveltitle, lightnovelkey) in hobby.novel" :key="lightnovelkey"
+                    <v-col v-for="(lightnoveltitle, lightnovelkey) in novels" :key="lightnovelkey"
                         xs="12"
                         lg="4"    
                         md="6"
                         sm="6"
-                        
-                        class="blue-b"
                     >
                         {{ lightnoveltitle }}
                         <!-- <v-list :items="animetitles"></v-list> -->
@@ -96,15 +92,11 @@
 </template>
 
 <script setup lang="ts">
-    let tab = ref(0)
+    let tab = ref(1)
 
-    const { data: articles } = await useFetch('/api/anime');
-    console.log(articles)
-    console.log(articles.value.a)
-    console.log(typeof  articles)
-    const click = () => {
-        console.log(tab)
-    }
+    const { data: animes } = await useFetch('/api/anime');
+    const { data: comics } = await useFetch('/api/comic');
+    const { data: novels } = await useFetch('/api/novel');
 
     // const tmp = { 
     //     a : [ "色づく世界の明日から", 'アイドルマスター', 'あんハピ' ],
