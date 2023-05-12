@@ -12,21 +12,18 @@
                 fixed-tabs
                 show-arrows
             >
-                <v-tab v-for="(tabitem,tabitemkey) in tabitems" :key="tabitemkey" :value=tabitemkey>
+                <v-tab v-for="(tabitem,tabitemkey) in tabitems" :key="tabitemkey" :value=tabitemkey v-on="click()">
+                    {{ tab }}
                     {{ tabitem }}
                 </v-tab>
                 <!-- <v-tab :value=tabitemkey> {{ tabitem }}</v-tab> -->
             </v-tabs>
 
-            <!-- <v-card-text>
-                {{ articles }}
-                {{ tmp }}
+            <v-card-text>
+
                 <v-window v-model="tab" v-for="(animetitles, animeskey) in articles" :key="animeskey">
                     <v-window-item :value=animeskey> 
-                        {{ animetitles }}
-                        {{ animetitles.value }}
-                        {{ animetitles.a }}
-                        {{ animetitles.value.a }}
+
                         <v-row>
                             <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
                                 lg="4"    
@@ -35,17 +32,14 @@
                                 xs="12"
                             >
                                 {{ animetitle }}
-                            <v-list :items="animetitles"></v-list> 
                             </v-col>
                         </v-row>
                         
-                         <p v-for="(anime, animekey) in animes" :key="animekey" >
-                            {{ anime }}
-                        </p>  
+                         
                     </v-window-item>
                 </v-window>
-            </v-card-text> -->
-            <v-card-text>
+            </v-card-text>
+            <!-- <v-card-text>
                 <v-window v-model="tab" v-for="(animetitles, animeskey) in tmp" :key="animeskey">
 
                     <v-window-item :value=animeskey> 
@@ -57,23 +51,14 @@
                                 xs="12"
                             >   
                                 {{ animetitle }}
-                                <!-- <v-list :items="animetitles"></v-list> -->
+                                
                             </v-col>
                         </v-row>
-                        
-                        <!-- <p v-for="(anime, animekey) in animes" :key="animekey" >
-                            {{ anime }}
-                        </p> -->   
+ 
                     </v-window-item>
                 </v-window>
-            </v-card-text>
+            </v-card-text> -->
         </v-card>
-
-        <div v-for="(aaa, index) in tmp" :key="index">
-            {{ aaa }}
-        </div>
-
-
         <v-card>
             <v-card-title class="text-center justify-center py-6">
                 マンガ・ライトノベル
@@ -111,48 +96,41 @@
 </template>
 
 <script setup lang="ts">
+    let tab = ref(0)
+
     const { data: articles } = await useFetch('/api/anime');
     console.log(articles)
     console.log(articles.value.a)
     console.log(typeof  articles)
-    const sample = "hello world"
-
-    const tmp = { 
-        a : [ "色づく世界の明日から", 'アイドルマスター', 'あんハピ' ],
-        ka: [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
-        sa: [ '咲', 'サクラクエスト' ],
-        ta: [ 'デートアライブ', 'ダンまち' ],
-        na: [ '91', 'ノゲノラ' ],
-        ha: [ '花咲くいろは', 'ハナヤマタ' ],
-        ma: [ '魔法科高校の劣等生', 'まどマギ' ],
-        ya: [ 'よう実', 'やがて君になる' ],
-        ra: [ 'リトルバスターズ', 'ログ・ホライズン' ],
-        wa: []
-    }  
-
-    const tmp2 = { 
-        "a" : [ '色づく世界の明日から', 'アイドルマスター', 'あんハピ' ],
-        "ka": [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
-        "sa": [ '咲', 'サクラクエスト' ],
-        "ta": [ 'デートアライブ', 'ダンまち' ],
-        "na": [ '91', 'ノゲノラ' ],
-        "ha": [ '花咲くいろは', 'ハナヤマタ' ],
-        "ma": [ '魔法科高校の劣等生', 'まどマギ' ],
-        "ya": [ 'よう実', 'やがて君になる' ],
-        "ra": [ 'リトルバスターズ', 'ログ・ホライズン' ],
-        "wa": []
-    }  
-
-    const hobby = {
-        novel: {
-
-        },
-        comic: {
-
-        }
+    const click = () => {
+        console.log(tab)
     }
 
-    let tab = false
+    // const tmp = { 
+    //     a : [ "色づく世界の明日から", 'アイドルマスター', 'あんハピ' ],
+    //     ka: [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
+    //     sa: [ '咲', 'サクラクエスト' ],
+    //     ta: [ 'デートアライブ', 'ダンまち' ],
+    //     na: [ '91', 'ノゲノラ' ],
+    //     ha: [ '花咲くいろは', 'ハナヤマタ' ],
+    //     ma: [ '魔法科高校の劣等生', 'まどマギ' ],
+    //     ya: [ 'よう実', 'やがて君になる' ],
+    //     ra: [ 'リトルバスターズ', 'ログ・ホライズン' ],
+    //     wa: []
+    // }  
+
+    // const tmp2 = { 
+    //     "a" : [ '色づく世界の明日から', 'アイドルマスター', 'あんハピ' ],
+    //     "ka": [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
+    //     "sa": [ '咲', 'サクラクエスト' ],
+    //     "ta": [ 'デートアライブ', 'ダンまち' ],
+    //     "na": [ '91', 'ノゲノラ' ],
+    //     "ha": [ '花咲くいろは', 'ハナヤマタ' ],
+    //     "ma": [ '魔法科高校の劣等生', 'まどマギ' ],
+    //     "ya": [ 'よう実', 'やがて君になる' ],
+    //     "ra": [ 'リトルバスターズ', 'ログ・ホライズン' ],
+    //     "wa": []
+    // }  
 
     const tabitems = {
         a:"あ",
