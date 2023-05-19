@@ -2,7 +2,9 @@
     <div>
         <v-app-bar :clipped-left="true" app>
             <v-spacer />
-            <v-app-bar-title>{{ title }}</v-app-bar-title>
+            <NuxtLink :to="`/`">
+                <v-app-bar-title class="text-center" to="/index">{{ title }}</v-app-bar-title>
+            </NuxtLink>
             <v-spacer />
         </v-app-bar>     
     </div>
