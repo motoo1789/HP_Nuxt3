@@ -154,8 +154,8 @@ export default {
                     url: "https://github.com/motoo1789/WinRate",
                     // img: require(`/img/HP用WinRate写真.png`),
                     // movie: require(`/movie/HP用WinRate.mp4`),
-                    img: "/img/HP用WinRate写真.png",
-                    movie: "/movie/HP用WinRate.mp4"
+                    img: "assets/img/HP用WinRate写真.png",
+                    movie: "assets/movie/HP用WinRate.mp4"
                 },
                 {
                     projectNum: 2,
@@ -168,8 +168,8 @@ export default {
                     abstract: "修士研究で作成したアプリケーション描画部分",
                     detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
                     url: "https://github.com/motoo1789/KIfU-drawer",
-                    img: "/img/HP用UMLDS.png",
-                    movie: "/movie/HP用UMLDS.mp4",
+                    img: "assets/img/HP用UMLDS.png",
+                    movie: "assets/movie/HP用UMLDS.mp4",
                 },
             ],
         }
