@@ -9,9 +9,9 @@
         <v-row class="blue-b" justify="start">
             <v-col class="red-b" cols="5"> 自分の写真
                 <v-img
-                    src="@/assets/img/profile_face.png"
+                    src="/images/profile_face.png"
                     height="200px"
-                ></v-img>
+                />
             </v-col>
 
             <v-col class="green-b" cols="7">
@@ -37,7 +37,7 @@
         <v-row class="blue-b" justify="start">
             <v-col class="red-b" cols="5"> 学生のアイコン
                 <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                    src="images/career.png"
                     height="200px"
                 ></v-img>
             </v-col>
@@ -67,7 +67,7 @@
         <v-row class="blue-b" justify="start">
             <v-col class="red-b" cols="5"> 発表
                 <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                    src="images/presentation.png"
                     height="200px"
                 ></v-img>
             </v-col>
