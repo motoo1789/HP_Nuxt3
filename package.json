@@ -10,7 +10,10 @@
     "start": "nuxt start"
   },
   "devDependencies": {
+    "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/font": "^7.2.96",
+    "@mdi/js": "^7.2.96",
+    "contentful": "^10.3.0",
     "nuxt": "^3.3.2",
     "sass": "^1.60.0",
     "vite-plugin-vuetify": "^1.0.2",
