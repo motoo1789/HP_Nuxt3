@@ -63,7 +63,7 @@
                                         :max-width="750"
                                     >
                                         <video controls class="ma-2 movie-size-parent">
-                                                <source :src="showDialogProject.movie" type="video/mp4">
+                                            <source :src='showDialogProject.movie' type="video/mp4">
                                         </video>
                                         <v-card-text>
                                             <p class="text-h5"> {{ showDialogProject.title }} </p>
@@ -117,7 +117,7 @@
                                                 <v-btn
                                                     color="blue darken-1"
                                                     :rounded=true
-                                                    @click="closeDialogProjectDetail_tmp"
+                                                    @click="closeDialogProjectDetail"
                                                 >
                                                     閉じる
                                                 </v-btn>
@@ -137,66 +137,151 @@
   </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            dialog: false,
 
-            dialogProjectDetail: false,
-            selectProjectIndex: -1,
-            showDialogProject: {},
-            projects: [
-                {
-                    projectNum: 1,
-                    title: "WinRate",
-                    environments: {
-                        language: "Java",
-                        framework:"Eclipse",
-                        library: "OpenCV",
-                    },
-                    abstract: "シャドウバースの勝敗記録をするアプリケーション",
-                    detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
-                    url: "https://github.com/motoo1789/WinRate",
-                    // img: require(`/img/HP用WinRate写真.png`),
-                    // movie: require(`/movie/HP用WinRate.mp4`),
-                    img: "/images/HP用WinRate写真.png",
-                    movie: "/movies/HP用WinRate.mp4"
-                },
-                {
-                    projectNum: 2,
-                    title: "UMLDS",
-                    environments: {
-                        language: "Java",
-                        framework:"Eclipse GWT",
-                        library: "JeroMQ GWTUMLDrawer",
-                    },
-                    abstract: "修士研究で作成したアプリケーション描画部分",
-                    detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
-                    url: "https://github.com/motoo1789/KIfU-drawer",
-                    img: "/images/HP用UMLDS.png",
-                    movie: "/movies/HP用UMLDS.mp4",
-                },
-            ],
-        }
-    },
-    methods: {
-        jumpGithubPage( url ) {
-            window.open(url, '_blank')
-        },
-        closeDialogProjectDetail() {
-            this.dialog = false
-        },
-        openDialogProjectDetail( project ) {
-            this.selectProjectIndex = this.projects.indexOf(project)
-            this.showDialogProject = Object.assign({}, project)
-            this.dialog = true
-        },
-    },
+<script setup lang="ts">
+    import { ref } from "vue";
+    // const { data: animes } = await useFetch('/api/anime');
+    let dialog = ref(false)
 
-}
+    let selectProjectIndex = ref(-1)
+    
+    const projects = [
+        {
+            projectNum: 1,
+            title: "WinRate",
+            environments: {
+                language: "Java",
+                framework:"Eclipse",
+                library: "OpenCV",
+            },
+            abstract: "シャドウバースの勝敗記録をするアプリケーション",
+            detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
+            url: "https://github.com/motoo1789/WinRate",
+            // img: require(`/img/HP用WinRate写真.png`),
+            // movie: require(`/movie/HP用WinRate.mp4`),
+            img: "/images/HP用WinRate写真.png",
+            movie: "/movies/HP用WinRate.mp4"
+        },
+        {
+            projectNum: 2,
+            title: "UMLDS",
+            environments: {
+                language: "Java",
+                framework:"Eclipse GWT",
+                library: "JeroMQ GWTUMLDrawer",
+            },
+            abstract: "修士研究で作成したアプリケーション描画部分",
+            detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
+            url: "https://github.com/motoo1789/KIfU-drawer",
+            img: "/images/HP用UMLDS.png",
+            movie: "/movies/HP用UMLDS.mp4",
+        },
+    ]
+
+    let showDialogProject = ref({
+        url: URL,
+        detail: String,
+        environments: {
+            language:String,
+            framework:String,
+            library:String,
+        },
+        title: String,
+        movie:URL,
+    })
+
+
+
+    const jumpGithubPage = ( url : any) => {
+        window.open(url, '_blank')
+    }
+
+    const closeDialogProjectDetail = () => {
+        dialog.value = false
+        console.log(dialog)
+    }
+
+    const openDialogProjectDetail = ( project : any ) => {
+        console.log(project)
+        selectProjectIndex.value = projects.indexOf(project)
+        showDialogProject.value = Object.assign({}, project)
+        dialog.value = true
+        console.log(showDialogProject)
+
+    }
+
+
+
+
 </script>
 
+<!-- <script setup lang="ts">
+    const { data: animes } = await useFetch('/api/anime');
+    let dialog = false
+
+    let dialogProjectDetail = false
+    let selectProjectIndex = -1
+    
+    const projects = [
+        {
+            projectNum: 1,
+            title: "WinRate",
+            environments: {
+                language: "Java",
+                framework:"Eclipse",
+                library: "OpenCV",
+            },
+            abstract: "シャドウバースの勝敗記録をするアプリケーション",
+            detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
+            url: "https://github.com/motoo1789/WinRate",
+            // img: require(`/img/HP用WinRate写真.png`),
+            // movie: require(`/movie/HP用WinRate.mp4`),
+            img: "/images/HP用WinRate写真.png",
+            movie: "/movies/HP用WinRate.mp4"
+        },
+        {
+            projectNum: 2,
+            title: "UMLDS",
+            environments: {
+                language: "Java",
+                framework:"Eclipse GWT",
+                library: "JeroMQ GWTUMLDrawer",
+            },
+            abstract: "修士研究で作成したアプリケーション描画部分",
+            detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
+            url: "https://github.com/motoo1789/KIfU-drawer",
+            img: "/images/HP用UMLDS.png",
+            movie: "/movies/HP用UMLDS.mp4",
+        },
+    ]
+
+    let showDialogProject = Object.assign({}, projects)
+
+
+    const jumpGithubPage = ( url : any) => {
+        window.open(url, '_blank')
+    }
+
+    const closeDialogProjectDetail = () => {
+        dialog = false
+    }
+
+    const openDialogProjectDetail = ( project : any ) => {
+        selectProjectIndex = projects.indexOf(project)
+        showDialogProject = Object.assign({}, project)
+        dialog = true
+    }
+
+
+
+
+</script> -->
+
+
+
+<style>
+
+</style>
 <style>
     .custom-font-color-white {
         color: white,
