@@ -15,6 +15,7 @@ export default defineNuxtConfig({
       
     },
     serverMiddleware: [
-      { path: 'api/anime', handler: "~/server/api/anime"}
+      { path: 'api/anime', handler: "~/server/api/anime"},
+      "~/server/middleware/getContentful"
     ]
 })
