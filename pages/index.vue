@@ -12,8 +12,8 @@
         class="mx-auto"
         shaped="true"
     >
-        <v-row class="blue-b" justify="start">
-            <v-col class="green-b" cols="7">
+        <v-row class="blue-b" >
+            <v-col class="green-b" cols="12" >
                 <v-card-title>
                     ページ概要
                 </v-card-title>
@@ -22,7 +22,8 @@
                     <p>山崎貴弘と申します。</p>
                     <p>Vueを使ってみたくてホームページを作り直しました。</p>
                     <p>プロフィール 最近のニュース 趣味 成果物 などについて紹介をしています。</p>
-                    <p>この規模でなんでこんなことしてるの？などいろいろ突っ込みポイントはあるかもしれませんが、暖かく見守ってください(良ければContactから指摘がいただけると勉強になります)</p>
+                    <p>この規模でなんでこんなことしてるの？などいろいろ突っ込みポイントはあるかもしれませんが、</p>
+                    <p>暖かく見守ってください(良ければContactから指摘がいただけると勉強になります)</p>
                 </v-card-text>
             </v-col>
         </v-row>
