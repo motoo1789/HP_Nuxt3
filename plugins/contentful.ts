@@ -49,7 +49,7 @@ export default defineNuxtPlugin(() => {
           client :createClient({
               space: 'gtch6w6darsf',
               // accessToken: "DXG7DohnxRncpcxSPtLGr5fR4_fzjyzRzVZAiP9Ussk"
-              // accessToken: 'WeLfbbaxjBFy5vJSq56AkuD517_G8nhCGgDypdF2-7g'
+              //accessToken: 'WeLfbbaxjBFy5vJSq56AkuD517_G8nhCGgDypdF2-7g'
               accessToken: 'CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds'
           })
       }

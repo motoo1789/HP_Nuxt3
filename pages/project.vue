@@ -1,6 +1,11 @@
 <template>
   <div>
-    
+    <v-col  cols="5"> 
+                    <v-img
+                        :src="contentful_imgurl"
+                        height="200px"
+                    ></v-img>
+                </v-col>
     <v-card
         class="mx-auto"
         shaped="true"
@@ -140,18 +145,24 @@
 
 <script setup lang="ts">
     import { ref } from "vue";
+    import { ofetch } from 'ofetch'
     const { data: animes } = await useFetch('/api/anime');
+    //const { data: cms } = await useAsyncData('/api/contentful');
+    //const { data: cms } = await ofetch('/api/contentful');
     //const { data: cms } = await useFetch('/api/contentful');
 
-    import {useAsyncData, useNuxtApp} from "nuxt/app";
+    // import {useAsyncData, useNuxtApp} from "nuxt/app";
 
-
-	const route = useRoute()
+    const png_id = "4J3u7b0DkC26yQGjn0DuS0"
 	const id = "4cc9JW3vkGlnH8B97ofmn9"
     const {$client} = useNuxtApp()
-    const {data} =await useAsyncData(id,()=> $client.getEntry(id));
+    //const { data: cms } = await useFetch($client.getEntry(id));
+    const { data:cms } = await useAsyncData(id,()=> $client.getEntry(id));
 
-    console.log(data)
+    //console.log(cms.value.fields.hpNuxtMovies[0].fields.title)
+    console.log(cms.value.fields.hpNuxtMovies[18].fields)
+    console.log(cms.value.fields.hpNuxtMovies[18].fields.file.url)
+    const contentful_imgurl = ref(cms.value.fields.hpNuxtMovies[18].fields.file.url)
     
     let dialog = ref(false)
 
