@@ -140,7 +140,19 @@
 
 <script setup lang="ts">
     import { ref } from "vue";
-    // const { data: animes } = await useFetch('/api/anime');
+    const { data: animes } = await useFetch('/api/anime');
+    //const { data: cms } = await useFetch('/api/contentful');
+
+    import {useAsyncData, useNuxtApp} from "nuxt/app";
+
+
+	const route = useRoute()
+	const id = "4cc9JW3vkGlnH8B97ofmn9"
+    const {$client} = useNuxtApp()
+    const {data} =await useAsyncData(id,()=> $client.getEntry(id));
+
+    console.log(data)
+    
     let dialog = ref(false)
 
     let selectProjectIndex = ref(-1)
