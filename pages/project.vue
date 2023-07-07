@@ -9,14 +9,14 @@
     <v-card
         class="mx-auto"
         shaped="true"
-        v-for="(project, key) in projects"
+        v-for="(project, key) in showcontents"
         :key="key"
     >
         <v-container>
             <v-row justify="start">
                 <v-col  cols="5"> 
                     <v-img
-                        :src="project.img"
+                        :src="project.img.fields.file.url"
                         height="200px"
                     ></v-img>
                 </v-col>
@@ -68,10 +68,10 @@
                                         :max-width="750"
                                     >
                                         <video controls class="ma-2 movie-size-parent">
-                                            <source :src='showDialogProject.movie' type="video/mp4">
+                                            <source :src='project.movie.fields.file.url' type="video/mp4">
                                         </video>
                                         <v-card-text>
-                                            <p class="text-h5"> {{ showDialogProject.title }} </p>
+                                            <p class="text-h5"> {{ project.title }} </p>
                                         </v-card-text>
                                         <v-divider></v-divider>
 
@@ -87,9 +87,9 @@
                                                     </v-col>
                                                     <v-spacer></v-spacer>
                                                     <v-col cols="7">
-                                                        <v-row align-content="center">{{ showDialogProject.environments.language }}</v-row>
-                                                        <v-row align-content="center">{{ showDialogProject.environments.framework }}</v-row>
-                                                        <v-row align-content="center">{{ showDialogProject.environments.library }}</v-row>
+                                                        <v-row align-content="center">{{ project.language }}</v-row>
+                                                        <v-row align-content="center">{{ project.framework }}</v-row>
+                                                        <v-row align-content="center">{{ project.library }}</v-row>
                                                     </v-col>
                                                 </v-row>
                                             </div>
@@ -100,7 +100,7 @@
                                         <v-card-text>
                                             <p class="text-h5"> 詳細 </p>
                                             <div class="my-1">
-                                                {{ showDialogProject.detail }}
+                                                {{ project.detail }}
                                             </div>
                                         </v-card-text>                                
                                         <v-row >
@@ -109,7 +109,7 @@
                                                 <v-btn
                                                     color="blue darken-1"
                                                     :rounded=true
-                                                    @click="jumpGithubPage(showDialogProject.url)"
+                                                    @click="jumpGithubPage(project.url)"
                                                 >
                                                     <v-icon
                                                         large
@@ -154,15 +154,27 @@
     // import {useAsyncData, useNuxtApp} from "nuxt/app";
 
     const png_id = "4J3u7b0DkC26yQGjn0DuS0"
-	const id = "4cc9JW3vkGlnH8B97ofmn9"
+	// const id = "4cc9JW3vkGlnH8B97ofmn9"
+    const id = "0Spja66f69ipYNQN6Hgv3o";
     const {$client} = useNuxtApp()
     //const { data: cms } = await useFetch($client.getEntry(id));
     const { data:cms } = await useAsyncData(id,()=> $client.getEntry(id));
+    const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
     //console.log(cms.value.fields.hpNuxtMovies[0].fields.title)
-    console.log(cms.value.fields.hpNuxtMovies[18].fields)
-    console.log(cms.value.fields.hpNuxtMovies[18].fields.file.url)
-    const contentful_imgurl = ref(cms.value.fields.hpNuxtMovies[18].fields.file.url)
+    //console.log(cms.value)
+    console.log(getContents.value?.items[0].fields)
+    console.log(getContents.value)
+
+    
+
+    const contents = getContents.value?.items;
+    console.log(contents);
+
+    const showContents = contents.map(item => item.fields);
+    console.log(showContents[0].title);
+
+    // const contentful_imgurl = ref(cms.value.fields.hpNuxtMovies[18].fields.file.url)
     
     let dialog = ref(false)
 
@@ -224,9 +236,18 @@
         console.log(dialog)
     }
 
+    // const openDialogProjectDetail = ( project : any ) => {
+    //     console.log(project)
+    //     selectProjectIndex.value = projects.indexOf(project)
+    //     showDialogProject.value = Object.assign({}, project)
+    //     dialog.value = true
+    //     console.log(showDialogProject)
+
+    // }
+
     const openDialogProjectDetail = ( project : any ) => {
         console.log(project)
-        selectProjectIndex.value = projects.indexOf(project)
+        selectProjectIndex.value = showcontents.indexOf(project)
         showDialogProject.value = Object.assign({}, project)
         dialog.value = true
         console.log(showDialogProject)
