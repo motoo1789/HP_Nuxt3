@@ -9,14 +9,14 @@
     <v-card
         class="mx-auto"
         shaped="true"
-        v-for="(project, key) in showcontents"
+        v-for="(project, key) in projects"
         :key="key"
     >
         <v-container>
             <v-row justify="start">
                 <v-col  cols="5"> 
                     <v-img
-                        :src="project.img.fields.file.url"
+                        :src="project.img"
                         height="200px"
                     ></v-img>
                 </v-col>
@@ -68,10 +68,10 @@
                                         :max-width="750"
                                     >
                                         <video controls class="ma-2 movie-size-parent">
-                                            <source :src='project.movie.fields.file.url' type="video/mp4">
+                                            <source :src='showDialogProject.movie' type="video/mp4">
                                         </video>
                                         <v-card-text>
-                                            <p class="text-h5"> {{ project.title }} </p>
+                                            <p class="text-h5"> {{ showDialogProject.title }} </p>
                                         </v-card-text>
                                         <v-divider></v-divider>
 
@@ -87,9 +87,9 @@
                                                     </v-col>
                                                     <v-spacer></v-spacer>
                                                     <v-col cols="7">
-                                                        <v-row align-content="center">{{ project.language }}</v-row>
-                                                        <v-row align-content="center">{{ project.framework }}</v-row>
-                                                        <v-row align-content="center">{{ project.library }}</v-row>
+                                                        <v-row align-content="center">{{ showDialogProject.environments.language }}</v-row>
+                                                        <v-row align-content="center">{{ showDialogProject.environments.framework }}</v-row>
+                                                        <v-row align-content="center">{{ showDialogProject.environments.library }}</v-row>
                                                     </v-col>
                                                 </v-row>
                                             </div>
@@ -100,7 +100,7 @@
                                         <v-card-text>
                                             <p class="text-h5"> 詳細 </p>
                                             <div class="my-1">
-                                                {{ project.detail }}
+                                                {{ showDialogProject.detail }}
                                             </div>
                                         </v-card-text>                                
                                         <v-row >
@@ -109,7 +109,7 @@
                                                 <v-btn
                                                     color="blue darken-1"
                                                     :rounded=true
-                                                    @click="jumpGithubPage(project.url)"
+                                                    @click="jumpGithubPage(showDialogProject.url)"
                                                 >
                                                     <v-icon
                                                         large
@@ -163,16 +163,36 @@
 
     //console.log(cms.value.fields.hpNuxtMovies[0].fields.title)
     //console.log(cms.value)
-    console.log(getContents.value?.items[0].fields)
-    console.log(getContents.value)
+    // console.log(getContents.value?.items[0].fields)
+    // console.log(getContents.value)
 
     
 
     const contents = getContents.value?.items;
     console.log(contents);
 
-    const showContents = contents.map(item => item.fields);
-    console.log(showContents[0].title);
+    const parseContents = contents.map(item => item.fields);
+    
+    const projects = []
+    parseContents?.forEach(( content, index ) => {
+        const joinContent = {
+            projectNum : index,
+            title : content.title,
+            environments: {
+                language: content.language,
+                framework: content.framework,
+                library: content.library,
+            },
+            abstract: content.abstract,
+            detail: content.detail,
+            url: content.github,
+            img: content.img.fields.file.url,
+            movie: content.movie.fields.file.url,
+        }
+        projects.push(joinContent)
+    });
+    console.log("array push");
+    console.log(projects);
 
     // const contentful_imgurl = ref(cms.value.fields.hpNuxtMovies[18].fields.file.url)
     
@@ -180,38 +200,38 @@
 
     let selectProjectIndex = ref(-1)
     
-    const projects = [
-        {
-            projectNum: 1,
-            title: "WinRate",
-            environments: {
-                language: "Java",
-                framework:"Eclipse",
-                library: "OpenCV",
-            },
-            abstract: "シャドウバースの勝敗記録をするアプリケーション",
-            detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
-            url: "https://github.com/motoo1789/WinRate",
-            // img: require(`/img/HP用WinRate写真.png`),
-            // movie: require(`/movie/HP用WinRate.mp4`),
-            img: "/images/HP用WinRate写真.png",
-            movie: "/movies/HP用WinRate.mp4"
-        },
-        {
-            projectNum: 2,
-            title: "UMLDS",
-            environments: {
-                language: "Java",
-                framework:"Eclipse GWT",
-                library: "JeroMQ GWTUMLDrawer",
-            },
-            abstract: "修士研究で作成したアプリケーション描画部分",
-            detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
-            url: "https://github.com/motoo1789/KIfU-drawer",
-            img: "/images/HP用UMLDS.png",
-            movie: "/movies/HP用UMLDS.mp4",
-        },
-    ]
+    // const projects = [
+    //     {
+    //         projectNum: 1,
+    //         title: "WinRate",
+    //         environments: {
+    //             language: "Java",
+    //             framework:"Eclipse",
+    //             library: "OpenCV",
+    //         },
+    //         abstract: "シャドウバースの勝敗記録をするアプリケーション",
+    //         detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
+    //         url: "https://github.com/motoo1789/WinRate",
+    //         // img: require(`/img/HP用WinRate写真.png`),
+    //         // movie: require(`/movie/HP用WinRate.mp4`),
+    //         img: "/images/HP用WinRate写真.png",
+    //         movie: "/movies/HP用WinRate.mp4"
+    //     },
+    //     {
+    //         projectNum: 2,
+    //         title: "UMLDS",
+    //         environments: {
+    //             language: "Java",
+    //             framework:"Eclipse GWT",
+    //             library: "JeroMQ GWTUMLDrawer",
+    //         },
+    //         abstract: "修士研究で作成したアプリケーション描画部分",
+    //         detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
+    //         github: "https://github.com/motoo1789/KIfU-drawer",
+    //         img: "/images/HP用UMLDS.png",
+    //         movie: "/movies/HP用UMLDS.mp4",
+    //     },
+    // ]
 
     let showDialogProject = ref({
         url: URL,
@@ -247,7 +267,7 @@
 
     const openDialogProjectDetail = ( project : any ) => {
         console.log(project)
-        selectProjectIndex.value = showcontents.indexOf(project)
+        selectProjectIndex.value = projects.indexOf(project)
         showDialogProject.value = Object.assign({}, project)
         dialog.value = true
         console.log(showDialogProject)
