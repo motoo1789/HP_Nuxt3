@@ -117,8 +117,6 @@ export default {
 
         // this.styleSize.width = this.maxsize 直接指定する場合はオブジェクトの中まで指定する
         // this.calcSkilTextSize();
-
-        console.log(this.maxsize)
     },
     methods :{
         calcSkilTextSize() {
