@@ -1,11 +1,5 @@
 <template>
   <div>
-    <v-col  cols="5"> 
-                    <v-img
-                        :src="contentful_imgurl"
-                        height="200px"
-                    ></v-img>
-                </v-col>
     <v-card
         class="mx-auto"
         shaped="true"
@@ -147,34 +141,46 @@
     import { ref } from "vue";
     import { ofetch } from 'ofetch'
     const { data: animes } = await useFetch('/api/anime');
-    //const { data: cms } = await useAsyncData('/api/contentful');
-    //const { data: cms } = await ofetch('/api/contentful');
-    //const { data: cms } = await useFetch('/api/contentful');
+    
 
-    // import {useAsyncData, useNuxtApp} from "nuxt/app";
+
 
     const png_id = "4J3u7b0DkC26yQGjn0DuS0"
 	// const id = "4cc9JW3vkGlnH8B97ofmn9"
     const id = "0Spja66f69ipYNQN6Hgv3o";
     const {$client} = useNuxtApp()
-    //const { data: cms } = await useFetch($client.getEntry(id));
     const { data:cms } = await useAsyncData(id,()=> $client.getEntry(id));
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
-    //console.log(cms.value.fields.hpNuxtMovies[0].fields.title)
-    //console.log(cms.value)
-    // console.log(getContents.value?.items[0].fields)
-    // console.log(getContents.value)
 
     
 
     const contents = getContents.value?.items;
-    console.log(contents);
+
 
     const parseContents = contents.map(item => item.fields);
+
+
+    const getContentArray = [];
+    parseContents.forEach(tmp => getContentArray.push(tmp))
+
+    
+
+    const projectArray  = getContentArray?.filter(obj => {
+        return obj.hasOwnProperty('title')
+    })
+
+    // const b = Array.from(a);
+    // splitProject = parseContents.map(obj => obj instanceof Proxy ? obj.__target : obj)
+    //                       .filter(tmp => tmp.hasOwnProperty('anime'));
+
+    // splitProject = parseContents.filter( tmp => tmp.__target.anime.hasOwnProperty('anime'));
+
+    // splitProject = parseContents.map( content => console.log(content));
+
     
     const projects = []
-    parseContents?.forEach(( content, index ) => {
+    projectArray?.forEach(( content, index ) => {
         const joinContent = {
             projectNum : index,
             title : content.title,
@@ -191,8 +197,8 @@
         }
         projects.push(joinContent)
     });
-    console.log("array push");
-    console.log(projects);
+    // console.log("array push");
+    // console.log(projects);
 
     // const contentful_imgurl = ref(cms.value.fields.hpNuxtMovies[18].fields.file.url)
     
