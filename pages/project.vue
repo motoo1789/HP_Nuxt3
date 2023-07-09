@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <v-card
         class="mx-auto"
         shaped="true"
@@ -140,43 +139,105 @@
 
 <script setup lang="ts">
     import { ref } from "vue";
-    // const { data: animes } = await useFetch('/api/anime');
+    import { ofetch } from 'ofetch'
+    const { data: animes } = await useFetch('/api/anime');
+    
+
+
+
+    const png_id = "4J3u7b0DkC26yQGjn0DuS0"
+	// const id = "4cc9JW3vkGlnH8B97ofmn9"
+    const id = "0Spja66f69ipYNQN6Hgv3o";
+    const {$client} = useNuxtApp()
+    const { data:cms } = await useAsyncData(id,()=> $client.getEntry(id));
+    const { data:getContents } = await useAsyncData( () => $client.getEntries())
+
+
+    
+
+    const contents = getContents.value?.items;
+
+
+    const parseContents = contents.map(item => item.fields);
+
+
+    const getContentArray = [];
+    parseContents.forEach(tmp => getContentArray.push(tmp))
+
+    
+
+    const projectArray  = getContentArray?.filter(obj => {
+        return obj.hasOwnProperty('title')
+    })
+
+    // const b = Array.from(a);
+    // splitProject = parseContents.map(obj => obj instanceof Proxy ? obj.__target : obj)
+    //                       .filter(tmp => tmp.hasOwnProperty('anime'));
+
+    // splitProject = parseContents.filter( tmp => tmp.__target.anime.hasOwnProperty('anime'));
+
+    // splitProject = parseContents.map( content => console.log(content));
+
+    
+    const projects = []
+    projectArray?.forEach(( content, index ) => {
+        const joinContent = {
+            projectNum : index,
+            title : content.title,
+            environments: {
+                language: content.language,
+                framework: content.framework,
+                library: content.library,
+            },
+            abstract: content.abstract,
+            detail: content.detail,
+            url: content.github,
+            img: content.img.fields.file.url,
+            movie: content.movie.fields.file.url,
+        }
+        projects.push(joinContent)
+    });
+    // console.log("array push");
+    // console.log(projects);
+
+    // const contentful_imgurl = ref(cms.value.fields.hpNuxtMovies[18].fields.file.url)
+    
     let dialog = ref(false)
 
     let selectProjectIndex = ref(-1)
     
-    const projects = [
-        {
-            projectNum: 1,
-            title: "WinRate",
-            environments: {
-                language: "Java",
-                framework:"Eclipse",
-                library: "OpenCV",
-            },
-            abstract: "シャドウバースの勝敗記録をするアプリケーション",
-            detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
-            url: "https://github.com/motoo1789/WinRate",
-            // img: require(`/img/HP用WinRate写真.png`),
-            // movie: require(`/movie/HP用WinRate.mp4`),
-            img: "/images/HP用WinRate写真.png",
-            movie: "/movies/HP用WinRate.mp4"
-        },
-        {
-            projectNum: 2,
-            title: "UMLDS",
-            environments: {
-                language: "Java",
-                framework:"Eclipse GWT",
-                library: "JeroMQ GWTUMLDrawer",
-            },
-            abstract: "修士研究で作成したアプリケーション描画部分",
-            detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
-            url: "https://github.com/motoo1789/KIfU-drawer",
-            img: "/images/HP用UMLDS.png",
-            movie: "/movies/HP用UMLDS.mp4",
-        },
-    ]
+    // const projects = [
+    //     {
+    //         projectNum: 1,
+    //         title: "WinRate",
+    //         environments: {
+    //             language: "Java",
+    //             framework:"Eclipse",
+    //             library: "OpenCV",
+    //         },
+    //         abstract: "シャドウバースの勝敗記録をするアプリケーション",
+    //         detail: "シャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーションシャドウバースの勝敗記録をするアプリケーション",
+    //         url: "https://github.com/motoo1789/WinRate",
+    //         // img: require(`/img/HP用WinRate写真.png`),
+    //         // movie: require(`/movie/HP用WinRate.mp4`),
+    //         img: "/images/HP用WinRate写真.png",
+    //         movie: "/movies/HP用WinRate.mp4"
+    //     },
+    //     {
+    //         projectNum: 2,
+    //         title: "UMLDS",
+    //         environments: {
+    //             language: "Java",
+    //             framework:"Eclipse GWT",
+    //             library: "JeroMQ GWTUMLDrawer",
+    //         },
+    //         abstract: "修士研究で作成したアプリケーション描画部分",
+    //         detail: "修士研究で作成したアプリケーション修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分修士研究で作成したアプリケーション描画部分",
+    //         github: "https://github.com/motoo1789/KIfU-drawer",
+    //         img: "/images/HP用UMLDS.png",
+    //         movie: "/movies/HP用UMLDS.mp4",
+    //     },
+    // ]
 
     let showDialogProject = ref({
         url: URL,
@@ -200,6 +261,15 @@
         dialog.value = false
         console.log(dialog)
     }
+
+    // const openDialogProjectDetail = ( project : any ) => {
+    //     console.log(project)
+    //     selectProjectIndex.value = projects.indexOf(project)
+    //     showDialogProject.value = Object.assign({}, project)
+    //     dialog.value = true
+    //     console.log(showDialogProject)
+
+    // }
 
     const openDialogProjectDetail = ( project : any ) => {
         console.log(project)

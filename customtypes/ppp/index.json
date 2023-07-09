@@ -1,0 +1,19 @@
+{
+  "id": "ppp",
+  "label": "ppp",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "link": {
+        "type": "Link",
+        "config": { "label": "link", "placeholder": "", "select": "media" }
+      },
+      "image": {
+        "type": "Image",
+        "config": { "label": "image", "constraint": {}, "thumbnails": [] }
+      }
+    }
+  }
+}
