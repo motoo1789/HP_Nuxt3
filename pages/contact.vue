@@ -1,6 +1,6 @@
 <template>
   <div>
-    contact
+    It is being implemented. Please wait.
   </div>
 </template>
 
