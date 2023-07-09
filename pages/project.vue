@@ -259,7 +259,6 @@
 
     const closeDialogProjectDetail = () => {
         dialog.value = false
-        console.log(dialog)
     }
 
     // const openDialogProjectDetail = ( project : any ) => {
@@ -272,12 +271,9 @@
     // }
 
     const openDialogProjectDetail = ( project : any ) => {
-        console.log(project)
         selectProjectIndex.value = projects.indexOf(project)
         showDialogProject.value = Object.assign({}, project)
         dialog.value = true
-        console.log(showDialogProject)
-
     }
 
 
