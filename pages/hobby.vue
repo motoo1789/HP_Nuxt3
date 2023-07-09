@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card>
+        <v-card class="my-2">
             <v-card-title class="text-center justify-center py-6">
                 
                     アニメ
@@ -36,6 +36,26 @@
                          
                     </v-window-item>
                 </v-window>
+
+                <!--
+                    <v-window v-model="tab" v-for="(animetitles, animeskey) in animes" :key="animeskey">
+                    <v-window-item :value=animeskey> 
+
+                        <v-row>
+                            <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
+                                lg="4"    
+                                md="6"
+                                sm="6"
+                                xs="12"
+                            >
+                                {{ animetitle }}
+                            </v-col>
+                        </v-row>
+                        
+                         
+                    </v-window-item>
+                </v-window>
+                -->
             </v-card-text>
             <!-- <v-card-text>
                 <v-window v-model="tab" v-for="(animetitles, animeskey) in tmp" :key="animeskey">
@@ -57,29 +77,37 @@
                 </v-window>
             </v-card-text> -->
         </v-card>
-        <v-card>
+        <v-card class="my-2">
             <v-card-title class="text-center justify-center py-6">
-                マンガ・ライトノベル
+                マンガ
             </v-card-title>
             
             <v-container>
                 <v-row>
-                    <v-col v-for="(mangatitle, mangakey) in comics" :key="mangakey"
+                    <v-col v-for="(comictitle, comickey) in comics" :key="comickey"
                         lg="4"    
                         md="6"
-                        sm="6"
+                        sm="12"
                         xs="12"
                     >
-                        {{ mangatitle }}
+                        {{ comictitle }}
                     </v-col>
                 </v-row>
-                <v-divider class="my-2"></v-divider>
+            </v-container>
+            
+        </v-card>
+        <v-card class="my-2">
+            <v-card-title class="text-center justify-center py-6">
+                ライトノベル
+            </v-card-title>
+            
+            <v-container>
                 <v-row>
                     <v-col v-for="(lightnoveltitle, lightnovelkey) in novels" :key="lightnovelkey"
-                        xs="12"
                         lg="4"    
                         md="6"
-                        sm="6"
+                        sm="12"
+                        xs="12"
                     >
                         {{ lightnoveltitle }}
                         <!-- <v-list :items="animetitles"></v-list> -->
@@ -92,11 +120,27 @@
 </template>
 
 <script setup lang="ts">
-    let tab = ref(1)
+    const {$client} = useNuxtApp()
+    const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
-    const { data: animes } = await useFetch('/api/anime');
-    const { data: comics } = await useFetch('/api/comic');
-    const { data: novels } = await useFetch('/api/novel');
+    const contents = getContents.value?.items;
+    const parseContents = contents.map(item => item.fields);
+    const getContentArray = [];
+    parseContents.forEach(content => getContentArray.push(content))
+
+    const hobbyArray = getContentArray?.filter(obj => {
+        return obj.hasOwnProperty('anime')
+    })
+
+    const animes = hobbyArray[0].anime;
+    const comics = hobbyArray[0].book.comic
+    const novels = hobbyArray[0].book.novel
+
+
+    let tab = ref(1)
+    // const { data: animes } = await useFetch('/api/anime');
+    // const { data: comics } = await useFetch('/api/comic');
+    // const { data: novels } = await useFetch('/api/novel');
 
     // const tmp = { 
     //     a : [ "色づく世界の明日から", 'アイドルマスター', 'あんハピ' ],

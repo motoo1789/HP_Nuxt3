@@ -1,0 +1,5 @@
+{
+  "repositoryName": "hp-nuxt",
+  "adapter": "@slicemachine/adapter-nuxt",
+  "libraries": ["./slices"]
+}
