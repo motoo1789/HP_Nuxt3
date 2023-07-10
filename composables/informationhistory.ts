@@ -1,3 +1,12 @@
+const {$client} = useNuxtApp()
+const id = "4aRueTYaQFRMv4drT6irTy";
+//const { data:cms } = await useAsyncData(id ,()=> $client.getEntries())
+// const { data:cms } = await useAsyncData(id ,()=> $client.getEntry(id))
+const { data:cms } = await useAsyncData(id ,()=> $client.getEntries({content_type: 'newInformation'}))
+
+
+console.log(cms);
+const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
 export const updatePage = (currentpage: Ref<number>) => {
     return (nextpage: number) => (currentpage.value = nextpage);
