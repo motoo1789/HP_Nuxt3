@@ -26,8 +26,9 @@
   </div>
 </template>
 <script setup>
-const { currentpage, updatePage } = useCurrentPage();
-const { informationhisotory } = useInformationHisotry();
+const { currentpage, updatePage } =  useCurrentPage();
+const { informationhisotory } =  useInformationHisotry();
+const { getCMSContent } =  getCMSContent();
 
 
 const pushPagination = () => {

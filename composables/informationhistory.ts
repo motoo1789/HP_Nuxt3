@@ -2,13 +2,29 @@ const {$client} = useNuxtApp()
 const id = "4aRueTYaQFRMv4drT6irTy";
 //const { data:cms } = await useAsyncData(id ,()=> $client.getEntries())
 // const { data:cms } = await useAsyncData(id ,()=> $client.getEntry(id))
-const { data:cms } = await useAsyncData(id ,()=> $client.getEntries({content_type: 'newInformation'}))
+// const { data:cms } = await useAsyncData(id ,()=> $client.getEntries({content_type: 'newInformation'}))
+// const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
 
-console.log(cms);
-const { data:getContents } = await useAsyncData( () => $client.getEntries())
+export const getCMSContent = () => {
+  const getContent =  async () => {
+    const {$client} = useNuxtApp()
+    const { data:getContents } = await useAsyncData( () => $client.getEntries())
+    
+    const contents = getContents.value?.items;
+    const parseContents = contents.map(item => item.fields);
+    console.log(parseContents);
+
+    
+
+  };
+  return { 
+    getContent 
+  }
+}
 
 export const updatePage = (currentpage: Ref<number>) => {
+  
     return (nextpage: number) => (currentpage.value = nextpage);
 }
 
@@ -30,7 +46,8 @@ export const useCurrentPage = () => {
 }
 
 export const useInformationHisotry = () => {
-    
+
+
     const hisotory = useState('hisotory', () => {
         return [
             {
