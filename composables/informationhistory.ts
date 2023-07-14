@@ -6,20 +6,40 @@ const id = "4aRueTYaQFRMv4drT6irTy";
 // const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
 
-export const getCMSContent = () => {
-  const getContent =  async () => {
+export const getCMSContent = async () => {
+
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
     
     const contents = getContents.value?.items;
     const parseContents = contents.map(item => item.fields);
-    console.log(parseContents);
+    return parseContents;
 
+};
+
+// export const getCMSContent = () => {
+//   const getContent =   async () => {
+//     const {$client} = useNuxtApp()
+//     const { data:getContents } = await useAsyncData( () => $client.getEntries())
     
+//     const contents = getContents.value?.items;
+//     const parseContents = contents.map(item => item.fields);
+//     console.log(parseContents);
+//     return parseContents;
+    
+//   };
+//   return { 
+//     getContent
+//   }
+// }
 
+export const getUpdateInformation = () => { 
+  const parseUpdateInformation = async () => {
+    const  parsebeforeCMSContents  = await getCMSContent();
+    return parsebeforeCMSContents
   };
-  return { 
-    getContent 
+  return {
+    parseUpdateInformation
   }
 }
 
