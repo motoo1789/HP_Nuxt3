@@ -25,14 +25,19 @@
     
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
+
+
 const { currentpage, updatePage } =  useCurrentPage();
 const { informationhisotory } =  useInformationHisotry();
-const { getCMSContent } =  getCMSContent();
+//const { getContent } =  getCMSContent();
+const { parseUpdateInformation } = getUpdateInformation();
+
+console.log(parseUpdateInformation())
 
 
 const pushPagination = () => {
-  updatePage(currentpage)
+  // updatePage(getCMSContent)
 }
   // 初期値をセットする場合
   // const [informationhistory, setInformationhistory] = useState({ histories: homepageNewInformations })
