@@ -17,7 +17,6 @@
         HOME
       </v-btn>
     </v-row>
-      
 
     
 
@@ -27,17 +26,17 @@
 </template>
 <script setup lang="ts">
 
-
 const { currentpage, updatePage } =  useCurrentPage();
-const { informationhisotory } =  useInformationHisotry();
+// const { informationhisotory } =  useInformationHisotry();
 //const { getContent } =  getCMSContent();
 const { parseUpdateInformation } = getUpdateInformation();
 
-console.log(parseUpdateInformation())
+const  informationhisotory  =  await parseUpdateInformation();
+//console.log(informationhisotory.length)
 
 
 const pushPagination = () => {
-  // updatePage(getCMSContent)
+  updatePage(currentpage)
 }
   // 初期値をセットする場合
   // const [informationhistory, setInformationhistory] = useState({ histories: homepageNewInformations })
