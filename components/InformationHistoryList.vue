@@ -16,7 +16,7 @@
                       :key="key"
                   >
                   <!-- HACK: -するの好きじゃないのでどうにかしたい -->
-                     <v-expansion-panel-title>{{ newinformation.updatedate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
+                     <v-expansion-panel-title>{{ newinformation.updateDate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
                   <v-expansion-panel-text>{{ newinformation.detaile }}</v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -26,9 +26,13 @@
   </div>
 </template>
 
-<script  setup>
+<script setup lang="ts">
 
-const { informationhisotory } = useInformationHisotry();
+// const { informationhisotory } = useInformationHisotry();
+const { parseUpdateInformation } = getUpdateInformation();
+const informationhisotory = await parseUpdateInformation();
+console.log(informationhisotory.length)
+
 const { currentpage } = useCurrentPage();
 
 </script>
