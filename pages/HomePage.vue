@@ -88,7 +88,6 @@ export default {
   },
   methods : {
       showNewInformationHistory() {
-          console.log("チップをクリックしました")
           this.$router.push({
             name:'InformationHistoryList',
             params:{

@@ -8,5 +8,6 @@ node_modules
 dist
 .DS_Store
 *.mp4
-*.png
-*.jpg
+not push/
+# *.png
+# *.jpg

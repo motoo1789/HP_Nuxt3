@@ -17,7 +17,6 @@
         HOME
       </v-btn>
     </v-row>
-      
 
     
 
@@ -25,9 +24,15 @@
     
   </div>
 </template>
-<script setup>
-const { currentpage, updatePage } = useCurrentPage();
-const { informationhisotory } = useInformationHisotry();
+<script setup lang="ts">
+
+const { currentpage, updatePage } =  useCurrentPage();
+// const { informationhisotory } =  useInformationHisotry();
+//const { getContent } =  getCMSContent();
+const { parseUpdateInformation } = getUpdateInformation();
+
+const  informationhisotory  =  await parseUpdateInformation();
+//console.log(informationhisotory.length)
 
 
 const pushPagination = () => {
