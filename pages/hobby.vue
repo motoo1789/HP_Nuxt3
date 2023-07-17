@@ -132,6 +132,8 @@
         return obj.hasOwnProperty('anime')
     })
 
+    
+
     const animes = hobbyArray[0].anime;
     const comics = hobbyArray[0].book.comic
     const novels = hobbyArray[0].book.novel
