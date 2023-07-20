@@ -89,12 +89,12 @@
 
 	// add Newt
 	const schema = {
-	name (value: string) {
-		if (!value) {
-		return 'Name is required'
+		name (value: string) {
+			if (!value) {
+				return 'Name is required'
+			}
+			return true
 		}
-		return true
-	}
 	}
 	const { useFieldModel, handleSubmit, errors } = useForm({
   		validationSchema: schema
@@ -128,7 +128,7 @@
 		} catch (err) {
 			await navigateTo('/error')
 		}
-	}
+	})
 
 </script>
 
