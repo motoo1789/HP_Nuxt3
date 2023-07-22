@@ -23,7 +23,11 @@
     "vuetify": "^3.1.4"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.3",
     "contentful": "^10.3.0",
-    "vue": "^3.2.36"
+    "vee-validate": "^4.10.7",
+    "vue": "^3.2.36",
+    "yup": "^1.2.0"
   }
 }
