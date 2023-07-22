@@ -21,7 +21,7 @@
 			<v-icon size="100px" color="blue-lighten-2 " >mdi-check-circle-outline</v-icon>
 
 			<v-card-title>
-				お問い合わせが完了いたしました
+				お問い合わせが完了しました
 			</v-card-title>
 
 			<v-card-actions class="justify-center">
@@ -31,7 +31,7 @@
 						color="blue-lighten-1"
 						size="x-large"
 					>
-						Back to home page
+						ホームへ
 					</v-btn>
 				</NuxtLink>
 
