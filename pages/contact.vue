@@ -1,132 +1,99 @@
+<script lang="ts" setup>
+useHead({
+	title: 'Newt・Nuxtフォーム',
+  	meta: [
+		{ name: 'description', content: 'NewtとNuxtを利用した問い合わせフォームです' }
+  	]	
+})
+
+import { useForm } from 'vee-validate'
+import * as yup from "yup"
+
+const schema = yup.object({
+	email: yup.string().email().required(),
+	name: yup.string().required().min(2),
+});
+
+const { useFieldModel, handleSubmit, errors } = useForm({
+	validationSchema: schema
+})
+const [name, email, message] = useFieldModel(['name', 'email', 'message'])
+
+const onSubmit = handleSubmit(async (values) => {
+
+
+const formData = new FormData()
+	Object.entries(values).forEach(([key, value]) => {
+    	formData.append(key, value)
+  	})
+
+
+ 	try {
+   		const response = await fetch('https://motoolab.form.newt.so/v1/Ycl-scwxX', {
+		method: 'POST',
+		body: formData,
+		headers: {
+			Accept: 'application/json'
+		}
+   	})
+
+   	if (response.ok) {
+    	await navigateTo('/thanks')
+   	} else {
+    	await navigateTo('/error')
+   	}
+ 	} catch (err) {
+   		await navigateTo('/error')
+ 	}
+})
+</script>
+
 <template>
 	<div>
-    <div class="text-h6">GUIなどのバグ報告・その他問い合わせ</div>
-		<form @submit="onSubmit">
-			<!-- 
-			<v-text-field
-				v-model="state.name"
-				:error-messages="v$.name.$errors.map(e => e.$message)"
-				:counter="10"
-				label="名前"
-				@input="v$.name.$touch"
-				@blur="v$.name.$touch"
-			></v-text-field> 
-		-->
+    	<div class="text-center　text-h6">GUIなどのバグ報告・その他問い合わせ</div>
+    	<form @submit="onSubmit">
+			<v-alert
+				variant="text"
+				type="warning"
+				density="compact"
+				v-if="errors.email"
+				id="error-email-required" aria-live="assertive"
 
+			>
+				メールアドレスを正しく入力してください！
+			</v-alert>
 			<v-text-field
-				v-model="state.email"
-				:error-messages="v$.email.$errors.map(e => e.$message)"
+				v-model="email"
 				label="メールアドレス"
-				required
-				@input="v$.email.$touch"
-				@blur="v$.email.$touch"
 				name="email"
 			></v-text-field>
+			
 
+			<v-alert
+				variant="text"
+				type="warning"
+				density="compact"
+				v-if="errors.name"
+				id="error-name-required" aria-live="assertive"
+			>
+				名前が未入力です！
+			</v-alert>
 			<v-text-field
 				label="名前"
 				name="name"
+				v-model="name"
 			></v-text-field>
-
+		
 			<v-textarea 
 				label="本文"
 				name="message"
+				v-model="message"
 			>
 			</v-textarea>
 
 			<div class="text-center justify-center">
-				<v-btn class="me-4" @click="v$.$validate" type="submit">submit</v-btn>
-
-				<v-btn @click="clear">
-					clear
-				</v-btn>
+				<v-btn class="me-4" type="submit">submit</v-btn>
 			</div>
-			
     	</form>
   	</div>
 </template>
-
-<script setup lang="ts">
-  	import { reactive } from 'vue'
-  	import { useVuelidate } from '@vuelidate/core'
-  	import { email, required } from '@vuelidate/validators'
-	import { useForm } from 'vee-validate'
-
- 	const initialState = {
-		name: '',
-		email: '',
-		select: null,
-		checkbox: null,
-  	}
-
-  	const state = reactive({
-    	...initialState,
-  	})
-
-
-  	const rules = {
-		name: { required },
-		email: { required, email },
-		select: { required },
-		items: { required },
-		checkbox: { required },
-  	}
-
-  	const v$ = useVuelidate(rules, state)
-
-  	function clear () {
-    	v$.value.$reset()
-
-    	for (const [key, value] of Object.entries(initialState)) {
-      		state[key] = value
-    	}
-  	}
-
-	// add Newt
-	const schema = {
-		name (value: string) {
-			if (!value) {
-				return 'Name is required'
-			}
-			return true
-		}
-	}
-	const { useFieldModel, handleSubmit, errors } = useForm({
-  		validationSchema: schema
-	})
-	const onSubmit = handleSubmit(async (values) => {
-		// await recaptchaInstance?.recaptchaLoaded()
-		// const token = await recaptchaInstance?.executeRecaptcha('submit')
-		// values.googleReCaptchaToken = token
-
-
-
-		const formData = new FormData()
-		Object.entries(values).forEach(([key, value]) => {
-			formData.append(key, value)
-		})
-
-		try {
-			const response = await fetch('https://motoolab.form.newt.so/v1/Ycl-scwxX', {
-				method: 'POST',
-				body: formData,
-				headers: {
-					Accept: 'application/json'
-				}
-			})
-
-			if (response.ok) {
-				await navigateTo('/thanks')
-			} else {
-				await navigateTo('/error')
-			}
-		} catch (err) {
-			await navigateTo('/error')
-		}
-	})
-
-</script>
-
-<style>
-
-</style>
