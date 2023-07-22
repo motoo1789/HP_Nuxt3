@@ -36,10 +36,7 @@
 
 			<div class="text-center justify-center">
 				<v-btn class="me-4" @click="v$.$validate" type="submit">submit</v-btn>
-
-				<v-btn @click="clear">
-					clear
-				</v-btn>
+				<v-btn @click="clear">clear</v-btn>
 			</div>
 			
     	</form>
@@ -92,7 +89,7 @@
 		}
 	}
 	const { useFieldModel, handleSubmit, errors } = useForm({
-  		validationSchema: schema
+
 	})
 	const onSubmit = handleSubmit(async (values) => {
 		// await recaptchaInstance?.recaptchaLoaded()
