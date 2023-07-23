@@ -9,7 +9,7 @@
     ></v-pagination> 
     <v-row>
       <v-btn
-        color="blue darken-1"
+        color="light-blue-accent-3"
         :rounded=true
         :to="`/`"
         class="mx-auto my-5"

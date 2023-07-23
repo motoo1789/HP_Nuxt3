@@ -1,15 +1,15 @@
 <template>
     <div>
         <v-card class="my-2">
-            <v-card-title class="text-center justify-center py-6">
+            <v-card-title class="text-center justify-center py-3  color">
                 
                     アニメ
             </v-card-title>
             <v-tabs
                 v-model="tab"
-                bg-color="primary"
                 fixed-tabs
                 show-arrows
+                class="color"
             >
                 <v-tab v-for="(tabitem,tabitemkey) in tabitems" :key="tabitemkey" :value=tabitemkey>
                     {{ tabitem }}
@@ -37,48 +37,12 @@
                     </v-window-item>
                 </v-window>
 
-                <!--
-                    <v-window v-model="tab" v-for="(animetitles, animeskey) in animes" :key="animeskey">
-                    <v-window-item :value=animeskey> 
 
-                        <v-row>
-                            <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
-                                lg="4"    
-                                md="6"
-                                sm="6"
-                                xs="12"
-                            >
-                                {{ animetitle }}
-                            </v-col>
-                        </v-row>
-                        
-                         
-                    </v-window-item>
-                </v-window>
-                -->
             </v-card-text>
-            <!-- <v-card-text>
-                <v-window v-model="tab" v-for="(animetitles, animeskey) in tmp" :key="animeskey">
 
-                    <v-window-item :value=animeskey> 
-                        <v-row>
-                            <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
-                                lg="4"    
-                                md="6"
-                                sm="6"
-                                xs="12"
-                            >   
-                                {{ animetitle }}
-                                
-                            </v-col>
-                        </v-row>
- 
-                    </v-window-item>
-                </v-window>
-            </v-card-text> -->
         </v-card>
         <v-card class="my-2">
-            <v-card-title class="text-center justify-center py-6">
+            <v-card-title class="text-center justify-center color py-3 ">
                 マンガ
             </v-card-title>
             
@@ -97,7 +61,7 @@
             
         </v-card>
         <v-card class="my-2">
-            <v-card-title class="text-center justify-center py-6">
+            <v-card-title class="text-center justify-center color py-3" >
                 ライトノベル
             </v-card-title>
             

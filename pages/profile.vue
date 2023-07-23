@@ -15,7 +15,7 @@
             </v-col>
 
             <v-col class="green-b" cols="9">
-                <v-card-title>
+                <v-card-title class="color text-h5">
                     名前 山崎 貴弘
                 </v-card-title>
                 <v-divider></v-divider>
@@ -72,8 +72,11 @@
                         </v-banner-text>                
                     </v-banner> -->
                     <v-row class="my-2">
-                        <v-col cols="9" >
-                            <div class="text-h6">経歴</div>
+                        <v-col >
+                            <v-card-title class="color text-h5">
+                                経歴
+                            </v-card-title>
+
                             <v-divider></v-divider>
                             <v-timeline class="my-2" side="end">
                                 <v-timeline-item  
@@ -90,8 +93,11 @@
                         
                     </v-row>
                     <v-row>
-                        <v-col cols="9">
-                            <div class="text-h6 mt-2 ">資格</div>
+                        <v-col >
+                            
+                            <v-card-title class="color text-h5">
+                                資格
+                            </v-card-title>
                             <v-divider></v-divider>
                             <v-list
                                 :items="qualifications"
@@ -121,7 +127,9 @@
                 </v-col>
 
                 <v-col class="green-b" cols="9">
-                    <div class="text-h6">発表</div>
+                    <v-card-title class="color text-h5">
+                                発表
+                            </v-card-title>
                     <v-divider></v-divider>
                     <v-table>
                         <thead>
@@ -173,7 +181,9 @@
                 </v-col>
 
                 <v-col class="green-b" cols="9">
-                    <div class="text-h6">スキル（自己評価）</div>
+                    <v-card-title class="color text-h5">
+                                スキル（自己評価）
+                            </v-card-title>
                     <v-divider></v-divider>
                     <!-- <div 
                         v-for="(rating, key) in ratings"
@@ -297,8 +307,11 @@ export default {
             // },
             ratings: [
                 { skill: "Java", value: "2" },
-                { skill: "Docker", value: "2" },
+                { skill: "Docker", value: "1" },
                 { skill: "Vue", value: "1" },
+                { skill: "Nuxt", value: "1" },
+                { skill: "JavaScript", value: "1" },
+                
             ],
             qualifications: [
                 { name: "ITパスポート" },
