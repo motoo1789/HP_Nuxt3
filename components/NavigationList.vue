@@ -5,7 +5,7 @@
                 :key="sidelist.titleJP" 
                 prepend-icon=sidelist.icon
             >
-                <NuxtLink :to="sidelist.path">
+                <NuxtLink :to="sidelist.path" class="link-style">
                     <v-list-item-icon>
                         <v-icon > {{ sidelist.icon }}</v-icon>
                     </v-list-item-icon>
@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+
 
 	const sidelists = [
 		{titleJP: "ホーム", titleENG: "Home", path: "/",  icon:"mdi-home-outline"},

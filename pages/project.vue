@@ -18,7 +18,7 @@
                 <v-col cols="7">
                     <v-row align="center">
                         <v-col cols="11">
-                            <v-card-title > {{ project.title }} </v-card-title>
+                            <v-card-title class=""> {{ project.title }} </v-card-title>
                         </v-col>
                         <v-cols cols="1">
                             <v-icon
@@ -47,7 +47,7 @@
                             <div class="text-center">
                                 <v-btn 
                                     rounded="lg"
-                                    color="infoBlue"
+                                    color="light-blue-accent-3"
                                     @click.stop="openDialogProjectDetail(project)"
                                 >
                                     詳細
@@ -101,7 +101,7 @@
                                             <v-spacer></v-spacer>
                                             <v-col cols="2" >
                                                 <v-btn
-                                                    color="blue darken-1"
+                                                    color="light-blue-accent-3"
                                                     :rounded=true
                                                     @click="jumpGithubPage(showDialogProject.url)"
                                                 >
@@ -114,7 +114,7 @@
                                             </v-col>
                                             <v-col cols="2" >   
                                                 <v-btn
-                                                    color="blue darken-1"
+                                                    color="light-blue-accent-3"
                                                     :rounded=true
                                                     @click="closeDialogProjectDetail"
                                                 >

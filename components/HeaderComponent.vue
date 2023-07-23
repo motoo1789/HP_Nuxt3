@@ -1,14 +1,14 @@
 <template>
     <div>
         <header>
-            <v-app-bar :clipped-left="true" app>
+            <v-app-bar color="blue-lighten-1" :clipped-left="true" app >
                 <template v-slot:prepend>
                     <v-app-bar-nav-icon @click.stop=show class="hidden-lg-and-up"></v-app-bar-nav-icon>
                 </template>
 
                 <v-spacer />
-                <NuxtLink :to="`/`">
-                    <v-app-bar-title class="text-center" to="/index">{{ title }}</v-app-bar-title>
+                <NuxtLink :to="`/`" class="link-style-home">
+                    <v-app-bar-title class="text-center text-h5" to="/index">{{ title }}</v-app-bar-title>
                 </NuxtLink>
                 <v-spacer />
             </v-app-bar>     

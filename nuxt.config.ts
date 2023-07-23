@@ -5,7 +5,12 @@ export default defineNuxtConfig({
     },
 
   ssr: false,
-  css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.css"],
+  css: [
+    "vuetify/styles", 
+    "@mdi/font/css/materialdesignicons.css",
+    '~/assets/css/font.css',
+    '~/assets/css/card.css',
+  ],
 
   build: {
     transpile: ["vuetify"],
