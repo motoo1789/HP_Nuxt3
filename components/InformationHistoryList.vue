@@ -28,7 +28,6 @@
 
 <script setup lang="ts">
 
-// const { informationhisotory } = useInformationHisotry();
 const { parseUpdateInformation } = getUpdateInformation();
 const informationhisotory = await parseUpdateInformation();
 console.log(informationhisotory.length)
