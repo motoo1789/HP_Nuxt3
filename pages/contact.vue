@@ -63,9 +63,9 @@ const formData = new FormData()
 				メールアドレスを正しく入力してください！
 			</v-alert>
 			<v-text-field
-				v-model="email"
 				label="メールアドレス"
 				name="email"
+				v-model="email"
 			></v-text-field>
 			
 
