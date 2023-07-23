@@ -14,18 +14,27 @@
                 />
             </v-col>
 
-            <v-col class="green-b" cols="9">
-                <v-card-title class="color text-h5">
-                    名前 山崎 貴弘
-                </v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>
-                    <div> 小学生の頃にゲームが作りたくて工業高校情報科に進学。進学後プログラミングの面白さはゲーム作りだけではないと気づき、エンジニアになるため情報科の大学へ進学を決意。
-                        大学で勉強をしていく中でソフトウェアの作り方について知識をつけたいと考えソフトウェア工学を大学院まで研究していました。
-                        研究の影響もあり、将来はアーキテクトに強いエンジニアになります。
-                        とは言いながらも趣味を捨てきることができない人間で、ゲームやアニメ、ライトノベル、漫画など自分を形成してきた文化を大切にしていきながら仕事をしていきたいです。
-                    </div>
-                </v-card-text>
+            <v-col cols="9">
+                <v-row >
+                    <v-row>
+                        <v-col cols="12">
+                            <v-card-title class="color text-h5">
+                                名前 山崎 貴弘
+                            </v-card-title>
+                        </v-col>
+                        
+                    </v-row>
+                
+                    <v-divider></v-divider>
+                    <v-card-text>
+                        <div> 小学生の頃にゲームが作りたくて工業高校情報科に進学。進学後プログラミングの面白さはゲーム作りだけではないと気づき、エンジニアになるため情報科の大学へ進学を決意。
+                            大学で勉強をしていく中でソフトウェアの作り方について知識をつけたいと考えソフトウェア工学を大学院まで研究していました。
+                            研究の影響もあり、将来はアーキテクトに強いエンジニアになります。
+                            とは言いながらも趣味を捨てきることができない人間で、ゲームやアニメ、ライトノベル、漫画など自分を形成してきた文化を大切にしていきながら仕事をしていきたいです。
+                        </div>
+                    </v-card-text>
+                </v-row>
+                
             </v-col>
         </v-row>
     </v-card>
@@ -50,60 +59,43 @@
 
                 
                 <v-col  cols="9">
-                    <!-- <v-banner
-                        lines="one"
-                        icon="mdi-lock"
-                        color="deep-purple-accent-4"
-                        class="my-4"
-                    >
-                        <v-banner-text>
-                            <v-timeline class="my-2" side="end">
-                                <v-timeline-item  
-                                    v-for="history in histories"
-                                    :key="history.id"
-                                    dot-color="#82b0ff"
-                                >
-                                    {{ history.text }}
-                                    
-                                </v-timeline-item>
+    
+                    <v-row class="">
+                        <v-row>
+                            <v-col cols="12">
+                                <v-card-title class="color text-h5">
+                                    経歴
+                                </v-card-title>
+                            </v-col>
+                        </v-row>
+                        <v-divider></v-divider>
+                        <v-timeline class="my-1" side="end">
+                            <v-timeline-item  
+    
+                                v-for="history in histories"
+                                :key="history.id"
+                                dot-color="#42A5F5"
+                            >
+                                {{ history.text }}
                                 
-                                
-                            </v-timeline>
-                        </v-banner-text>                
-                    </v-banner> -->
-                    <v-row class="my-2">
-                        <v-col >
-                            <v-card-title class="color text-h5">
-                                経歴
-                            </v-card-title>
-
-                            <v-divider></v-divider>
-                            <v-timeline class="my-2" side="end">
-                                <v-timeline-item  
-       
-                                    v-for="history in histories"
-                                    :key="history.id"
-                                    dot-color="#82b0ff"
-                                >
-                                    {{ history.text }}
-                                    
-                                </v-timeline-item>
-                            </v-timeline>
-                        </v-col>
-                        
+                            </v-timeline-item>
+                        </v-timeline>
                     </v-row>
                     <v-row>
-                        <v-col >
-                            
-                            <v-card-title class="color text-h5">
-                                資格
-                            </v-card-title>
-                            <v-divider></v-divider>
-                            <v-list
-                                :items="qualifications"
-                                item-title="name"
-                            ></v-list>
-                        </v-col>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-card-title class="color text-h5">
+                                    資格
+                                </v-card-title>
+                            </v-col>
+                        </v-row>
+                        
+                        <v-divider></v-divider>
+                        <v-list
+                            :items="qualifications"
+                            item-title="name"
+                        ></v-list>
+
                     </v-row>
                 </v-col>
                     
@@ -127,41 +119,48 @@
                 </v-col>
 
                 <v-col class="green-b" cols="9">
-                    <v-card-title class="color text-h5">
-                                発表
-                            </v-card-title>
-                    <v-divider></v-divider>
-                    <v-table>
-                        <thead>
-                        <tr>
-                            <th class="text-left">
-                            日付
-                            </th>
-                            <th class="text-left">
-                            タイトル
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                v-for="presentation in presentations"
-                                :key="presentation.name"
-                            >
-                                <td>{{ presentation.date }}</td>
-                                <!-- <component 
-                                    :is="isExternalLink(presentation.url) ? 'a' : 'nuxt-link'"
-                                    :href="isExternalLink(presentation.url) ? presentation.url : ''"
-                                    :to="isExternalLink(presentation.url) ? '' : ''" 
-                                >
-                                    <td>{{ presentation.title }}</td>
-
-                                </component> -->
-                                <td>
-                                    <a :href="presentation.url">{{ presentation.title }}</a>
-                                </td>
+                    <v-row class="">
+                        <v-row>
+                            <v-col cols="12">
+                                <v-card-title class="color text-h5">
+                                    発表
+                                </v-card-title>
+                            </v-col>
+                        </v-row>
+                
+                        <v-divider></v-divider>
+                        <v-table>
+                            <thead>
+                            <tr>
+                                <th class="text-left">
+                                日付
+                                </th>
+                                <th class="text-left">
+                                タイトル
+                                </th>
                             </tr>
-                        </tbody>
-                    </v-table>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="presentation in presentations"
+                                    :key="presentation.name"
+                                >
+                                    <td>{{ presentation.date }}</td>
+                                    <!-- <component 
+                                        :is="isExternalLink(presentation.url) ? 'a' : 'nuxt-link'"
+                                        :href="isExternalLink(presentation.url) ? presentation.url : ''"
+                                        :to="isExternalLink(presentation.url) ? '' : ''" 
+                                    >
+                                        <td>{{ presentation.title }}</td>
+
+                                    </component> -->
+                                    <td>
+                                        <a :href="presentation.url">{{ presentation.title }}</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </v-table>
+                    </v-row>
                 </v-col>
             </v-row>
         </v-container>
@@ -181,26 +180,20 @@
                 </v-col>
 
                 <v-col class="green-b" cols="9">
-                    <v-card-title class="color text-h5">
-                                スキル（自己評価）
-                            </v-card-title>
-                    <v-divider></v-divider>
-                    <!-- <div 
-                        v-for="(rating, key) in ratings"
-                        :key="key"
-                        class="blue-b rating-container"
-                    > -->
-                        <!-- <div ckass="rating-label">{{ rating.skill }}</div>
-                        <v-rating
-                            :model-value="rating.value"
-                            readonly="true"
-                            color="#82b0ff"
-                            class="blue-b"
-                        >
-                        </v-rating> -->
+                    <v-row>
+                         <v-row>
+                            <v-col cols="12">
+                                <v-card-title class="color text-h5">
+                                    スキル（自己評価）
+                                </v-card-title>
+                            </v-col>
+                        </v-row>
+                    
+                        <v-divider></v-divider>
+                    
 
                         
-                        <v-row class="my-2">
+                        <v-row class="my-2 blue-b">
                             <v-col  
                                 v-for="(rating, key) in ratings"
                                 :key="key"
@@ -225,6 +218,7 @@
                                 </v-row>
                             </v-col>
                         </v-row>               
+                    </v-row>
                 </v-col>
             </v-row>
         </v-container>
