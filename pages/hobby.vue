@@ -132,44 +132,13 @@
         return obj.hasOwnProperty('anime')
     })
 
-    
-
     const animes = hobbyArray[0].anime;
     const comics = hobbyArray[0].book.comic
     const novels = hobbyArray[0].book.novel
 
 
     let tab = ref(1)
-    // const { data: animes } = await useFetch('/api/anime');
-    // const { data: comics } = await useFetch('/api/comic');
-    // const { data: novels } = await useFetch('/api/novel');
-
-    // const tmp = { 
-    //     a : [ "色づく世界の明日から", 'アイドルマスター', 'あんハピ' ],
-    //     ka: [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
-    //     sa: [ '咲', 'サクラクエスト' ],
-    //     ta: [ 'デートアライブ', 'ダンまち' ],
-    //     na: [ '91', 'ノゲノラ' ],
-    //     ha: [ '花咲くいろは', 'ハナヤマタ' ],
-    //     ma: [ '魔法科高校の劣等生', 'まどマギ' ],
-    //     ya: [ 'よう実', 'やがて君になる' ],
-    //     ra: [ 'リトルバスターズ', 'ログ・ホライズン' ],
-    //     wa: []
-    // }  
-
-    // const tmp2 = { 
-    //     "a" : [ '色づく世界の明日から', 'アイドルマスター', 'あんハピ' ],
-    //     "ka": [ 'キャプテンアース', '刀語', '神様のメモ帳' ],
-    //     "sa": [ '咲', 'サクラクエスト' ],
-    //     "ta": [ 'デートアライブ', 'ダンまち' ],
-    //     "na": [ '91', 'ノゲノラ' ],
-    //     "ha": [ '花咲くいろは', 'ハナヤマタ' ],
-    //     "ma": [ '魔法科高校の劣等生', 'まどマギ' ],
-    //     "ya": [ 'よう実', 'やがて君になる' ],
-    //     "ra": [ 'リトルバスターズ', 'ログ・ホライズン' ],
-    //     "wa": []
-    // }  
-
+    
     const tabitems = {
         a:"あ",
         ka:"か",
@@ -186,7 +155,7 @@
 </script>
 
 <style>
-.blue-b{
-    border: 1px blue solid
-}
+    .blue-b{
+        border: 1px blue solid
+    }
 </style>
