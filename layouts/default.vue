@@ -2,7 +2,7 @@
 
     <v-app>
       <HeaderComponent />
-      <LeftNavigation />
+      <LeftNavigation /> 
       <v-main>
         <v-container>
         <slot />
