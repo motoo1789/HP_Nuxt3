@@ -14,22 +14,7 @@
             </v-col>
 
             <v-col class="green-b" cols="7">
-                あくまで自己評価です
-                <!-- <div 
-                    v-for="(rating, key) in ratings"
-                    :key="key"
-                    class="blue-b rating-container"
-                > -->
-                    <!-- <div ckass="rating-label">{{ rating.skill }}</div>
-                    <v-rating
-                        :model-value="rating.value"
-                        readonly="true"
-                        color="#82b0ff"
-                        class="blue-b"
-                    >
-                    </v-rating> -->
-
-                    
+                あくまで自己評価です                    
                     <v-row>
                         <v-col  
                             v-for="(rating, key) in ratings"
@@ -114,9 +99,6 @@ export default {
     },
     created() {
         this.maxsize = this.calcSkilTextSize()
-
-        // this.styleSize.width = this.maxsize 直接指定する場合はオブジェクトの中まで指定する
-        // this.calcSkilTextSize();
     },
     methods :{
         calcSkilTextSize() {
