@@ -10,11 +10,11 @@
 
     <v-card
         class="mx-auto"
-        shaped="true"
+        shaped="true" 
     >
-        <v-row class="blue-b" >
-            <v-col class="green-b" cols="12" >
-                <v-card-title>
+        <v-row  >
+            <v-col  cols="12" >
+                <v-card-title  class="color text-h5">
                     ページ概要
                 </v-card-title>
                 <v-divider></v-divider>

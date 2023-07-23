@@ -6,7 +6,7 @@
 			elevation="0"
 		>
 
-			<v-icon size="100px" color="blue-lighten-2 " >mdi-check-circle-outline</v-icon>
+			<v-icon size="100px" color="red-darken-1" >mdi-check-circle-outline</v-icon>
 
 			<v-card-title>
 				お問い合わせに失敗しました

@@ -92,7 +92,7 @@ const formData = new FormData()
 			</v-textarea>
 
 			<div class="text-center justify-center">
-				<v-btn class="me-4" type="submit">submit</v-btn>
+				<v-btn class="me-4" type="submit" color="light-blue-accent-3">送信</v-btn>
 			</div>
     	</form>
   	</div>

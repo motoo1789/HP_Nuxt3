@@ -6,7 +6,7 @@
     >
         <v-row class="blue-b" >
             <v-col class="green-b" >
-                <v-card-title>
+                <v-card-title class="color text-h5">
                   新着情報
                 </v-card-title>
                 <v-divider></v-divider>
