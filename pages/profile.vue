@@ -4,11 +4,11 @@
             <v-card class="mx-auto" shaped="true">
                 <v-container>
                     <v-row>
-                        <v-col class="red-b" cols="3">
-                            <v-img src="/images/profile_face.png" height="200px" />
+                        <v-col class="hidden-md-and-down"  cols=3>
+                            <v-img class="" src="/images/profile_face.png" height="200px" />
                         </v-col>
 
-                        <v-col cols="9">
+                        <v-col>
                             <v-row>
                                 <v-col cols="12">
                                     <v-card-title class="color text-h5">
@@ -34,15 +34,14 @@
             <v-card class="mx-auto">
                 <v-container>
                     <v-row align="center">
-                        <v-col cols="3">
-
+                        <v-col class="hidden-md-and-down" cols="3">
                             <v-layout>
                                 <v-img class="mx-auto " src="images/career.png" height="200px"></v-img>
                             </v-layout>
 
                         </v-col>
 
-                        <v-col cols="9">
+                        <v-col>
                             <v-row>
                                 <v-col cols="12">
                                     <v-card-title class="color text-h5">
@@ -78,12 +77,11 @@
             <v-card class="mx-auto">
                 <v-container>
                     <v-row align="center">
-                        <v-col cols="3">
+                        <v-col class="hidden-md-and-down" cols="3">
                             <v-img src="images/presentation.png" height="200px"></v-img>
                         </v-col>
 
-                        <v-col class="green-b" cols="9">
-
+                        <v-col>
                             <v-row>
                                 <v-col cols="12">
                                     <v-card-title class="color text-h5">
@@ -123,11 +121,11 @@
             <v-card class="mx-auto" shaped="true">
                 <v-container>
                     <v-row align="center">
-                        <v-col class="red-b" cols="3">
+                        <v-col class="hidden-md-and-down" cols="3">
                             <v-img src="images/skill.png" height="200px"></v-img>
                         </v-col>
 
-                        <v-col class="green-b" cols="9">
+                        <v-col>
 
                             <v-row>
                                 <v-col cols="12">
@@ -169,6 +167,8 @@ export default {
     },
     data() {
         return {
+            colImg: 3,
+            colContext: 9,
             img1: ref(),
 
             //img: require('~/assets/img/profile_face.png'),
