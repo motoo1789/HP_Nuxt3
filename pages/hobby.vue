@@ -28,6 +28,7 @@
                                 md="6"
                                 sm="6"
                                 xs="12"
+                                cols="12"
                             >
                                 {{ animetitle }}
                             </v-col>
@@ -51,8 +52,9 @@
                     <v-col v-for="(comictitle, comickey) in comics" :key="comickey"
                         lg="4"    
                         md="6"
-                        sm="12"
+                        sm="6"
                         xs="12"
+                        cols="12"
                     >
                         {{ comictitle }}
                     </v-col>
@@ -70,8 +72,9 @@
                     <v-col v-for="(lightnoveltitle, lightnovelkey) in novels" :key="lightnovelkey"
                         lg="4"    
                         md="6"
-                        sm="12"
+                        sm="6"
                         xs="12"
+                        cols="12"
                     >
                         {{ lightnoveltitle }}
                         <!-- <v-list :items="animetitles"></v-list> -->
