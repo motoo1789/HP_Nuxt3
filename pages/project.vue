@@ -8,14 +8,14 @@
     >
         <v-container>
             <v-row justify="start">
-                <v-col  cols="5"> 
+                <v-col  cols="4"> 
                     <v-img
                         :src="project.img"
                         height="200px"
                     ></v-img>
                 </v-col>
 
-                <v-col cols="7">
+                <v-col cols="8">
                     <v-row align="center">
                         <v-col cols="11">
                             <v-card-title class=""> {{ project.title }} </v-card-title>
