@@ -17,10 +17,10 @@
 
                 <v-col cols="8">
                     <v-row align="center">
-                        <v-col cols="11">
+                        <v-col cols="10">
                             <v-card-title class=""> {{ project.title }} </v-card-title>
                         </v-col>
-                        <v-cols cols="1">
+                        <v-cols >
                             <v-icon
                                 large
                                 @click="jumpGithubPage(project.url)"
@@ -42,7 +42,7 @@
                     <v-row>
                         <v-col cols="9">
                         </v-col>
-                        <v-col cols="3" class="my-2">
+                        <v-col  class="my-2">
 
                             <div class="text-center">
                                 <v-btn 
