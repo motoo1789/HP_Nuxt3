@@ -18,26 +18,24 @@
 			elevation="0"
 		>
 
-			<v-icon size="100px" color="blue-lighten-2 " >mdi-check-circle-outline</v-icon>
+			<v-icon size="100px" color="light-blue-accent-3 " >mdi-check-circle-outline</v-icon>
 
 			<v-card-title>
 				お問い合わせが完了しました
 			</v-card-title>
+			<v-card-text>
+				メールアドレスに確認メールを送信しました
+			</v-card-text>
 
-			<v-card-actions class="justify-center">
-				<NuxtLink :to="'/'">
-					<v-btn
-						
-						color="blue-lighten-1"
-						size="x-large"
-					>
-						ホームへ
-					</v-btn>
-				</NuxtLink>
-
-			</v-card-actions>
-
-			
+			<NuxtLink :to="'/'">
+				<v-btn
+					:rounded=true
+					color="light-blue-accent-3"
+					size="large"
+				>
+					ホーム
+				</v-btn>
+			</NuxtLink>
 		</v-card>
   	</div>
 </template>
