@@ -92,7 +92,7 @@
 
                                     <v-dialog v-model="dialog" width="auto">
                                         <v-card class="mx-auto " :max-width="750">
-                                            <video controls class="ma-2 movie-size-parent">
+                                            <video controls class="ma-2 video-size">
                                                 <source :src='showDialogProject.movie' type="video/mp4">
                                             </video>
                                             <v-card-text>
@@ -147,23 +147,24 @@
                                                         </v-tooltip>
                                                     </div> -->
   
-                                                        <v-btn 
-                                                            color="light-blue-accent-3" 
-                                                            :rounded=true 
-                                                            class="github-button"
-                                                            v-bind="props"
-                                                            v-if="typeof showDialogProject.url === 'undefined'"
+                                                    <v-btn 
+                                                        
+                                                        color="light-blue-accent-3" 
+                                                        :rounded=true 
+                                                        class="github-button"
+                                                        v-bind="props"
+                                                        v-if="typeof showDialogProject.url === 'undefined'"
+                                                    >
+                                                        <v-icon  large >
+                                                            mdi-github
+                                                        </v-icon>
+                                                        <v-tooltip
+                                                            activator="parent"
+                                                            location="top"
                                                         >
-                                                            <v-icon  large >
-                                                                mdi-github
-                                                            </v-icon>
-                                                            <v-tooltip
-                                                                activator="parent"
-                                                                location="top"
-                                                            >
-                                                                Githubはありません
-                                                            </v-tooltip>
-                                                        </v-btn> 
+                                                            Githubはありません
+                                                        </v-tooltip>
+                                                    </v-btn> 
  
                                                     
                                             
@@ -183,8 +184,11 @@
 
                                                 </v-col>
                                                 <v-col cols="2">
-                                                    <v-btn color="light-blue-accent-3" :rounded=true
-                                                        @click="closeDialogProjectDetail">
+                                                    <v-btn 
+                                                        color="light-blue-accent-3" 
+                                                        :rounded=true
+                                                        @click="closeDialogProjectDetail"
+                                                    >
                                                         閉じる
                                                     </v-btn>
                                                 </v-col>
@@ -293,5 +297,10 @@ const openDialogProjectDetail = (project: any) => {
 
 .github-button {
     opacity: 0.2;
+}
+
+.video-size {
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>
