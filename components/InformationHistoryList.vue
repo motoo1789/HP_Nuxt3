@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 
-const { parseUpdateInformation } = getUpdateInformation();
+const { parseUpdateInformation } = useUpdateInformation();
 const informationhisotory = await parseUpdateInformation();
 console.log(informationhisotory.length)
 
