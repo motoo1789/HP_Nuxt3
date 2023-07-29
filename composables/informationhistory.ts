@@ -1,4 +1,4 @@
-export const getCMSContents = async () => {
+export const useCMSContents = async () => {
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
     
@@ -7,16 +7,16 @@ export const getCMSContents = async () => {
     return parseContents
 };
 
-export const getCMSContent = () => {
-    const cmsComtents = useState("cmsComtents" , () => getCMSContents() );
+export const useCMSContent = () => {
+    const cmsComtents = useState("cmsComtents" , () => useCMSContents() );
     return { 
         cmsComtents: readonly(cmsComtents),
     }
 }
 
-export const getUpdateInformation = () => { 
+export const useUpdateInformation = () => { 
     const parseUpdateInformation = async () => {
-        const { cmsComtents } = await getCMSContent()
+        const { cmsComtents } = await useCMSContent()
 
         const contentsValueObject = await cmsComtents.value;
         console.log(contentsValueObject)
@@ -54,7 +54,7 @@ export const getUpdateInformation = () => {
     }
 }
 
-export const updatePage = (currentpage: Ref<number>) => {
+export const useUpdatePage = (currentpage: Ref<number>) => {
   
     return (nextpage: number) => (currentpage.value = nextpage);
 }

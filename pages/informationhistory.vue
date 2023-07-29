@@ -29,7 +29,7 @@
 const { currentpage, updatePage } =  useCurrentPage();
 // const { informationhisotory } =  useInformationHisotry();
 //const { getContent } =  getCMSContent();
-const { parseUpdateInformation } = getUpdateInformation();
+const { parseUpdateInformation } = useUpdateInformation();
 
 const  informationhisotory  =  await parseUpdateInformation();
 //console.log(informationhisotory.length)
