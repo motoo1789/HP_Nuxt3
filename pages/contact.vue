@@ -48,6 +48,8 @@ useHead({
 })
 
 import { useForm } from 'vee-validate'
+import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
+
 import * as yup from "yup"
 
 const schema = yup.object({
@@ -60,8 +62,23 @@ const { useFieldModel, handleSubmit, errors } = useForm({
 })
 const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
+ const { vueApp } = useNuxtApp()
+ vueApp.use(VueReCaptcha, {
+   siteKey: '6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb',
+   loaderOptions: {
+     renderParameters: {
+       hl: 'ja'
+     }
+   }
+ })
+ const recaptchaInstance = useReCaptcha()
+
+
 const onSubmit = handleSubmit(async (values) => {
 
+	await recaptchaInstance?.recaptchaLoaded()
+	const token = await recaptchaInstance?.executeRecaptcha('submit')
+	values.googleReCaptchaToken = token
 
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
