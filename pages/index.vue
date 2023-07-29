@@ -12,7 +12,7 @@
         class="mx-auto"
         shaped="true" 
     >
-        <v-row  >
+        <v-row >
             <v-col  cols="12" >
                 <v-card-title  class="color text-h5">
                     ページ概要
