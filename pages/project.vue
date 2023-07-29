@@ -25,47 +25,12 @@
                                         Githubはありません
                                     </v-tooltip>
                                 </div>
-                                
-
-                                <!-- <v-tooltip 
-                                    text="Githubはありません" 
-                                    v-if="typeof project.url === 'undefined'"
-                                    location="start"
-                                >
-                                    <template v-slot:activator="{ props }">
-                                        <v-icon v-bind="props" large >
-                                            mdi-github
-                                        </v-icon>
-                                    </template>
-                                </v-tooltip> -->
-
-                                <!-- <v-icon  large v-if="typeof project.url === 'undefined'">
-                                    mdi-github
-                                    <v-tooltip
-                                        activator="parent"
-                                        location="start"
-                                    >
-                                        Githubはありません
-                                    </v-tooltip>
-                                </v-icon>
-                                 -->
 
                                 
                                 <v-icon v-else large  @click="jumpGithubPage(project.url)">
                                     mdi-github
                                 </v-icon>
-                                <!-- <v-icon v-else
-                                large
-                                
-                            >
-                                <v-tooltip
-                                    activator="parent"
-                                    location="start"
-                                >
-                                    Githubはありません
-                                </v-tooltip>
-                                    mdi-github                       
-                            </v-icon> -->
+
 
                             </v-cols>
                         </v-row>
@@ -134,18 +99,6 @@
                                             <v-row>
                                                 <v-spacer></v-spacer>
                                                 <v-col cols="2">
-
-                                                    <!-- <div v-if="typeof project.url === 'undefined'">
-                                                        <v-icon v-bind="props" large >
-                                                                mdi-github
-                                                        </v-icon>
-                                                        <v-tooltip
-                                                            activator="parent"
-                                                            location="start"
-                                                        >
-                                                            Githubはありません
-                                                        </v-tooltip>
-                                                    </div> -->
   
                                                     <v-btn 
                                                         
