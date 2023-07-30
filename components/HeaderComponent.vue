@@ -11,6 +11,14 @@
                     <NuxtLink :to="`/`" class="link-style-home ">{{ title }}</NuxtLink>
                 </v-app-bar-title>
 
+                <!-- <v-hover>
+                    <template v-slot:default="{ isHovering, props }"> -->
+                        
+                    <!-- </template>
+                </v-hover> -->
+                <v-btn class="text-h6">
+                    <NuxtLink :to="`/login`" class="link-style-home ">Sign in</NuxtLink>
+                </v-btn>
                 
             </v-app-bar>     
 
@@ -43,4 +51,6 @@
     .blue-b{
         border: 1px blue solid
     }
+
+
   </style>
