@@ -1,42 +1,17 @@
 
 <template>
-	<div>
-		<v-container>
-			<v-row>
-				<v-col>
-					<p class="text-center　text-h6">バグ報告・その他問い合わせ
-					</p>
-				</v-col>
+	<div class="align-center justify-center" style="height: 100vh">
+        <v-sheet width="400" class="mx-auto">
+            <v-form fast-fail @submit.prevent="login">
+                <v-text-field  variant="underlined" v-model="username" label="User Name"></v-text-field>
 
-			</v-row>
-			<v-row>
-				<v-col>
-					<form @submit="onSubmit">
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.email"
-							id="error-email-required" aria-live="assertive">
-							メールアドレスを正しく入力してください！
-						</v-alert>
-						<v-text-field label="メールアドレス" name="email" v-model="email"></v-text-field>
+                <v-text-field variant="underlined" v-model="password" label="Password"></v-text-field>
+                
+                <v-btn type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2">Sign in</v-btn>
 
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
-							aria-live="assertive">
-							名前が未入力です！
-						</v-alert>
-						<v-text-field label="名前" name="name" v-model="name"></v-text-field>
-
-						<v-textarea label="本文" name="message" v-model="message">
-						</v-textarea>
-
-						<div class="text-center justify-center">
-							<v-btn class="me-4" type="submit" color="light-blue-accent-3">送信</v-btn>
-						</div>
-					</form>
-				</v-col>
-
-			</v-row>
-		</v-container>
-	</div>
+            </v-form>
+        </v-sheet>
+    </div>
 </template>
 
 <script lang="ts" setup>
