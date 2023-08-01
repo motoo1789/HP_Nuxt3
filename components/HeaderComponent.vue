@@ -16,8 +16,16 @@
                         
                     <!-- </template>
                 </v-hover> -->
-                <v-btn class="text-h6">
-                    <NuxtLink :to="`/login`" class="link-style-home ">Sign in</NuxtLink>
+                <v-alert>{{ data?.user?.email }}</v-alert>
+                <p> </p>
+                <!-- <v-btn class="text-h6" >
+                    <NuxtLink @click="signOut()" class="link-style-home ">サインアウト本命</NuxtLink>
+                </v-btn> -->
+                <v-btn class="text-h6" v-if="typeof data?.user?.email === 'undefined'">
+                    <NuxtLink :to="`/login`" class="link-style-home ">サインイン</NuxtLink>
+                </v-btn>
+                <v-btn class="text-h6" v-else>
+                    <NuxtLink @click="signOut()"  class="link-style-home ">サインアウト</NuxtLink>
                 </v-btn>
                 
             </v-app-bar>     
@@ -36,6 +44,7 @@
   
 <script setup lang="ts">
     import { ref } from "vue";
+    const  { signOut, data } = useAuth();
 
     const title = "Motoo Lab";
     let showDrawer = ref(false);
