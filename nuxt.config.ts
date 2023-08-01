@@ -29,7 +29,11 @@ export default defineNuxtConfig({
     
   ],
 
-  modules: ["@nuxtjs/prismic"],
+  modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
+
+  auth: {
+    enableGlobalAppMiddleware: true,
+  },
 
   prismic: {
     endpoint: "hp-nuxt",
