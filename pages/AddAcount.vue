@@ -76,7 +76,9 @@ const addAccount = async () => {
 </script>
 
 <style scoped>
+
 .blue-b {
 	border: 1px blue solid
 }
+
 </style>
