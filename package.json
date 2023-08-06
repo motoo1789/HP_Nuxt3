@@ -25,8 +25,10 @@
     "vuetify": "^3.1.4"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.3",
+    "bcrypt": "^5.1.0",
     "contentful": "^10.3.0",
     "vee-validate": "^4.10.7",
     "vue": "^3.2.36",
