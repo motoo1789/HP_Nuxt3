@@ -23,21 +23,49 @@ const name = ref("");
 const email = ref("");
 const password = ref("");
 
-const rules = (value : string) => {
-    if(value) 
-    {
-        return true;
-    }
+const rules = [
+    (value:string) => {
+        if(value) 
+        {
+            return true;
+        }
 
-    return "入力してください"
+        return "入力してください"
+    }
+];
+
+interface AddUser {
+    name: string,
+    email: string,
+    password: string
 }
 
-
 const addAccount = async () => {
-    const formData = new FormData();
-    formData.append("name", this.name);
-    formData.append("email", this.email);
-    formData.append("password", this.password);
+    console.log(name.value)
+    console.log(email.value)
+    console.log(password.value)
+
+    const formData: AddUser = {
+        name: name.value,
+        email: email.value,
+        password: password.value
+    }
+
+
+    const data = await useFetch('/api/account/addUser', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json", // JSON形式でデータを送信するためのヘッダー
+        },
+        params: {
+            "name": name.value,
+            "email": email.value,
+            "password": password.value
+        },
+        body: formData,// formDataをJSON文字列に変換して送信
+    });
+
+    console.log(data);
 }
 
 
