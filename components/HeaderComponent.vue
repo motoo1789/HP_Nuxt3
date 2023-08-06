@@ -25,7 +25,7 @@
                     <NuxtLink :to="`/login`" class="link-style-home ">サインイン</NuxtLink>
                 </v-btn>
                 <v-btn class="text-h6" v-else>
-                    <NuxtLink @click="signOut()"  class="link-style-home ">サインアウト</NuxtLink>
+                    <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">サインアウト</NuxtLink>
                 </v-btn>
                 
             </v-app-bar>     
