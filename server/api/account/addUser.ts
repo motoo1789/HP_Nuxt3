@@ -1,4 +1,9 @@
 import bcrypt from "bcrypt";
+import { sql } from '@vercel/postgres';
+ 
+function getRandomInt(max:number) {
+    return Math.floor(Math.random() * max);
+}
 
 export default defineEventHandler(async (event) => {
     console.log("サーバー側処理：addUser")
@@ -9,8 +14,11 @@ export default defineEventHandler(async (event) => {
 
         console.log(body)
 
+        const name = body.name
         const password = body.password;
-        const saltRounds = 10
+        const email = body.email;
+
+        const saltRounds = getRandomInt(10) + 1
 
         const salt = bcrypt.genSaltSync(saltRounds)
         console.log('salt: ', salt)
@@ -20,6 +28,21 @@ export default defineEventHandler(async (event) => {
         
         console.log('data1: ', bcrypt.compareSync(password, hash))
         console.log('data2: ', bcrypt.compareSync("dte", hash))
+
+
+        const { rows, fields } = await sql`SELECT COUNT(*) FROM users`;
+        console.log(rows)
+        console.log(fields);
+        const lines:number = Number(rows[0].count) + 1;
+
+        await sql`INSERT INTO users (user_id,username,password,email,is_active) 
+                                    VALUES ( ${lines}, ${name},${hash},${email},false);`;
+        
+        await sql`INSERT INTO password_security_info (user_id,password_hash,password_salt) 
+                VALUES (${lines},${hash},${salt});`;
+	
+
+        
 
         return "success";
     }
