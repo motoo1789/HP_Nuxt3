@@ -4,6 +4,7 @@
         <v-sheet width="400" class="mx-auto">
             <pre>{{ status }}</pre>
             <pre>{{ data }}</pre>
+            <pre>{{ alert }}</pre>
             <v-form fast-fail @submit.prevent="loginMailPass">
                 <v-text-field  variant="underlined" v-model="email" label="User Mail"></v-text-field>
 
@@ -25,14 +26,23 @@
 </template>
 
 <script lang="ts" setup>
+import { SignInFunc } from "@sidebase/nuxt-auth/dist/runtime/types";
+
+
 const { status, data, signIn } = useAuth()
 
 const email = ref("");
 const password = ref("");
+let alert = ref("初期値");
 
 const loginMailPass = async () => {
-  await signIn('credentials', { email: email.value, password: password.value })
+  await signIn( 'credentials', { email: email.value, password: password.value, redirect: false });
+  // console.log(result);
+  
+  // alert = ref(message);
 }
+
+
 
 definePageMeta( {
 	auth: {
