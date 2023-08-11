@@ -32,7 +32,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
 
   auth: {
-    enableGlobalAppMiddleware: true,
+    enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
     
   },
 
