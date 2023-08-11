@@ -15,19 +15,21 @@
             </v-form>
         </v-sheet>
 
-		<v-btn @click="signIn('github')" type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2">Githubでログイン</v-btn>
+		<v-btn @click="signIn()" type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2">Githubでログイン</v-btn>
 
-    <NuxtLink :to="`/AddAcount`" class="link-style-home ">
+    <!-- <NuxtLink :to="`/AddAcount`" class="link-style-home ">
       <v-btn  type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2 " >
         アカウント登録
       </v-btn>
-    </NuxtLink>
+    </NuxtLink> -->
     </div>
 </template>
 
 <script lang="ts" setup>
 
-const { status, data, signIn } = useAuth()
+
+
+const { status, data, signOut, signIn } = useAuth()
 
 const email = ref("");
 const password = ref("");

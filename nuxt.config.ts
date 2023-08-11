@@ -33,6 +33,14 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: true,
+    
+  },
+
+  redirect: {
+    login: '/login',
+    logout: '/',
+    callback: false,
+    home: '/'
   },
 
   prismic: {
