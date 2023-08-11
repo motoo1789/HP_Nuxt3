@@ -11,16 +11,9 @@
                     <NuxtLink :to="`/`" class="link-style-home ">{{ title }}</NuxtLink>
                 </v-app-bar-title>
 
-                <!-- <v-hover>
-                    <template v-slot:default="{ isHovering, props }"> -->
-                        
-                    <!-- </template>
-                </v-hover> -->
+
                 <v-alert>{{ data?.user?.email }}</v-alert>
                 <p> </p>
-                <!-- <v-btn class="text-h6" >
-                    <NuxtLink @click="signOut()" class="link-style-home ">サインアウト本命</NuxtLink>
-                </v-btn> -->
                 <v-btn class="text-h6" v-if="status === 'authenticated'">
                     <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">サインアウト</NuxtLink>
                 </v-btn>
