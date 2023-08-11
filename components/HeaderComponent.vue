@@ -21,12 +21,13 @@
                 <!-- <v-btn class="text-h6" >
                     <NuxtLink @click="signOut()" class="link-style-home ">サインアウト本命</NuxtLink>
                 </v-btn> -->
-                <v-btn class="text-h6" v-if="typeof data?.user?.email === 'undefined'">
-                    <NuxtLink :to="`/login`" class="link-style-home ">サインイン</NuxtLink>
-                </v-btn>
-                <v-btn class="text-h6" v-else>
+                <v-btn class="text-h6" v-if="status === 'authenticated'">
                     <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">サインアウト</NuxtLink>
                 </v-btn>
+                <v-btn class="text-h6" v-else>
+                    <NuxtLink :to="`/login`" class="link-style-home ">サインイン</NuxtLink>
+                </v-btn>
+                
                 
             </v-app-bar>     
 
@@ -44,7 +45,7 @@
   
 <script setup lang="ts">
     import { ref } from "vue";
-    const  { signOut, data } = useAuth();
+    const  { signOut, data, status } = useAuth();
 
     const title = "Motoo Lab";
     let showDrawer = ref(false);
