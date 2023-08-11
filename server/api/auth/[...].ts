@@ -6,6 +6,9 @@ import bcrypt from "bcrypt";
 import { sql } from '@vercel/postgres';
 
 export default NuxtAuthHandler({
+	pages: {
+		signIn: "/login", // 用意したログインページに設定
+	},
     providers: [
         //@ts-expect-error
         GithubProvider.default({
@@ -13,6 +16,11 @@ export default NuxtAuthHandler({
             clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         }),
         CredentialsProvider.default({
+			name: 'Credentials',
+			credentials: {
+				username: { label: 'Username', type: 'text', placeholder: '(hint: jsmith)' },
+				password: { label: 'Password', type: 'password', placeholder: '(hint: hunter2)' }
+			},
 			async authorize(credentials: { email: string, password: string }) {
 
 				const dbUserId:string = await getEmailUser(credentials.email);
@@ -20,13 +28,8 @@ export default NuxtAuthHandler({
 				if(dbUserId === "No acount")
 				{
 					console.log("アカウントが存在しません");
-					return {
-						id: "id",
-						name: 'name',
-						username: 'username',
-						email: credentials.email,
-						message: "アカウントが存在しません"
-					}
+					
+					return null;
 				}
 
 				const correctPassword:boolean = await checkPassword(dbUserId, credentials.password);
@@ -38,27 +41,24 @@ export default NuxtAuthHandler({
 				}
 				else {
 					//console.error('Warning: Malicious login attempt registered, bad credentials provided');
-					return false
+					return null
 					
 				}
         	}
         })
-    ]
+    ],
+
 })
 
 const getEmailUser = async ( email:string ): Promise<string> => 
 {
 	const { rows, fields } = await sql`SELECT user_id FROM users WHERE email = ${email}`;
-	console.log("ここまではくるよね");
 	return rows[0]?.user_id ?? "No acount";
 }
 
 const checkPassword = async ( dbUserId:string, password:string ): Promise<boolean> => 
 {
-	console.log(`SELECT * FROM password_security_info WHERE usre_id = ${dbUserId}`)
 	const { rows, fields } = await sql`SELECT * FROM password_security_info where user_id = ${dbUserId}`;
-	console.log("sql後")
-
 	const hash:string = rows[0]?.password_hash ?? "no";
 	
 	return bcrypt.compareSync(password, hash);
