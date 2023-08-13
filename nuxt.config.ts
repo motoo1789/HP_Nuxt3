@@ -29,7 +29,19 @@ export default defineNuxtConfig({
     
   ],
 
-  modules: ["@nuxtjs/prismic"],
+  modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
+
+  auth: {
+    enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
+    
+  },
+
+  redirect: {
+    login: '/login',
+    logout: '/',
+    callback: false,
+    home: '/'
+  },
 
   prismic: {
     endpoint: "hp-nuxt",
