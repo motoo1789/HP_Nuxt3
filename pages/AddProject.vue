@@ -1,7 +1,7 @@
 
 <template>
 	<div>
-		<v-date-picker></v-date-picker>
+		
 		<v-container>
 			<v-row>
 				<v-col>
@@ -63,11 +63,32 @@
 							aria-live="assertive">
 							作成日時が未入力です！
 						</v-alert>
-						<VueDatePicker v-model="date"></VueDatePicker>
+						
+						<v-text-field
+							label="作成日時"
+							prepend-inner-icon="mdi-calendar-cursor"
+							variant="solo"
+							v-model="createdProjectDate"
+							@click="chooseDate()"
+						></v-text-field>
+
+						<v-dialog v-model="dateDialog" width="auto">
+							<v-defaults-provider >
+								<v-locale-provider locale="ja">
+									<v-date-picker v-model="createdProjectDate" format="yyyy-dd-mm" ></v-date-picker>
+								</v-locale-provider>
+							</v-defaults-provider>
+							
+
+							<v-btn 
+								color="light-blue-accent-3" 		
+								@click="closeDialog()"
+							>
+								閉じる
+							</v-btn>
+						</v-dialog>
 
 						
-
-
 
 						<div class="text-center justify-center">
 							<v-btn class="me-4" type="submit" color="light-blue-accent-3">送信</v-btn>
@@ -82,6 +103,7 @@
 
 <script lang="ts" setup>
 import { VDatePicker } from 'vuetify/labs/VDatePicker'
+import { locale } from "vuetify/locale"
 
 useHead({
 	title: 'Newt・Nuxtフォーム',
@@ -93,8 +115,30 @@ useHead({
 import { useForm } from 'vee-validate'
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 import { ref } from 'vue';
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+
+const dateDialog = ref(false);
+const createdProjectDate = ref()
+watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
+    // .valueは不要
+    console.log("old ", oldCreatedProjectDate) 
+    console.log("new ", newCreatedProjectDate)
+	createdProjectDate.value = <string> newCreatedProjectDate.replace('UTC', '');
+})
+
+const chooseDate = () => {
+	if(dateDialog.value === false)
+	{
+		dateDialog.value = true;
+	}
+}
+
+
+const closeDialog = () => {
+	if(dateDialog.value === true)
+	{
+		dateDialog.value = false;
+	}
+}
 
 const date = ref();
 
