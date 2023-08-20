@@ -65,7 +65,7 @@ const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
  const { vueApp } = useNuxtApp()
  vueApp.use(VueReCaptcha, {
-   siteKey: '6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb',
+   siteKey: "6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb",
    loaderOptions: {
      renderParameters: {
        hl: 'ja'
@@ -88,7 +88,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 
 	try {
-		const response = await fetch('https://motoolab.form.newt.so/v1/Ycl-scwxX', {
+		const response = await fetch(process.env.NEWT_URL!, {
 			method: 'POST',
 			body: formData,
 			headers: {
