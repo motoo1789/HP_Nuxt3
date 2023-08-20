@@ -13,83 +13,38 @@
 				<v-col>
 					
 					<form @submit="onSubmit">
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.email"
-							id="error-email-required" aria-live="assertive">
-							タイトルを正しく入力してください！
-						</v-alert>
-						<v-text-field label="タイトル" name="title" v-model="email"></v-text-field>
+						<!--タイトル-->
+					
 
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
+						<v-alert variant="text" type="warning" density="compact" v-if="errors.image" id="error-name-required"
 							aria-live="assertive">
-							名前が未入力です！
+							画像の選択がされていません！
 						</v-alert>
-						<v-text-field label="概要" name="abstract" v-model="name"></v-text-field>
+						<v-file-input
+							show-size
+							density="compact"
+							label="画像"
+							prepend-icon=""
+							prepend-inner-icon="mdi-camera"
+							name="image"
+							v-model="image"
+						></v-file-input>
 
-						<v-textarea label="本文" name="detail" v-model="message">
-						</v-textarea>
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
+						<!-- <v-alert variant="text" type="warning" density="compact" v-if="errors.movie" id="error-name-required"
 							aria-live="assertive">
-							フレームワークが未入力です！
+							動画の選択がされていません！
 						</v-alert>
-						<v-text-field label="フレームワーク" name="framework" v-model="name"></v-text-field>
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
-							aria-live="assertive">
-							ライブラリが未入力です！
-						</v-alert>
-						<v-text-field label="ライブラリ" name="library" v-model="name"></v-text-field>
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
-							aria-live="assertive">
-							言語が未入力です！
-						</v-alert>
-						<v-text-field label="言語" name="language" v-model="name"></v-text-field>
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
-							aria-live="assertive">
-							名前が未入力です！
-						</v-alert>
-						<v-text-field label="概要" name="name" v-model="name"></v-text-field>
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
-							aria-live="assertive">
-							GithubURLが未入力です！
-						</v-alert>
-						<v-text-field label="Github U" name="github" v-model="name"></v-text-field>
-
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.name" id="error-name-required"
-							aria-live="assertive">
-							作成日時が未入力です！
-						</v-alert>
-						
-						<v-text-field
-							label="作成日時"
-							prepend-inner-icon="mdi-calendar-cursor"
-							variant="solo"
-							v-model="createdProjectDate"
-							@click="chooseDate()"
-						></v-text-field>
-
-						<v-dialog v-model="dateDialog" width="auto">
-							<v-defaults-provider >
-								<v-locale-provider locale="ja">
-									<v-date-picker v-model="createdProjectDate" format="yyyy-dd-mm" ></v-date-picker>
-								</v-locale-provider>
-							</v-defaults-provider>
-							
-
-							<v-btn 
-								color="light-blue-accent-3" 		
-								@click="closeDialog()"
-							>
-								閉じる
-							</v-btn>
-						</v-dialog>
+						<v-file-input
+							show-size
+							density="compact"
+							label="動画"
+							prepend-icon=""
+							prepend-inner-icon="mdi-movie-play"
+							name="movie"
+							v-model="movie"
+						></v-file-input> -->
 
 						
-
 						<div class="text-center justify-center">
 							<v-btn class="me-4" type="submit" color="light-blue-accent-3">送信</v-btn>
 						</div>
@@ -103,7 +58,7 @@
 
 <script lang="ts" setup>
 import { VDatePicker } from 'vuetify/labs/VDatePicker'
-import { locale } from "vuetify/locale"
+
 
 useHead({
 	title: 'Newt・Nuxtフォーム',
@@ -117,7 +72,68 @@ import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 import { ref } from 'vue';
 
 const dateDialog = ref(false);
-const createdProjectDate = ref()
+//const createdProjectDate = ref()
+
+
+import * as yup from "yup"
+
+const schema = yup.object({
+	title: yup.string().required(),
+	abstract:   yup.string().required(),
+	detail:  yup.string().required(),
+	language:  yup.string().required(),
+	library:  yup.string().required(),
+	framework:  yup.string().required(),
+	github:  yup.string().required(),
+	createdProjectDate:  yup.string().required(),
+	// image: yup.mixed().required().test("type", "Only the picture",
+	// 	(value) => {
+	// 		console.log(typeof value)
+			
+	// 	}
+	// )
+	image: yup.mixed().required().test(
+		"image",
+      'imgじゃないです',
+      (value) => {
+		console.log(value[0].name);
+		const filename:string = value[0].name;
+		const isValid = filename.lastIndexOf('jpg');
+		if (!isValid) {
+			return false
+		}
+        return true;
+
+		// return value && ( value[0].type === "image/jpeg" || value[0].type === "image/png");
+		// value && ( value.type === "image/jpeg" || value.type === "image/png")
+		// const isValid = ['image/jpeg', 'image/png'].includes((img?.name));
+      	// if (!isValid) {
+		// 	return false
+		// }
+        // return true;
+        
+      },
+    )
+
+	// movie: yup.mixed().required().test({
+    //   message: () => 'movieじゃないです',
+    //   test: img => {
+	// 	const isValid = ['video/mp4', 'movie/mp4'].includes((img?.name));
+    //   	if (!isValid) {
+	// 		return false
+	// 	}
+    //     return true;
+        
+    //   },
+	// })
+});
+
+const { useFieldModel, handleSubmit, errors } = useForm({
+	validationSchema: schema
+})
+const [title, abstract, detail,language, library, framework, github, createdProjectDate, image] 
+		= useFieldModel(['title', 'abstract', 'detail','language', 'library', 'framework', 'github', 'createdProjectDate','image'])
+
 watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
     // .valueは不要
     console.log("old ", oldCreatedProjectDate) 
@@ -125,67 +141,34 @@ watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
 	createdProjectDate.value = <string> newCreatedProjectDate.replace('UTC', '');
 })
 
-const chooseDate = () => {
-	if(dateDialog.value === false)
-	{
-		dateDialog.value = true;
-	}
-}
-
-
-const closeDialog = () => {
-	if(dateDialog.value === true)
-	{
-		dateDialog.value = false;
-	}
-}
-
-const date = ref();
-
-
-import * as yup from "yup"
-
-const schema = yup.object({
-	email: yup.string().email().required(),
-	name: yup.string().required().min(2),
-});
-
-const { useFieldModel, handleSubmit, errors } = useForm({
-	validationSchema: schema
-})
-const [name, email, message] = useFieldModel(['name', 'email', 'message'])
-
- const { vueApp } = useNuxtApp()
- vueApp.use(VueReCaptcha, {
-   siteKey: '6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb',
-   loaderOptions: {
-     renderParameters: {
-       hl: 'ja'
-     }
-   }
- })
- const recaptchaInstance = useReCaptcha()
+//  const { vueApp } = useNuxtApp()
+//  vueApp.use(VueReCaptcha, {
+//    siteKey: process.env.SITE_KEY!,
+//    loaderOptions: {
+//      renderParameters: {
+//        hl: 'ja'
+//      }
+//    }
+//  })
+//  const recaptchaInstance = useReCaptcha()
 
 
 const onSubmit = handleSubmit(async (values) => {
 
-	await recaptchaInstance?.recaptchaLoaded()
-	const token = await recaptchaInstance?.executeRecaptcha('submit')
-	values.googleReCaptchaToken = token
+	// await recaptchaInstance?.recaptchaLoaded()
+	// const token = await recaptchaInstance?.executeRecaptcha('submit')
+	// values.googleReCaptchaToken = token
 
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
+		console.log(value)
 		formData.append(key, value)
 	})
 
-
 	try {
-		const response = await fetch('https://motoolab.form.newt.so/v1/Ycl-scwxX', {
+		const response = useFetch ("/api/contentful/post", {
 			method: 'POST',
 			body: formData,
-			headers: {
-				Accept: 'application/json'
-			}
 		})
 
 		if (response.ok) {

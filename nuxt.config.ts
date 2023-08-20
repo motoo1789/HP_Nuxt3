@@ -51,4 +51,25 @@ export default defineNuxtConfig({
   prismic: {
     endpoint: "hp-nuxt",
   },
+  proxy: {
+    // ファイルのPOSTがうまくいかなかったら
+    // options:[ 
+    //     {
+    //         target: process.env.API_HOST_URL,
+    //         changeOrigin: true,
+    //         pathRewrite: {
+    //             "^/api/media/upload": "/api/v1/upload",
+    //         },
+    //         pathFilter: ["/api/media/upload"],
+    //     },
+    //     {
+    //         target: process.env.API_HOST_URL,
+    //         changeOrigin: true,
+    //         pathRewrite: {
+    //             "^/api/product/": "/api/v1/product",
+    //         },
+    //         pathFilter: ["/api/product"],
+    //     },
+    // ]
+}, 
 })
