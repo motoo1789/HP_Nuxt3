@@ -242,10 +242,12 @@ const onSubmit = handleSubmit(async (values) => {
 		if (response.ok) {
 			await navigateTo('/thanks')
 		} else {
+			
 			await navigateTo('/error')
 		}
 	} catch (err) {
-		await navigateTo('/error')
+		console.log("こっちのerrorでしょ")
+		// await navigateTo('/error')
 	}
 })
 </script>
