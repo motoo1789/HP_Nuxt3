@@ -6,10 +6,8 @@ export default defineEventHandler(async (event) => {
 
     if (event.node.req.method === 'POST') {
         
-        
+        console.log()
         return "success";
     }
 
-
-    return "Bodyがないよ"
 })
