@@ -24,11 +24,11 @@
 						<v-text-field label="概要" name="abstract" v-model="abstract"></v-text-field>
 
 						<!--本文-->
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.detail" id="error-name-required"
+						<v-alert variant="text" type="warning" density="compact" v-if="errors.detaile" id="error-name-required"
 							aria-live="assertive">
 							本文が未入力です！
 						</v-alert>
-						<v-textarea label="本文" name="detail" v-model="detail"></v-textarea>
+						<v-textarea label="本文" name="detaile" v-model="detaile"></v-textarea>
 
 						<!--作成日時-->
 						<v-alert variant="text" type="warning" density="compact" v-if="errors.createdInformationDate" id="error-name-required"
@@ -91,18 +91,19 @@ const dateDialog = ref(false);
 const imagetype = ["png", "jpeg", "jpg"];
 
 import * as yup from "yup"
+import { DatePickerType } from 'vuetify';
 
 const schema = yup.object({
 	abstract:   yup.string().required(),
-	detail:  yup.string().required(),
+	detaile:  yup.string().required(),
 	createdInformationDate:  yup.string().required(),
 });
 
 const { useFieldModel, handleSubmit, errors } = useForm({
 	validationSchema: schema
 })
-const [abstract, detail,createdInformationDate] 
-		= useFieldModel(['abstract', 'detail','createdInformationDate'])
+const [abstract, detaile,createdInformationDate] 
+		= useFieldModel(['abstract', 'detaile','createdInformationDate'])
 
 watch(createdInformationDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
     // .valueは不要
@@ -111,14 +112,24 @@ watch(createdInformationDate, (newCreatedProjectDate, oldCreatedProjectDate) => 
 	createdInformationDate.value = <string> newCreatedProjectDate.replace('UTC', '');
 })
 
+interface POSTFormat {
+	abstract: string,
+	detaile: string,
+	createdInformationDate: string,
+}
 
 const onSubmit = handleSubmit(async (values) => {
 
-	const formData = new FormData()
-	Object.entries(values).forEach(([key, value]) => {
-		console.log(value)
-		formData.append(key, value)
-	})
+	// const formData = new FormData()
+	// Object.entries(values).forEach(([key, value]) => {
+	// 	console.log(value)
+	// 	formData.append(key, value)
+	// })
+	const formData = {
+		abstract: values.abstract,
+		detaile: values.detaile,
+		createdInformationDate: values.createdInformationDate,
+	}
 	
 
 	try {

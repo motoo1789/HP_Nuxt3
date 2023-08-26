@@ -1,128 +1,47 @@
+// pluginsは server/api で使用できないのでimportが必要
 import contentful from "contentful-management";
-import { Environment } from "contentful-management/dist/typings/entities/environment";
 
 interface POSTFormat {
-    createdProjectDate: string,
+    createdInformationDate: string,
 	shortContent: string,
 	abstract: string,
-	detail: string,
+	detaile: string,
 }
 
 export default defineEventHandler(async (event) => {
     console.log("サーバー側処理：PostInformation")
 
-    console.log("readData");
     const post = await readBody(event) as POSTFormat;
 
-    console.log(post)
-
-    const spaceId = process.env.CONTENTFUL_SPACE_ID!;
-    
-
-    if (event.node.req.method === 'POST') {
-
-        // const {$client} = useNuxtApp()
-        // const spaceId = process.env.CONTENTFUL_SPACE_ID!;
-        // const { data: cms } = await useAsyncData(spaceId, () => $client.getSpace(spaceId));
-        // const { data } = await useAsyncData(spaceId, () => $client.getSpace(spaceId));
-        // const environment = await useAsyncData('',() => data.getEnvironment(process.env.environment_id));
-        console.log("connect")
-        // const connect = async (): Promise<Environment> => {
-        //     const client = contentful.createClient({
-        //         space: process.env.CONTENTFUL_SPACE_ID!,
-        //         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-        //         host: "cdn.contentful.com"
-        //     });
-        //     const mySpace = await client.getSpace(process.env.CONTENTFUL_SPACE_ID!);
-          
-        //     return await mySpace.getEnvironment(process.env.CONTENTFUL_ENVIROMENT!);
-        //   };
-        // console.log(connect);
-        // const myEnvironment = await connect();
-
-        // const assetRes = await myEnvironment.createEntryWithId('NewInformation', post.abstract + post.createdProjectDate, {
-        //     fields: {
-        //         abstract: {
-        //             'en-US': post.abstract
-        //         },
-        //         detail: {
-        //             'en-US': post.detail
-        //         },
-        //         createdProjectDate: {
-        //             'en-US': post.createdProjectDate
-        //         },	 
-        //         shortContent: {
-        //             'en-US': post.abstract
-        //         }               
-        //     },
-        // })
-
-        // await assetRes.publish();
-
-        console.log("createClient前")
+    if (event.node.req.method === 'POST') 
+    {
         const client = contentful.createClient({
-            
-            accessToken: "CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds",
-            host: "cdn.contentful.com"
+            accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY!,
+            host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
-        console.log(client)
-        console.log("createClient後")
 
-        
-        const mySpace = await client.getSpace("gtch6w6darsf")
-        console.log("getSpace後")
-        console.log(mySpace)
-        const myEnvironment = await mySpace.getEnvironment("master")
-        console.log("getEnvironment後")
-        const assetRes = await myEnvironment.createEntryWithId('NewInformation', post.abstract + post.createdProjectDate, {
+        const mySpace = await client.getSpace(process.env.CONTENTFUL_SPACE_ID!);
+        const myEnvironment = await mySpace.getEnvironment(process.env.CONTENTFUL_ENVIROMENT!);
+        const assetRes = await myEnvironment.createEntry(process.env.CONTENTFUL_CONTENT_TYPE_ID!,{
             fields: {
                 abstract: {
                     'en-US': post.abstract
                 },
-                detail: {
-                    'en-US': post.detail
+                detaile: {
+                    'en-US': post.detaile
                 },
-                createdProjectDate: {
-                    'en-US': post.createdProjectDate
-                },	 
                 shortContent: {
                     'en-US': post.abstract
-                }               
+                },
+                updateDate: {
+                    'en-US': post.createdInformationDate
+                },	            
             }
-        })
-        console.log("createEntryWithId後")
+        });
 
-        await assetRes.publish();
-        console.log("publish後")
-        
-
-        // console.log("post mae")
-        // $client.getSpace(spaceId)
-        // .then((space) => space.getEnvironment(process.env.CONTENTFUL_ENTRY_ID))
-        //     .then((environment) => environment.createEntryWithId('NewInformation', post.abstract + post.createdProjectDate, {
-                
-        //         fields: {
-        //             abstract: {
-        //                 'en-US': post.abstract
-        //             },
-        //             detail: {
-        //                 'en-US': post.detail
-        //             },
-	    //             createdProjectDate: {
-        //                 'en-US': post.createdProjectDate
-        //             },	 
-        //             shortContent: {
-        //                 'en-US': post.abstract
-        //             }               
-        //         }
-        //     }))
-        //     .then((entry) => console.log(entry))
-        //     .catch(console.error)
+        assetRes.publish();
 
         console.log("投稿OK")
         return "success";
     }
-
-
-
 })

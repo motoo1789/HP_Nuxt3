@@ -28,11 +28,11 @@
 						<v-text-field label="概要" name="abstract" v-model="abstract"></v-text-field>
 
 						<!--本文-->
-						<v-alert variant="text" type="warning" density="compact" v-if="errors.detail" id="error-name-required"
+						<v-alert variant="text" type="warning" density="compact" v-if="errors.detaile" id="error-name-required"
 							aria-live="assertive">
 							本文が未入力です！
 						</v-alert>
-						<v-textarea label="本文" name="detail" v-model="detail"></v-textarea>
+						<v-textarea label="本文" name="detaile" v-model="detaile"></v-textarea>
 
 						<!--フレームワーク-->
 						<v-alert variant="text" type="warning" density="compact" v-if="errors.framework" id="error-name-required"
@@ -157,7 +157,7 @@ import * as yup from "yup"
 const schema = yup.object({
 	title: yup.string().required(),
 	abstract:   yup.string().required(),
-	detail:  yup.string().required(),
+	detaile:  yup.string().required(),
 	language:  yup.string().required(),
 	library:  yup.string().required(),
 	framework:  yup.string().required(),
@@ -194,8 +194,8 @@ const schema = yup.object({
 const { useFieldModel, handleSubmit, errors } = useForm({
 	validationSchema: schema
 })
-const [title, abstract, detail,language, library, framework, github, createdProjectDate, image, movie] 
-		= useFieldModel(['title', 'abstract', 'detail','language', 'library', 'framework', 'github', 'createdProjectDate','image', 'movie'])
+const [title, abstract, detaile,language, library, framework, github, createdProjectDate, image, movie] 
+		= useFieldModel(['title', 'abstract', 'detaile','language', 'library', 'framework', 'github', 'createdProjectDate','image', 'movie'])
 
 watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
     // .valueは不要
@@ -218,7 +218,7 @@ watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
 interface POSTFormat {
 	title: string,
 	abstract: string,
-	detail: string,
+	detaile: string,
 	library: string
 	language: string,
 	framework: string,
@@ -237,7 +237,7 @@ const onSubmit = handleSubmit(async (values) => {
 	const postDataObject:POSTFormat = {
 		title: values.title,
 		abstract: values.abstract,
-		detail: values.detail,
+		detaile: values.detaile,
 		library: values.library,
 		language: values.language,
 		framework: values.framework,
