@@ -5,7 +5,7 @@
 		<v-container>
 			<v-row>
 				<v-col>
-					<p class="text-center　text-h6">成果物追加</p>
+					<p class="text-center text-h6">成果物追加</p>
 				</v-col>
 
 			</v-row>
@@ -103,10 +103,10 @@
 							prepend-icon=""
 							prepend-inner-icon="mdi-camera"
 							name="image"
-							v-model="iamge"
+							v-model="image"
 						></v-file-input>
 
-						<!-- <v-alert variant="text" type="warning" density="compact" v-if="errors.movie" id="error-name-required"
+						<v-alert variant="text" type="warning" density="compact" v-if="errors.movie" id="error-name-required"
 							aria-live="assertive">
 							動画の選択がされていません！
 						</v-alert>
@@ -118,7 +118,7 @@
 							prepend-inner-icon="mdi-movie-play"
 							name="movie"
 							v-model="movie"
-						></v-file-input> -->
+						></v-file-input>
 
 						
 						<div class="text-center justify-center">
@@ -150,6 +150,7 @@ import { ref } from 'vue';
 const dateDialog = ref(false);
 //const createdProjectDate = ref()
 
+const imagetype = ["png", "jpeg", "jpg"];
 
 import * as yup from "yup"
 
@@ -162,45 +163,39 @@ const schema = yup.object({
 	framework:  yup.string().required(),
 	github:  yup.string().required(),
 	createdProjectDate:  yup.string().required(),
-	image: yup.mixed().required().test("type", "Only the picture",
-		(value) => {
-			
-			return value && ( 
-				value.type === "image/jpeg" || value.type === "image/png"
-			);
+	image: yup.mixed().required().test(
+		"image",
+      	'imgじゃないです',
+      	image => {
+			const filename:string = image[0] !== undefined ? image[0].name : "";
+			const findFileType = imagetype.find((type:string) => filename.indexOf(type) !== -1);
+
+			if(findFileType)
+			{
+				return true;
+			}
+			return false;        
+      	},
+    ),
+	movie: yup.mixed().required().test(
+		'movie',
+		'movieじゃないです',
+      	movie => {
+			const filename:string = movie[0] !== undefined ? movie[0].name : "";
+			if(filename.indexOf('mp4') !== -1)
+			{
+				return true
+			}
+			return false;
 		}
 	)
-	// image: yup.mixed().required().test({
-    //   message: () => 'imgじゃないです',
-    //   test: value => {
-	// 	return value && ( value.type === "image/jpeg" || value.type === "image/png")
-	// 	const isValid = ['image/jpeg', 'image/png'].includes((img?.name));
-    //   	if (!isValid) {
-	// 		return false
-	// 	}
-    //     return true;
-        
-    //   },
-    // }),
-
-	// movie: yup.mixed().required().test({
-    //   message: () => 'movieじゃないです',
-    //   test: img => {
-	// 	const isValid = ['video/mp4', 'movie/mp4'].includes((img?.name));
-    //   	if (!isValid) {
-	// 		return false
-	// 	}
-    //     return true;
-        
-    //   },
-	// })
 });
 
 const { useFieldModel, handleSubmit, errors } = useForm({
 	validationSchema: schema
 })
-const [title, abstract, detail,language, library, framework, github, createdProjectDate, iamge] 
-		= useFieldModel(['title', 'abstract', 'detail','language', 'library', 'framework', 'github', 'createdProjectDate','iamge'])
+const [title, abstract, detail,language, library, framework, github, createdProjectDate, image, movie] 
+		= useFieldModel(['title', 'abstract', 'detail','language', 'library', 'framework', 'github', 'createdProjectDate','image', 'movie'])
 
 watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
     // .valueは不要
@@ -239,15 +234,14 @@ const onSubmit = handleSubmit(async (values) => {
 			body: formData,
 		})
 
-		if (response.ok) {
+		if (response.data.value === 'success') {
 			await navigateTo('/thanks')
 		} else {
-			
-			await navigateTo('/error')
+			console.log(response)
+			// await navigateTo('/error')
 		}
 	} catch (err) {
-		console.log("こっちのerrorでしょ")
-		// await navigateTo('/error')
+		await navigateTo('/error')
 	}
 })
 </script>

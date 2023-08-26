@@ -30,7 +30,7 @@
 						<!--本文-->
 						<v-alert variant="text" type="warning" density="compact" v-if="errors.detail" id="error-name-required"
 							aria-live="assertive">
-							概要が未入力です！
+							本文が未入力です！
 						</v-alert>
 						<v-textarea label="本文" name="detail" v-model="detail"></v-textarea>
 
@@ -215,23 +215,50 @@ watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
 //  })
 //  const recaptchaInstance = useReCaptcha()
 
+interface POSTFormat {
+	title: string,
+	abstract: string,
+	detail: string,
+	library: string
+	language: string,
+	framework: string,
+	github: string,
+	createdProjectDate: string,
+	image: string,
+	movie: string,
+}
 
 const onSubmit = handleSubmit(async (values) => {
 
 	// await recaptchaInstance?.recaptchaLoaded()
 	// const token = await recaptchaInstance?.executeRecaptcha('submit')
 	// values.googleReCaptchaToken = token
+	console.log(values);
+	const postDataObject:POSTFormat = {
+		title: values.title,
+		abstract: values.abstract,
+		detail: values.detail,
+		library: values.library,
+		language: values.language,
+		framework: values.framework,
+		github: values.github,
+		createdProjectDate: values.createdProjectDate,
+		image: await getBase64(values.image[0]) as string,
+		movie: await getBase64(values.movie[0]) as string 
+	}
 
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
 		console.log(value)
 		formData.append(key, value)
 	})
+	
 
 	try {
-		const response = useFetch ("/api/contentful/post", {
+		console.log(formData);
+		const response = useFetch ("/api/contentful/PostProject", {
 			method: 'POST',
-			body: formData,
+			body: postDataObject,
 		})
 
 		if (response.data.value === 'success') {
@@ -244,6 +271,15 @@ const onSubmit = handleSubmit(async (values) => {
 		await navigateTo('/error')
 	}
 })
+
+const getBase64 = (file:File) => {
+	return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 </script>
 
 <style scoped>
