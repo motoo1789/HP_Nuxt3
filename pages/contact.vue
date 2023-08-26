@@ -86,8 +86,9 @@ const onSubmit = handleSubmit(async (values) => {
 		formData.append(key, value)
 	})
 
-
+	
 	try {
+		
 		const response = await fetch(process.env.NEWT_URL!, {
 			method: 'POST',
 			body: formData,
