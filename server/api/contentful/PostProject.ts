@@ -1,3 +1,6 @@
+import * as contentful from "contentful-management";
+import { Environment } from "contentful-management/dist/typings/entities/environment";
+
 interface POSTFormat {
 	title: string,
 	abstract: string,
