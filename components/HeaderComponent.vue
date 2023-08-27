@@ -12,13 +12,46 @@
                 </v-app-bar-title>
 
 
-                <v-alert>{{ data?.user?.email }}</v-alert>
-                <p> </p>
-                <v-btn class="text-h6" v-if="status === 'authenticated'">
-                    <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">サインアウト</NuxtLink>
-                </v-btn>
+                <!-- <v-alert>{{ data?.user?.email }}</v-alert> -->
+                
+                <div class="text-center mx-2" v-if="status === 'authenticated'">
+                    <v-menu location="bottom" class="link-style-home">
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                                class="text-h6"
+                                v-bind="props"
+                                icon="mdi-account"
+                            >
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item
+                                v-for="(item, index) in items"
+                                :key="index"
+                                @click=louginusermenu(item.link)
+                            >
+                                <template v-slot:prepend>
+                                    <v-icon :icon="item.icon"></v-icon>
+                                </template>
+                                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                    <!-- <v-btn class="text-h6" >
+                        <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">管理者ページ</NuxtLink>
+                    </v-btn>
+                    <v-btn class="text-h6" >
+                        <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">ログアウト</NuxtLink>
+                    </v-btn> -->
+                </div>
+                <!--
+                    <v-btn class="text-h6" v-if="status === 'authenticated'">
+                        <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">ログアウト</NuxtLink>
+                    </v-btn> 
+                -->
                 <v-btn class="text-h6" v-else>
-                    <NuxtLink :to="`/login`" class="link-style-home ">サインイン</NuxtLink>
+                    <NuxtLink :to="`/login`" class="link-style-home ">ログイン</NuxtLink>
                 </v-btn>
                 
                 
@@ -46,6 +79,31 @@
     const show = () => {
         console.log("fdsafd");
         showDrawer.value = !showDrawer.value;
+    }
+
+    const items = [
+        {   
+            icon: 'mdi-account-wrench-outline',
+            title: '管理者用ページ' ,
+            link: 'adminhome',
+        },
+        { 
+            icon: 'mdi-logout ',  
+            title: 'ログアウト' ,
+            link: 'logout'
+        },
+    ]
+
+    const louginusermenu = ( selectMenu : string ) => {
+        switch(selectMenu)
+        {
+            case "adminhome":
+                navigateTo(selectMenu);
+                break;
+            case "logout":
+                signOut({callbackUrl: '/'})
+                break;
+        }
     }
 
   </script>
