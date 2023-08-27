@@ -13,8 +13,13 @@ export default defineNuxtConfig({
   ],
 
   build: {
-    transpile: ["vuetify"],
+    transpile: ["vuetify",'@vuepic/vue-datepicker'],
+
   },
+  buildModules: [
+    // Simple usage
+    '@nuxtjs/vuetify',
+  ],
 
   vite: {
     define: {
@@ -29,9 +34,42 @@ export default defineNuxtConfig({
     
   ],
 
-  modules: ["@nuxtjs/prismic"],
+  modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
+
+  auth: {
+    enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
+    
+  },
+
+  redirect: {
+    login: '/login',
+    logout: '/',
+    callback: false,
+    home: '/'
+  },
 
   prismic: {
     endpoint: "hp-nuxt",
   },
+  proxy: {
+    // ファイルのPOSTがうまくいかなかったら
+    // options:[ 
+    //     {
+    //         target: process.env.API_HOST_URL,
+    //         changeOrigin: true,
+    //         pathRewrite: {
+    //             "^/api/media/upload": "/api/v1/upload",
+    //         },
+    //         pathFilter: ["/api/media/upload"],
+    //     },
+    //     {
+    //         target: process.env.API_HOST_URL,
+    //         changeOrigin: true,
+    //         pathRewrite: {
+    //             "^/api/product/": "/api/v1/product",
+    //         },
+    //         pathFilter: ["/api/product"],
+    //     },
+    // ]
+}, 
 })

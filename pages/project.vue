@@ -25,47 +25,12 @@
                                         Githubはありません
                                     </v-tooltip>
                                 </div>
-                                
-
-                                <!-- <v-tooltip 
-                                    text="Githubはありません" 
-                                    v-if="typeof project.url === 'undefined'"
-                                    location="start"
-                                >
-                                    <template v-slot:activator="{ props }">
-                                        <v-icon v-bind="props" large >
-                                            mdi-github
-                                        </v-icon>
-                                    </template>
-                                </v-tooltip> -->
-
-                                <!-- <v-icon  large v-if="typeof project.url === 'undefined'">
-                                    mdi-github
-                                    <v-tooltip
-                                        activator="parent"
-                                        location="start"
-                                    >
-                                        Githubはありません
-                                    </v-tooltip>
-                                </v-icon>
-                                 -->
 
                                 
                                 <v-icon v-else large  @click="jumpGithubPage(project.url)">
                                     mdi-github
                                 </v-icon>
-                                <!-- <v-icon v-else
-                                large
-                                
-                            >
-                                <v-tooltip
-                                    activator="parent"
-                                    location="start"
-                                >
-                                    Githubはありません
-                                </v-tooltip>
-                                    mdi-github                       
-                            </v-icon> -->
+
 
                             </v-cols>
                         </v-row>
@@ -134,18 +99,6 @@
                                             <v-row>
                                                 <v-spacer></v-spacer>
                                                 <v-col cols="2">
-
-                                                    <!-- <div v-if="typeof project.url === 'undefined'">
-                                                        <v-icon v-bind="props" large >
-                                                                mdi-github
-                                                        </v-icon>
-                                                        <v-tooltip
-                                                            activator="parent"
-                                                            location="start"
-                                                        >
-                                                            Githubはありません
-                                                        </v-tooltip>
-                                                    </div> -->
   
                                                     <v-btn 
                                                         
@@ -214,9 +167,9 @@ import { ofetch } from 'ofetch'
 import { string } from "yup";
 const { data: animes } = await useFetch('/api/anime');
 
-const png_id = "4J3u7b0DkC26yQGjn0DuS0"
+// const png_id = "4J3u7b0DkC26yQGjn0DuS0"
 // const id = "4cc9JW3vkGlnH8B97ofmn9"
-const id = "0Spja66f69ipYNQN6Hgv3o";
+const id = process.env.CONTENTFUL_ENTRY_ID!
 const { $client } = useNuxtApp()
 const { data: cms } = await useAsyncData(id, () => $client.getEntry(id));
 const { data: getContents } = await useAsyncData(() => $client.getEntries())
