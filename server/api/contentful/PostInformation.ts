@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
     console.log("サーバー側処理：PostInformation")
 
     const post = await readBody(event) as POSTFormat;
+    console.log("postの中身")
 
     if (event.node.req.method === 'POST') 
     {
@@ -19,9 +20,12 @@ export default defineEventHandler(async (event) => {
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
+        console.log("client生成")
 
         const mySpace = await client.getSpace(process.env.CONTENTFUL_SPACE_ID!);
+        console.log("getSpace生成")
         const myEnvironment = await mySpace.getEnvironment(process.env.CONTENTFUL_ENVIROMENT!);
+        console.log("getEnvironment生成")
         const assetRes = await myEnvironment.createEntry(process.env.CONTENTFUL_CONTENT_TYPE_ID!,{
             fields: {
                 abstract: {
