@@ -22,11 +22,11 @@ export default defineEventHandler(async (event) => {
         });
         console.log("client生成")
 
-        const mySpace = await client.getSpace(process.env.CONTENTFUL_SPACE_ID!);
+        const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!);
         console.log("getSpace生成")
-        const myEnvironment = await mySpace.getEnvironment(process.env.CONTENTFUL_ENVIROMENT!);
+        const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!);
         console.log("getEnvironment生成")
-        const assetRes = await myEnvironment.createEntry(process.env.CONTENTFUL_CONTENT_TYPE_ID!,{
+        const assetRes = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_ID!,{
             fields: {
                 abstract: {
                     'en-US': post.abstract
