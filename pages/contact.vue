@@ -4,7 +4,7 @@
 		<v-container>
 			<v-row>
 				<v-col>
-					<p class="text-center　text-h6">バグ報告・その他問い合わせ
+					<p class="text-center text-h6">バグ報告・その他問い合わせ
 					</p>
 				</v-col>
 
