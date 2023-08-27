@@ -9,7 +9,7 @@
 			<v-icon size="100px" color="red-darken-1" >mdi-check-circle-outline</v-icon>
 
 			<v-card-title>
-				お問い合わせに失敗しました
+				エラーが発生しました
 			</v-card-title>
 
 			<v-card-actions class="justify-center">
@@ -19,7 +19,7 @@
 						color="blue-lighten-1"
 						size="x-large"
 					>
-						お問い合わせページへ
+						ホームへ
 					</v-btn>
 				</NuxtLink>
 

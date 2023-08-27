@@ -68,11 +68,6 @@ const addAccount = async () => {
     console.log(data);
 }
 
-
-
-
-
-
 </script>
 
 <style scoped>
