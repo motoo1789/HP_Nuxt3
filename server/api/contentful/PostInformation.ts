@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     if (event.node.req.method === 'POST') 
     {
         const client = contentful.createClient({
-            accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY!,
+            accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
 
