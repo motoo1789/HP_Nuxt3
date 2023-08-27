@@ -134,18 +134,11 @@
 
 <script lang="ts" setup>
 import { VDatePicker } from 'vuetify/labs/VDatePicker'
-
-
-useHead({
-	title: 'Newt・Nuxtフォーム',
-	meta: [
-		{ name: 'description', content: 'NewtとNuxtを利用した問い合わせフォームです' }
-	]
-})
-
 import { useForm } from 'vee-validate'
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 import { ref } from 'vue';
+
+definePageMeta({ middleware: 'auth' })
 
 const dateDialog = ref(false);
 //const createdProjectDate = ref()
