@@ -104,7 +104,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="presentation in presentations" :key="presentation.name">
+                                    <tr v-for="presentation in presentations" :key="presentation.id">
                                         <td>{{ presentation.date }}</td>
 
                                         <td>
@@ -157,103 +157,78 @@
     </v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import { mdiTableArrowUp } from '@mdi/js';
-import SvgIcon from "@jamescoyle/vue-icon";
-export default {
+import { ref } from "vue";
 
-    components: {
-        SvgIcon
-    },
-    data() {
-        return {
-            colImg: 3,
-            colContext: 9,
-            img1: ref(),
-
-            //img: require('~/assets/img/profile_face.png'),
-            sampleicon: "mdi-table-arrow-up",
-            path: mdiTableArrowUp,
-            histories: [
-                {
-                    id: 1,
-                    text: "日本工業大学工学部情報工学科 卒業",
-                },
-                {
-                    id: 2,
-                    text: "日本工業大学工学研究科電子情報メディア工学専攻博士前期課程 修了"
-                },
-                {
-                    id: 3,
-                    text: "株式会社ディマージシェア"
-                },
-            ],
-            presentations: [
-                {
-                    date: '2021-02-23',
-                    title: 'パターンの役割違反に着目したコード品質改善手法の提案',
-                    url: "https://www.ieice-taikai.jp/2021general/jpn/index.html"
-
-                },
-                {
-                    date: '2022-01-21',
-                    title: 'クラス図とソースコード間のラウンドトリップエンジニアリング支援ツール',
-                    url: "https://ken.ieice.org/ken/program/index.php?tgs_regid=c7e66ae8eec06d72f88ac1147e021d278969659589d143d7de3bb4d5e2aaa315&tgid=IEICE-KBSE"
-                },
-                {
-                    date: '2023-02-20',
-                    title: 'A Tool for Supporting Round-Trip Engineering with the Ability to Avoid Unintended Design Changes',
-                    url: "https://www.insticc.org/node/TechnicalProgram/modelsward/2023/presentationDetails/116675"
-                },
-            ],
-            maxsize: '100px',
-            // styleSize: { 勉強用に残しておく
-            //     width: "",
-            //     color: "red"
-            // },
-            ratings: [
-                { skill: "Java", value: "2" },
-                { skill: "Docker", value: "1" },
-                { skill: "Vue", value: "1" },
-                { skill: "Nuxt", value: "1" },
-                { skill: "JavaScript", value: "1" },
-
-            ],
-            qualifications: [
-                { name: "ITパスポート" },
-                { name: "基本情報技術者" },
-                { name: "普通自動車免許" }
-            ]
-
-        }
-    },
-    computed: {
-        styleSize() {
-            return {
-                width: this.maxsize,
-            }
-        }
-    },
-    created() {
-        this.maxsize = this.calcSkilTextSize()
-
-        // this.styleSize.width = this.maxsize 直接指定する場合はオブジェクトの中まで指定する
-        // this.calcSkilTextSize();
-    },
-    methods: {
-        isExternalLink(path) {
-            const pattern = /^(http|https|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]/i;
-            return pattern.test(path)
+    const sampleicon:string = "mdi-table-arrow-up"
+    const histories = [
+        {
+            id: 1,
+            text: "日本工業大学工学部情報工学科 卒業",
         },
-        calcSkilTextSize() {
-            const maxLength = Math.max(...this.ratings.map(item => item.skill.length)) * 10
-            return String(maxLength) + "px";
+        {
+            id: 2,
+            text: "日本工業大学工学研究科電子情報メディア工学専攻博士前期課程 修了"
+        },
+        {
+            id: 3,
+            text: "株式会社ディマージシェア"
+        },
+    ];
+
+    const presentations = [
+        {
+            id : 1,
+            date: '2021-02-23',
+            title: 'パターンの役割違反に着目したコード品質改善手法の提案',
+            url: "https://www.ieice-taikai.jp/2021general/jpn/index.html"
+
+        },
+        {
+            id : 2,
+            date: '2022-01-21',
+            title: 'クラス図とソースコード間のラウンドトリップエンジニアリング支援ツール',
+            url: "https://ken.ieice.org/ken/program/index.php?tgs_regid=c7e66ae8eec06d72f88ac1147e021d278969659589d143d7de3bb4d5e2aaa315&tgid=IEICE-KBSE"
+        },
+        {
+            id : 3,
+            date: '2023-02-20',
+            title: 'A Tool for Supporting Round-Trip Engineering with the Ability to Avoid Unintended Design Changes',
+            url: "https://www.insticc.org/node/TechnicalProgram/modelsward/2023/presentationDetails/116675"
+        },
+    ];
+
+
+    const styleSize = () => {
+        return {
+            width: "100px",
         }
-
-
     }
 
-}
+    const ratings = [
+        { skill: "Java", value: "2" },
+        { skill: "Docker", value: "1" },
+        { skill: "Vue", value: "1" },
+        { skill: "Nuxt", value: "1" },
+        { skill: "JavaScript", value: "1" },
+
+    ];
+    const qualifications = [
+        { name: "ITパスポート" },
+        { name: "基本情報技術者" },
+        { name: "普通自動車免許" }
+    ]
+    const isExternalLink = (path:string) => {
+            const pattern = /^(http|https|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]/i;
+            return pattern.test(path)
+        };
+    const calcSkilTextSize = () => {
+        const maxLength = Math.max(...ratings.map(item => item.skill.length)) * 10
+        return String(maxLength) + "px";
+    }
+
+
 </script>
 
 <style>
