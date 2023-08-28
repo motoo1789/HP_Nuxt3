@@ -169,9 +169,10 @@ const { data: animes } = await useFetch('/api/anime');
 
 // const png_id = "4J3u7b0DkC26yQGjn0DuS0"
 // const id = "4cc9JW3vkGlnH8B97ofmn9"
+
 const id = process.env.CONTENTFUL_ENTRY_ID!
 const { $client } = useNuxtApp()
-const { data: cms } = await useAsyncData(id, () => $client.getEntry(id));
+// const { data: cms } = await useAsyncData(id, () => $client.getEntry(id));
 const { data: getContents } = await useAsyncData(() => $client.getEntries())
 
 
