@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         console.log(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID)
         console.log(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!)
 
-        const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
+        const mySpace = client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
         console.log("getSpace生成")
         const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT);
         console.log("getEnvironment生成")
