@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
             host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
         console.log("client生成")
+        console.log(client)
 
         const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!);
         console.log("getSpace生成")
