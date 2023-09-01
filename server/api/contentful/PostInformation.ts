@@ -16,14 +16,14 @@ export default defineEventHandler(async (event) => {
 
     if (event.node.req.method === 'POST') 
     {
-        const client = contentful.createClient({
+        const client = await contentful.createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             //host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
         console.log("client生成")
         console.log(client)
 
-        const mySpace = client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
+        const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
         console.log("getSpace生成")
         console.log(mySpace)
         const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT);
