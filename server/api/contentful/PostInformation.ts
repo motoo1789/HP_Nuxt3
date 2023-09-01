@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
 
         const mySpace = client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
         console.log("getSpace生成")
+        console.log(mySpace)
         const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT);
         console.log("getEnvironment生成")
         const assetRes = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_ID,{
