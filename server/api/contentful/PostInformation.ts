@@ -18,12 +18,10 @@ export default defineEventHandler(async (event) => {
     {
         const client = contentful.createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
-            host: "api.contentful.com" // ホストは共通なので.envに記載しない
+            //host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
         console.log("client生成")
         console.log(client)
-        console.log(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID)
-        console.log(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!)
 
         const mySpace = client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
         console.log("getSpace生成")
