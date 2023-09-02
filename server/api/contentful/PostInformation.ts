@@ -16,13 +16,13 @@ export default defineEventHandler(async (event) => {
     if (event.node.req.method === 'POST') 
     {
         const client = contentful.createClient({
-            accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY!,
+            accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
 
-        const mySpace = await client.getSpace(process.env.CONTENTFUL_SPACE_ID!);
-        const myEnvironment = await mySpace.getEnvironment(process.env.CONTENTFUL_ENVIROMENT!);
-        const assetRes = await myEnvironment.createEntry(process.env.CONTENTFUL_CONTENT_TYPE_ID!,{
+        const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!);
+        const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!);
+        const assetRes = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_NEWINFORMATION!,{
             fields: {
                 abstract: {
                     'en-US': post.abstract
