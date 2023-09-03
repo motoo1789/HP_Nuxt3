@@ -19,24 +19,12 @@ interface POSTFormat {
 export default defineEventHandler(async (event) => {
     console.log("サーバー側処理：addUser");
 
-
-    // const postBody = await readMultipartFormData(event);
-    // console.log("readMultipartFormData");
-    // console.log(postBody);
-
-    console.log("readData");
-    //console.log(await readBody(event) as POSTFormat) ;
     const post = (await readBody(event)) as POSTFormat;
 
     const image = post.image;
     const movie = post.movie;
-    const fetchimage = await fetch(image);
-    const fetchmovie = await fetch(movie);
-    console.log("fetchimage");
-    // console.log(fetchimage);
-    // console.log(fetchimage.body);
 
-    //const blob = new Blob([fetchimage.respons], { type: "image/jpeg" });
+
     const imageFileData = image.replace(/^data:\w+\/\w+;base64,/, "");
     const movieFileData = movie.replace(/^data:\w+\/\w+;base64,/, "");
     // console.log(fileData)
@@ -59,41 +47,13 @@ export default defineEventHandler(async (event) => {
         .toString()
         .slice(movie.indexOf(":") + 1, movie.indexOf(";"));
 
-    // const contentfullPostFile = new File([decodedImageFile], "postimage.png", {
-    //     type: "image/png",
-    // });
-    // console.log("decodedFile" )
-    // console.log(typeof decodedFile )
-    // console.log(decodedFile )
 
-    // console.log("fileExtension" )
-    // console.log(typeof fileExtension )
-    // console.log(fileExtension )
-
-    // console.log("contentType" )
-    // console.log(typeof contentType )
-    // console.log(contentType )
-
-    const sendImageContentful = {
-        Body: decodedImageFile,
-        Bucket: "Bucket Name",
-        Key: [post.title, imageFileExtension].join("."),
-        ContentType: "application/octet-stream",
-    };
-    const sendMovieContentful = {
-        Body: decodedMovieFile,
-        Bucket: "Bucket Name",
-        Key: [post.title, movieFileExtension].join("."),
-        ContentType: "application/octet-stream",
-    };
-
-    console.log("if前")
     const tmpfileimagename = [post.title, imageFileExtension].join(".");
     const tmpfilemoviname = [post.title, movieFileExtension].join(".");
-
-    if (event.node.req.method === "POST") {
-        console.log("postif直後");
-        await fs.writeFileSync(`./public/movie/${tmpfileimagename}`, imageFileData, {
+ 
+    if (event.node.req.method === "POST") 
+    {
+        await fs.writeFileSync(`./public/image/${tmpfileimagename}`, imageFileData, {
             encoding: "base64",
         });
         await fs.writeFileSync(`./public/movie/${tmpfilemoviname}`, movieFileData, {
@@ -116,6 +76,7 @@ export default defineEventHandler(async (event) => {
         const myEnvironment = await mySpace.getEnvironment(
             process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!
         );
+
         const uploadImage = await myEnvironment.createUpload({
             file: tmpImageFile,
         });
@@ -131,7 +92,7 @@ export default defineEventHandler(async (event) => {
                     },
                     file: {
                         "en-US": {
-                            contentType: "image/jpg",
+                            contentType: contentImageType,
                             fileName: `${post.title}`,
                             uploadFrom: {
                                 sys: {
@@ -161,13 +122,13 @@ export default defineEventHandler(async (event) => {
                     },
                     file: {
                         "en-US": {
-                            contentType: "image/jpg",
+                            contentType: contentMovieType,
                             fileName: `${post.title}`,
                             uploadFrom: {
                                 sys: {
                                     type: "Link",
                                     linkType: "Upload",
-                                    id: uploadImage.sys.id,
+                                    id: uploadMovie.sys.id,
                                 },
                             },
                         },
@@ -189,64 +150,7 @@ export default defineEventHandler(async (event) => {
         await fs.unlink(`./public/movie/${tmpfilemoviname}`, (err) => {
             if (err) throw err;
         });
-        // const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!);
-        // const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!);
-        // const assetRes = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT!,{
-        //     fields: {
-        //         title: {
-        //             'en-US': post.title
-        //         },
-        //         abstract: {
-        //             'en-US': post.abstract
-        //         },
-        //         detail: {
-        //             'en-US': post.detail
-        //         },
-        //         library: {
-        //             'en-US': post.library
-        //         },
-        //         language: {
-        //             'en-US': post.language
-        //         },
-        //         framework: {
-        //             'en-US': post.framework
-        //         },
-        //         github: {
-        //             'en-US':  post.github
-        //         },
-        //         createdDate: {
-        //             'en-US': post.createdProjectDate
-        //         },
-        //         img: {
-        //             "en-US": {
-        //                 "contentType": "image/jpg",
-        //                 "fileName": [post.title, imageFileExtension].join('.'),
-        //                 "Body": sendImageContentful,
-        //                 "uploadFrom": {
-        //                     "sys": {
-        //                       "type": "Link",
-        //                       "linkType": "Upload",
-        //                       "id": "<use sys.id of an upload resource response here>"
-        //                     }
-        //                 }
-        //             }
-        //         },
-        //         movie: {
-        //             'en-US': {
-        //                 "contentType": "video/mp4",
-        //                 "fileName": [post.title, movieFileExtension].join('.'),
-        //                 "Body": sendMovieContentful,
-        //                 "uploadFrom": {
-        //                     "sys": {
-        //                       "type": "Link",
-        //                       "linkType": "Upload",
-        //                       "id": "<use sys.id of an upload resource response here>"
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
+
 
         // assetRes.publish();
         // console.log("投稿OK")
