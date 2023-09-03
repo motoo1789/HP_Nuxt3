@@ -1,13 +1,11 @@
 
 <template>
 	<div>
-
 		<v-container>
 			<v-row>
 				<v-col>
 					<p class="text-center text-h6">成果物追加</p>
 				</v-col>
-
 			</v-row>
 			<v-row>
 				<v-col>
@@ -98,19 +96,23 @@
 						<v-file-input show-size density="compact" label="動画" prepend-icon=""
 							prepend-inner-icon="mdi-movie-play" name="movie" v-model="movie"></v-file-input>
 
-						
+
 						<div class="text-center justify-center">
 							<v-btn class="me-4" type="submit" color="light-blue-accent-3">送信</v-btn>
 						</div>
 
-						<v-snackbar min-width="auto" width="150" :timeout="3500" v-model="notifySuccess"
+						<v-snackbar min-width="auto" width="150" :timeout="3000" v-model="notifySuccess"
 							color="light-blue-accent-3">
 							<p class="text-center">送信成功！</p>
 						</v-snackbar>
 
-						<v-snackbar min-width="auto" width="150" :timeout="3500" v-model="notifyError" color="error">
+						<v-snackbar min-width="auto" width="150" :timeout="3000" v-model="notifyError" color="error">
 							<p class="text-center">送信失敗！</p>
 						</v-snackbar>
+						<v-overlay v-model="overlay" class="align-center justify-center">
+							<v-progress-circular color="white" :size="64" :width="7"
+								:indeterminate=prograssCircular></v-progress-circular>
+						</v-overlay>
 					</form>
 				</v-col>
 
@@ -128,8 +130,6 @@ import { ref } from 'vue';
 definePageMeta({ middleware: 'auth' })
 
 const dateDialog = ref(false);
-//const createdProjectDate = ref()
-
 const imagetype = ["png", "jpeg", "jpg"];
 
 import * as yup from "yup"
@@ -177,21 +177,19 @@ const [title, abstract, detaile, language, library, framework, github, createdPr
 
 watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
 	// .valueは不要
-	console.log("old ", oldCreatedProjectDate)
-	console.log("new ", newCreatedProjectDate)
 	createdProjectDate.value = <string>newCreatedProjectDate.replace('UTC', '');
 })
 
 //  const { vueApp } = useNuxtApp()
 //  vueApp.use(VueReCaptcha, {
-//    siteKey: process.env.SITE_KEY!,
+//    siteKey: process.env.NEXT_PUBLIC_SITE_KEY!,
 //    loaderOptions: {
 //      renderParameters: {
 //        hl: 'ja'
 //      }
 //    }
 //  })
-//  const recaptchaInstance = useReCaptcha()
+ const recaptchaInstance = useReCaptcha()
 
 interface POSTFormat {
 	title: string,
@@ -206,15 +204,20 @@ interface POSTFormat {
 	movie: string,
 }
 
+// post関係変数
 let notifySuccess = ref(false)
 let notifyError = ref(false);
+let prograssCircular = ref(false);
+let overlay = ref(false);
 
 const onSubmit = handleSubmit(async (values) => {
+	prograssCircular.value = true;
+	overlay.value = true;
 
-	// await recaptchaInstance?.recaptchaLoaded()
-	// const token = await recaptchaInstance?.executeRecaptcha('submit')
-	// values.googleReCaptchaToken = token
-	console.log(values);
+	await recaptchaInstance?.recaptchaLoaded()
+	const token = await recaptchaInstance?.executeRecaptcha('submit')
+	values.googleReCaptchaToken = token
+
 	const postDataObject: POSTFormat = {
 		title: values.title,
 		abstract: values.abstract,
@@ -228,25 +231,21 @@ const onSubmit = handleSubmit(async (values) => {
 		movie: await getBase64(values.movie[0]) as string
 	}
 
-	const formData = new FormData()
-	Object.entries(values).forEach(([key, value]) => {
-		console.log(value)
-		formData.append(key, value)
-	})
-
-
 	try {
-		console.log(formData);
-		const response = useFetch("/api/contentful/PostProject", {
+		const response = await useFetch("/api/contentful/PostProject", {
 			method: 'POST',
 			body: postDataObject,
 		})
 
 		if (response.data.value === 'success') {
-			await navigateTo('/thanks')
+			overlay.value = false;
+			prograssCircular.value = false;
+			notifySuccess.value = true;
 		} else {
+			overlay.value = false;
+			prograssCircular.value = false;
+			notifyError.value = true;
 			console.log(response)
-			// await navigateTo('/error')
 		}
 	} catch (err) {
 		await navigateTo('/error')
@@ -261,6 +260,8 @@ const getBase64 = (file: File) => {
 		reader.onerror = error => reject(error);
 	});
 }
+
+
 </script>
 
 <style scoped>
