@@ -144,6 +144,54 @@ export default defineEventHandler(async (event) => {
                 return asset.publish();
             });
 
+        const postProject = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT!, {
+            fields: {
+                title: {
+                    'en-US': post.title
+                },
+                abstract: {
+                    'en-US': post.abstract
+                },
+                detail: {
+                    'en-US': post.detail
+                },
+                library: {
+                    'en-US': post.library
+                },
+                language: {
+                    'en-US': post.language
+                },
+                framework: {
+                    'en-US': post.framework
+                },
+                github: {
+                    'en-US':  post.github
+                },
+                createdDate: {
+                    'en-US': post.createdProjectDate
+                },
+                img: {
+                    "en-US": {
+                        "sys": {
+                            "type": "Link",
+                            "linkType": "Asset",
+                            "id": assetImage.sys.id
+                        }
+                    }
+                },
+                movie: {
+                    'en-US': {
+                        "sys": {
+                            "type": "Link",
+                            "linkType": "Asset",
+                            "id": assetMovie.sys.id
+                        }
+                    }
+                }
+            }
+        })
+        await postProject.publish();
+
         await fs.unlink(`./public/image/${tmpfileimagename}`, (err) => {
             if (err) throw err;
         });
@@ -153,7 +201,7 @@ export default defineEventHandler(async (event) => {
 
 
         // assetRes.publish();
-        // console.log("投稿OK")
+        console.log("投稿OK")
         return "success";
     }
 });
