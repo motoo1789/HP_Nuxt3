@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-
+    definePageMeta({ middleware: 'auth' })
     const adminpageCards = [
         {
             title: "新着情報追加",
