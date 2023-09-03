@@ -1,12 +1,11 @@
 import contentful from "contentful-management";
-import { Environment } from "contentful-management/dist/typings/entities/environment";
 import path from "path";
 import fs from "fs";
 
 interface POSTFormat {
     title: string;
     abstract: string;
-    detail: string;
+    detaile: string;
     library: string;
     language: string;
     framework: string;
@@ -24,12 +23,8 @@ export default defineEventHandler(async (event) => {
     const image = post.image;
     const movie = post.movie;
 
-
     const imageFileData = image.replace(/^data:\w+\/\w+;base64,/, "");
     const movieFileData = movie.replace(/^data:\w+\/\w+;base64,/, "");
-    // console.log(fileData)
-    const decodedImageFile = Buffer.from(imageFileData, "base64");
-    const decodedMovieFile = Buffer.from(movieFileData, "base64");
 
     // ファイルの拡張子(png)
     const imageFileExtension = image
@@ -47,12 +42,12 @@ export default defineEventHandler(async (event) => {
         .toString()
         .slice(movie.indexOf(":") + 1, movie.indexOf(";"));
 
-
     const tmpfileimagename = [post.title, imageFileExtension].join(".");
     const tmpfilemoviname = [post.title, movieFileExtension].join(".");
  
     if (event.node.req.method === "POST") 
     {
+        //tmpファイルの作成をし読み取る処理が必要らしい
         await fs.writeFileSync(`./public/image/${tmpfileimagename}`, imageFileData, {
             encoding: "base64",
         });
@@ -65,7 +60,7 @@ export default defineEventHandler(async (event) => {
         const tmpMovieFilePath = await path.resolve("./public/movie", tmpfilemoviname);
         const tmpMovieFile = await fs.readFileSync(tmpMovieFilePath);
 
-        
+        // 初期化
         const client = contentful.createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             host: "api.contentful.com", // ホストは共通なので.envに記載しない
@@ -77,6 +72,7 @@ export default defineEventHandler(async (event) => {
             process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!
         );
 
+        // enviromentにメディアをupload
         const uploadImage = await myEnvironment.createUpload({
             file: tmpImageFile,
         });
@@ -84,6 +80,7 @@ export default defineEventHandler(async (event) => {
             file: tmpMovieFile,
         });
 
+        // プロ画のアセット生成
         const assetImage = await myEnvironment
             .createAsset({
                 fields: {
@@ -114,6 +111,7 @@ export default defineEventHandler(async (event) => {
                 return asset.publish();
             });
 
+        // 動画のアセット生成
         const assetMovie = await myEnvironment
             .createAsset({
                 fields: {
@@ -144,7 +142,8 @@ export default defineEventHandler(async (event) => {
                 return asset.publish();
             });
 
-        const postProject = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT!, {
+        // entryの作成
+        await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT!, {
             fields: {
                 title: {
                     'en-US': post.title
@@ -153,7 +152,7 @@ export default defineEventHandler(async (event) => {
                     'en-US': post.abstract
                 },
                 detail: {
-                    'en-US': post.detail
+                    'en-US': post.detaile
                 },
                 library: {
                     'en-US': post.library
@@ -189,9 +188,11 @@ export default defineEventHandler(async (event) => {
                     }
                 }
             }
-        })
-        await postProject.publish();
+        }).then((postProject) => {
+            return postProject.publish();
+        });
 
+        // tmpファイルを削除
         await fs.unlink(`./public/image/${tmpfileimagename}`, (err) => {
             if (err) throw err;
         });
@@ -199,8 +200,6 @@ export default defineEventHandler(async (event) => {
             if (err) throw err;
         });
 
-
-        // assetRes.publish();
         console.log("投稿OK")
         return "success";
     }
