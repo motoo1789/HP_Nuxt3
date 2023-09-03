@@ -1,21 +1,15 @@
 
 <template>
 	<div>
-
 		<v-container>
 			<v-row>
 				<v-col>
 					<p class="text-center text-h6">新着情報追加</p>
 				</v-col>
-
 			</v-row>
 			<v-row>
 				<v-col>
-
 					<form @submit="onSubmit">
-						<!--タイトル-->
-
-
 						<!--概要-->
 						<v-alert variant="text" type="warning" density="compact" v-if="errors.abstract"
 							id="error-name-required" aria-live="assertive">
@@ -55,14 +49,18 @@
 							<v-btn class="me-4" type="submit" color="light-blue-accent-3">送信</v-btn>
 						</div>
 
-						<v-snackbar min-width="auto" width="150" :timeout="3500" v-model="notifySuccess"
+						<v-snackbar min-width="auto" width="150" :timeout="3000" v-model="notifySuccess"
 							color="light-blue-accent-3">
 							<p class="text-center">送信成功！</p>
 						</v-snackbar>
 
-						<v-snackbar min-width="auto" width="150" :timeout="3500" v-model="notifyError" color="error">
+						<v-snackbar min-width="auto" width="150" :timeout="3000" v-model="notifyError" color="error">
 							<p class="text-center">送信失敗！</p>
 						</v-snackbar>
+						<v-overlay v-model="overlay" class="align-center justify-center">
+							<v-progress-circular color="white" :size="64" :width="7"
+								:indeterminate=prograssCircular></v-progress-circular>
+						</v-overlay>
 					</form>
 				</v-col>
 
@@ -74,14 +72,11 @@
 <script lang="ts" setup>
 import { VDatePicker } from 'vuetify/labs/VDatePicker'
 import { useForm } from 'vee-validate'
-import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 import { ref } from 'vue';
 
 definePageMeta({ middleware: 'auth' })
 
 const dateDialog = ref(false);
-//const createdProjectDate = ref()
-
 const imagetype = ["png", "jpeg", "jpg"];
 
 import * as yup from "yup"
@@ -114,8 +109,12 @@ interface POSTFormat {
 
 let notifySuccess = ref(false)
 let notifyError = ref(false);
+let prograssCircular = ref(false);
+let overlay = ref(false);
 
 const onSubmit = handleSubmit(async (values) => {
+	prograssCircular.value = true;
+	overlay.value = true;
 
 	const formData = {
 		abstract: values.abstract,
@@ -124,7 +123,7 @@ const onSubmit = handleSubmit(async (values) => {
 	}
 
 	try {
-		const response = useFetch("/api/contentful/PostInformation", {
+		const response = await useFetch("/api/contentful/PostInformation", {
 			method: 'POST',
 			body: formData,
 			headers: {
@@ -133,8 +132,12 @@ const onSubmit = handleSubmit(async (values) => {
 		})
 
 		if (response.data.value === "success") {
+			overlay.value = false;
+			prograssCircular.value = false;
 			notifySuccess.value = true;
 		} else {
+			overlay.value = false;
+			prograssCircular.value = false;
 			notifyError.value = true;
 			console.log(response)
 		}
