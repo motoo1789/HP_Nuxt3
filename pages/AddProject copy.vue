@@ -207,7 +207,10 @@ const onSubmit = handleSubmit(async (values) => {
 	})
 
 	try {
-		const response = useFetch("/api/contentful/post", {
+
+		const response = await useFetch ("/api/contentful/post", {
+
+
 			method: 'POST',
 			body: formData,
 		})
