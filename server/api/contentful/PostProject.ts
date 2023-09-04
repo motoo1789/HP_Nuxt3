@@ -60,6 +60,9 @@ export default defineEventHandler(async (event) => {
         const tmpMovieFilePath = await path.resolve("./public/movie", tmpfilemoviname);
         const tmpMovieFile = await fs.readFileSync(tmpMovieFilePath);
 
+        const imageFileObj = base64ToArrayBuffer(imageFileData);
+        const movieFileObj = base64ToArrayBuffer(movieFileData);
+
         // 初期化
         const client = contentful.createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
@@ -74,10 +77,10 @@ export default defineEventHandler(async (event) => {
 
         // enviromentにメディアをupload
         const uploadImage = await myEnvironment.createUpload({
-            file: tmpImageFile,
+            file: imageFileObj,
         });
         const uploadMovie = await myEnvironment.createUpload({
-            file: tmpMovieFile,
+            file: movieFileObj,
         });
 
         // プロ画のアセット生成
@@ -204,3 +207,19 @@ export default defineEventHandler(async (event) => {
         return "success";
     }
 });
+
+async function dataUrlToFile(dataUrl: string, fileName: string): Promise<File> {
+
+    const res: Response = await fetch(dataUrl);
+    const blob: Blob = await res.blob();
+    return new File([blob], fileName, { type: 'image/png' });
+}
+
+function base64ToArrayBuffer(base64:string) {
+    var binaryString = atob(base64);
+    var bytes = new Uint8Array(binaryString.length);
+    for (var i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
