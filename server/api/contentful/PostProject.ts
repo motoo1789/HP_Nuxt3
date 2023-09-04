@@ -48,16 +48,16 @@ export default defineEventHandler(async (event) => {
     if (event.node.req.method === "POST") 
     {
         //tmpファイルの作成をし読み取る処理が必要らしい
-        await fs.writeFileSync(`tmp/${tmpfileimagename}`, imageFileData, {
+        await fs.writeFileSync(`./tmp/${tmpfileimagename}`, imageFileData, {
             encoding: "base64",
         });
-        await fs.writeFileSync(`tmp/${tmpfilemoviname}`, movieFileData, {
+        await fs.writeFileSync(`./tmp/${tmpfilemoviname}`, movieFileData, {
             encoding: "base64",
         });
-        const tmpImageFilePath = await path.resolve("tmp", tmpfileimagename);
+        const tmpImageFilePath = await path.resolve("/tmp", tmpfileimagename);
         const tmpImageFile = await fs.readFileSync(tmpImageFilePath);
 
-        const tmpMovieFilePath = await path.resolve("tmp", tmpfilemoviname);
+        const tmpMovieFilePath = await path.resolve("/tmp", tmpfilemoviname);
         const tmpMovieFile = await fs.readFileSync(tmpMovieFilePath);
 
         // 初期化
@@ -193,10 +193,10 @@ export default defineEventHandler(async (event) => {
         });
 
         // tmpファイルを削除
-        await fs.unlink(`tmp/${tmpfileimagename}`, (err) => {
+        await fs.unlink(`./tmp/${tmpfileimagename}`, (err) => {
             if (err) throw err;
         });
-        await fs.unlink(`tmp/${tmpfilemoviname}`, (err) => {
+        await fs.unlink(`./tmp/${tmpfilemoviname}`, (err) => {
             if (err) throw err;
         });
 
