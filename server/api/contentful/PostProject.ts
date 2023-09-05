@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
         // 初期化
         const client = contentful.createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
-            host: "api.contentful.com", // ホストは共通なので.envに記載しない
+            // host: "api.contentful.com", // ホストは共通なので.envに記載しない
         });
         const mySpace = await client.getSpace(
             process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!
@@ -183,10 +183,10 @@ export default defineEventHandler(async (event) => {
         });
 
         // tmpファイルを削除
-        await fs.unlink(`./public/image/${tmpfileimagename}`, (err) => {
+        await fs.unlink(`./tmp/${tmpfileimagename}`, (err) => {
             if (err) throw err;
         });
-        await fs.unlink(`./public/movie/${tmpfilemoviname}`, (err) => {
+        await fs.unlink(`./tmp/${tmpfilemoviname}`, (err) => {
             if (err) throw err;
         });
 
