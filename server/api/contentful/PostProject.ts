@@ -47,18 +47,8 @@ export default defineEventHandler(async (event) => {
  
     if (event.node.req.method === "POST") 
     {
-        //tmpファイルの作成をし読み取る処理が必要らしい
-        await fs.writeFileSync(`./tmp/${tmpfileimagename}`, imageFileData, {
-            encoding: "base64",
-        });
-        await fs.writeFileSync(`./tmp/${tmpfilemoviname}`, movieFileData, {
-            encoding: "base64",
-        });
-        const tmpImageFilePath = await path.resolve("/tmp", tmpfileimagename);
-        const tmpImageFile = await fs.readFileSync(tmpImageFilePath);
-
-        const tmpMovieFilePath = await path.resolve("/tmp", tmpfilemoviname);
-        const tmpMovieFile = await fs.readFileSync(tmpMovieFilePath);
+        const imageFileObj = await base64ToArrayBuffer(imageFileData);
+        const movieFileObj = await base64ToArrayBuffer(movieFileData);
 
         // 初期化
         const client = contentful.createClient({
@@ -74,10 +64,10 @@ export default defineEventHandler(async (event) => {
 
         // enviromentにメディアをupload
         const uploadImage = await myEnvironment.createUpload({
-            file: tmpImageFile,
+            file: imageFileObj,
         });
         const uploadMovie = await myEnvironment.createUpload({
-            file: tmpMovieFile,
+            file: movieFileObj,
         });
 
         // プロ画のアセット生成
@@ -204,3 +194,12 @@ export default defineEventHandler(async (event) => {
         return "success";
     }
 });
+
+async function base64ToArrayBuffer(base64:string) {
+    var binaryString = atob(base64);
+    var bytes = new Uint8Array(binaryString.length);
+    for (var i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
