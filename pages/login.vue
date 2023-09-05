@@ -18,11 +18,7 @@
 				<!-- <v-btn @click="signIn('github')" type="submit" variant="outlined" color="light-blue-accent-3" block v-if="status === 'unauthenticated'"
 				class="mt-2">Githubでログイン</v-btn> -->
 
-				<!-- <NuxtLink :to="`/AddAcount`" class="link-style-home ">
-					<v-btn type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2 ">
-						アカウント登録
-					</v-btn>
-				</NuxtLink> -->
+				
 			</v-form>
 		</v-sheet>
 

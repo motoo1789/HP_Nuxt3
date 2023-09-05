@@ -12,6 +12,13 @@
                     </v-card>
                 </v-col>
             </v-row>
+            <v-row>
+                <NuxtLink :to="`/AddAcount`" class="link-style-home ">
+					<v-btn type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2 ">
+						アカウント登録
+					</v-btn>
+				</NuxtLink>
+            </v-row>
         </v-container>
 
     </div>
