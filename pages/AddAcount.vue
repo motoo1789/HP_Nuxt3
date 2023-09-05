@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({ middleware: 'auth' })
 
 const name = ref("");
 const email = ref("");
