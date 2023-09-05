@@ -182,14 +182,6 @@ export default defineEventHandler(async (event) => {
             return postProject.publish();
         });
 
-        // tmpファイルを削除
-        await fs.unlink(`./tmp/${tmpfileimagename}`, (err) => {
-            if (err) throw err;
-        });
-        await fs.unlink(`./tmp/${tmpfilemoviname}`, (err) => {
-            if (err) throw err;
-        });
-
         console.log("投稿OK")
         return "success";
     }
