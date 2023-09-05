@@ -13,16 +13,15 @@
                 </v-col>
             </v-row>
             <v-row>
-                <NuxtLink :to="`/AddAcount`" class="link-style-home ">
-                    <v-col v-for="card in adminpageCards" :key="card.title" cols="12">
+                <v-col cols="12">
+                    <NuxtLink :to="`/AddAcount`" class="link-style-home ">
                         <v-btn type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2 ">
-                            アカウント登録
+                            アカウント登録ページ
                         </v-btn>
-                    </v-col>
-                </NuxtLink>
+                    </NuxtLink>
+                </v-col>
             </v-row>
         </v-container>
-
     </div>
 </template>
 
