@@ -217,6 +217,8 @@ import { ref } from "vue";
     const qualifications = [
         { name: "ITパスポート" },
         { name: "基本情報技術者" },
+        { name: "応用情報技術者" },
+        { name: "AWS Certified Cloud Practitioner" },
         { name: "普通自動車免許" }
     ]
     const isExternalLink = (path:string) => {
