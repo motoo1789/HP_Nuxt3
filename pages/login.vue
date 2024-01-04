@@ -47,8 +47,7 @@ const password = ref("");
 let showAlert = ref(false);
 
 const loginMailPass = async () => {
-	const result = await signIn('credentials', { email: email.value, password: password.value, redirect: false, callbackUrl: "/" });
-	console.log(result);
+	const result = await signIn('credentials', { email: email.value, password: password.value, redirect: false, callbackUrl: "/" })
 
 	if(status.value === 'unauthenticated')
 	{

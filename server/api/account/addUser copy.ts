@@ -6,13 +6,10 @@ function getRandomInt(max:number) {
 }
 
 export default defineEventHandler(async (event) => {
-    console.log("サーバー側処理：addUser")
     
     if (event.node.req.method === 'POST') {
         
         const body = await readBody(event);
-
-        console.log(body)
 
         const name = body.name
         const password = body.password;
@@ -20,19 +17,12 @@ export default defineEventHandler(async (event) => {
 
         const saltRounds = getRandomInt(10) + 1
 
-        const salt = bcrypt.genSaltSync(saltRounds)
-        console.log('salt: ', salt)
-        
+        const salt = bcrypt.genSaltSync(saltRounds)        
         const hash = bcrypt.hashSync(password, salt)
-        console.log('hash: ', hash)
-        
-        console.log('data1: ', bcrypt.compareSync(password, hash))
-        console.log('data2: ', bcrypt.compareSync("dte", hash))
+
 
 
         const { rows, fields } = await sql`SELECT COUNT(*) FROM users`;
-        console.log(rows)
-        console.log(fields);
         const lines:number = Number(rows[0].count) + 1;
 
         await sql`INSERT INTO users (user_id,username,password,email,is_active) 

@@ -77,7 +77,6 @@
     let showDrawer = ref(false);
 
     const show = () => {
-        console.log("fdsafd");
         showDrawer.value = !showDrawer.value;
     }
 
