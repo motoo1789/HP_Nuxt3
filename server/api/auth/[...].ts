@@ -25,11 +25,9 @@ export default NuxtAuthHandler({
 			async authorize(credentials: { email: string, password: string }) {
 
 				const dbUserId:string = await getEmailUser(credentials.email);
-				console.log(dbUserId);
 				if(dbUserId === "No acount")
 				{
 					console.log("アカウントが存在しません");
-					
 					return null;
 				}
 
