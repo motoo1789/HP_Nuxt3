@@ -42,9 +42,6 @@ interface AddUser {
 }
 
 const addAccount = async () => {
-    console.log(name.value)
-    console.log(email.value)
-    console.log(password.value)
 
     const formData: AddUser = {
         name: name.value,
@@ -65,8 +62,6 @@ const addAccount = async () => {
         },
         body: formData,// formDataをJSON文字列に変換して送信
     });
-
-    console.log(data);
 }
 
 </script>

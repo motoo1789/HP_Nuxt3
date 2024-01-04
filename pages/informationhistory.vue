@@ -32,7 +32,6 @@ const { currentpage, updatePage } =  useCurrentPage();
 const { parseUpdateInformation } = useUpdateInformation();
 
 const  informationhisotory  =  await parseUpdateInformation();
-//console.log(informationhisotory.length)
 
 
 const pushPagination = () => {
