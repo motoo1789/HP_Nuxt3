@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import { sql } from '@vercel/postgres';
 
 export default NuxtAuthHandler({
-	secret: process.env.AUTH_SECRET,
+	// secret: process.env.AUTH_SECRET, localはいらない
 	pages: {
 		signIn: "/login", // 用意したログインページに設定
 	},
