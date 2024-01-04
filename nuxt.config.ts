@@ -1,56 +1,60 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      contentfulSpaceId: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+      contentfulAccessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
+    },
+  },
+
   configureWebpack: {
     resolve: {
-      mainFields: ['main', 'browser']
-    }
+      mainFields: ["main", "browser"],
+    },
   },
   typescript: {
-      shim: false,
-    },
+    shim: false,
+  },
 
   ssr: false,
   css: [
-    "vuetify/styles", 
+    "vuetify/styles",
     "@mdi/font/css/materialdesignicons.css",
-    '~/assets/css/font.css',
-    '~/assets/css/card.css',
+    "~/assets/css/font.css",
+    "~/assets/css/card.css",
   ],
 
   build: {
-    transpile: ["vuetify",'@vuepic/vue-datepicker'],
-
+    transpile: ["vuetify", "@vuepic/vue-datepicker"],
   },
   buildModules: [
     // Simple usage
-    '@nuxtjs/vuetify',
+    "@nuxtjs/vuetify",
   ],
 
   vite: {
     define: {
       "process.env.DEBUG": false,
     },
-  
-},
+  },
 
   serverMiddleware: [
-    { path: 'api/anime', handler: "~/server/api/anime"},
-    { path: 'api/contentful', handler: "~/server/api/contentful"},
-    
+    { path: "api/anime", handler: "~/server/api/anime" },
+    { path: "api/contentful", handler: "~/server/api/contentful" },
   ],
 
   modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    origin: 'https://hp-nuxt3-motoo1789.vercel.app'
+    // origin: 'https://hp-nuxt3-motoo1789.vercel.app' localはいらない
   },
 
   redirect: {
-    login: '/login',
-    logout: '/',
+    login: "/login",
+    logout: "/",
     callback: false,
-    home: '/'
+    home: "/",
   },
 
   prismic: {
@@ -58,7 +62,7 @@ export default defineNuxtConfig({
   },
   proxy: {
     // ファイルのPOSTがうまくいかなかったら
-    // options:[ 
+    // options:[
     //     {
     //         target: process.env.API_HOST_URL,
     //         changeOrigin: true,
@@ -76,5 +80,5 @@ export default defineNuxtConfig({
     //         pathFilter: ["/api/product"],
     //     },
     // ]
-}, 
-})
+  },
+});
