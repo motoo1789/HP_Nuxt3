@@ -19,7 +19,6 @@ export const useUpdateInformation = () => {
         const { cmsComtents } = await useCMSContent()
 
         const contentsValueObject = await cmsComtents.value;
-        console.log(contentsValueObject)
         const hobbyArray = contentsValueObject?.filter(cmsContent => {
             return cmsContent.hasOwnProperty('updateDate')
         })
