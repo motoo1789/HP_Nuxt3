@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import { sql } from '@vercel/postgres';
 
 export default NuxtAuthHandler({
-	secret: process.env.AUTH_SECRET,
+	// secret: process.env.AUTH_SECRET, localはいらない
 	pages: {
 		signIn: "/login", // 用意したログインページに設定
 	},
@@ -25,11 +25,9 @@ export default NuxtAuthHandler({
 			async authorize(credentials: { email: string, password: string }) {
 
 				const dbUserId:string = await getEmailUser(credentials.email);
-				console.log(dbUserId);
 				if(dbUserId === "No acount")
 				{
 					console.log("アカウントが存在しません");
-					
 					return null;
 				}
 
