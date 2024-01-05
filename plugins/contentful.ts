@@ -21,6 +21,11 @@ export default defineNuxtPlugin(() => {
   console.log("configContentful.public.contentfulSpaceId");
   console.log(configContentful.public.contentfulSpaceId);
 
+  console.log(createClient({
+    space: configContentful.public.contentfulSpaceId,
+    accessToken: configContentful.public.contentfulAccessToken
+  }));
+
   if( configContentful.public.contentfulSpaceId     === undefined ||
       configContentful.public.contentfulAccessToken === undefined) 
   {
