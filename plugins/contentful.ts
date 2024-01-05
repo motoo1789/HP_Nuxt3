@@ -24,20 +24,21 @@ export default defineNuxtPlugin(() => {
   if( configContentful.public.contentfulSpaceId     === undefined ||
       configContentful.public.contentfulAccessToken === undefined) 
   {
+    console.log("undefindらしい");
     return {provide: {
       client: createClient({
         space: "",
-        accessToken: "",
-      }),
-    },}
+        accessToken: ""
+      })
+    }}
   }
 
   return {
 	  provide: {
       client: createClient({
         space: configContentful.public.contentfulSpaceId,
-        accessToken: configContentful.public.contentfulAccessToken,
-      }),
-    },
-  };
+        accessToken: configContentful.public.contentfulAccessToken
+      })
+    }
+  }
 });
