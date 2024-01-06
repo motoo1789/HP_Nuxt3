@@ -4,8 +4,8 @@ export default defineNuxtPlugin(async () => {
 
   const configContentful = await useRuntimeConfig();
   const client = await createClient({
-    space: configContentful.public.contentfulSpaceId,
-    accessToken: configContentful.public.contentfulAccessToken
+    space: `${configContentful.public.contentfulSpaceId}`,
+    accessToken: `${configContentful.public.contentfulAccessToken}`
   });
   console.log(client);
 
