@@ -1,32 +1,29 @@
 import { createClient } from "contentful";
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
 
-  const configContentful = useRuntimeConfig();
-  const client = createClient({
+  const configContentful = await useRuntimeConfig();
+  const client = await createClient({
     space: configContentful.public.contentfulSpaceId,
     accessToken: configContentful.public.contentfulAccessToken
   });
   console.log(client);
 
-  if( configContentful.public.contentfulSpaceId     === undefined ||
-      configContentful.public.contentfulAccessToken === undefined) 
-  {
-    console.log("コンテンツを取得できていません");
-    return {provide: {
-      client: createClient({
-        space: "",
-        accessToken: ""
-      })
-    }}
-  }
+  // if( configContentful.public.contentfulSpaceId     === undefined ||
+  //     configContentful.public.contentfulAccessToken === undefined) 
+  // {
+  //   console.log("コンテンツを取得できていません");
+  //   return {provide: {
+  //     client: createClient({
+  //       space: "",
+  //       accessToken: ""
+  //     })
+  //   }}
+  // }
 
-  if(undefined !== client)
-  {
-    return {
-      provide: {
-        client: client
-      }
+  return {
+    provide: {
+      client: client
     }
   }
 });
