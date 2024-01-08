@@ -16,6 +16,8 @@ export default defineNuxtPlugin(async () => {
     // return { provide : {client: createClient({space: "", accessToken: ""})}};
   }
 
+  console.log(`env アクセストークン:${configContentful.public.contentfulAccessToken}`)
+  console.log("env アクセストークン:CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds")
   if(configContentful.public.contentfulAccessToken === 'CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds')
 {
   console.log("同じ1")
