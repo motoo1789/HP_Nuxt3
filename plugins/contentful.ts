@@ -29,7 +29,7 @@ if(configContentful.public.contentfulSpaceId === 'gtch6w6darsf')
 
   const test : CreateClientParams = {
     space : configContentful.public.contentfulSpaceId,
-    accessToken : 'CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds'
+    accessToken : configContentful.public.contentfulAccessToken
   }
 
   const client = await createClient(test);
