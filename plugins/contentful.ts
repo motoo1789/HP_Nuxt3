@@ -1,5 +1,6 @@
 import { createClient } from "contentful";
 import { CreateClientParams } from 'contentful'
+import { ContentfulClientApi } from "contentful"
 
 export default defineNuxtPlugin(async () => {
 
@@ -16,8 +17,8 @@ export default defineNuxtPlugin(async () => {
   }
 
   const test : CreateClientParams = {
-    space : configContentful.public.contentfulSpaceId,
-    accessToken : configContentful.public.contentfulAccessToken
+    space : 'gtch6w6darsf',
+    accessToken : 'CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds'
   }
 
   const client = await createClient(test);
@@ -40,4 +41,4 @@ export default defineNuxtPlugin(async () => {
       client: client
     }
   }
-});
+} );
