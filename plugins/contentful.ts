@@ -1,4 +1,5 @@
 import { createClient } from "contentful";
+import { CreateClientParams } from 'contentful'
 
 export default defineNuxtPlugin(async () => {
 
@@ -14,10 +15,12 @@ export default defineNuxtPlugin(async () => {
     // return { provide : {client: createClient({space: "", accessToken: ""})}};
   }
 
-  const client = await createClient({
-    space: configContentful.public.contentfulSpaceId,
-    accessToken: configContentful.public.contentfulAccessToken
-  });
+  const test : CreateClientParams = {
+    space : configContentful.public.contentfulSpaceId,
+    accessToken : configContentful.public.contentfulAccessToken
+  }
+
+  const client = await createClient(test);
   console.log(client);
 
   // if( configContentful.public.contentfulSpaceId     === undefined ||
