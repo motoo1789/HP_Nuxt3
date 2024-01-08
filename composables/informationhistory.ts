@@ -1,5 +1,5 @@
 export const useCMSContents = async () => {
-    const {$client} = useNuxtApp()
+    const {$client} = await useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
     
     const contents = getContents.value?.items;
@@ -8,7 +8,7 @@ export const useCMSContents = async () => {
 };
 
 export const useCMSContent = () => {
-    const cmsComtents = useState("cmsComtents" , () => useCMSContents() );
+    const cmsComtents = useState("cmsComtents" , async () => await useCMSContents() );
     return { 
         cmsComtents: readonly(cmsComtents),
     }

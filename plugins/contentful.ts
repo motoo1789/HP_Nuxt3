@@ -16,9 +16,18 @@ export default defineNuxtPlugin(async () => {
     // return { provide : {client: createClient({space: "", accessToken: ""})}};
   }
 
+  if(configContentful.public.contentfulAccessToken === 'CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds')
+{
+  console.log("同じ1")
+}
+if(configContentful.public.contentfulSpaceId === 'gtch6w6darsf')
+{
+  console.log("同じ2")
+}
+
   const test : CreateClientParams = {
-    space : 'gtch6w6darsf',
-    accessToken : 'CRWQWaVfuYO7GFoepi_x8EJlCPEKc8gRXx9-u9kE_ds'
+    space : configContentful.public.contentfulSpaceId,
+    accessToken : configContentful.public.contentfulAccessToken
   }
 
   const client = await createClient(test);
@@ -41,4 +50,4 @@ export default defineNuxtPlugin(async () => {
       client: client
     }
   }
-} );
+});
