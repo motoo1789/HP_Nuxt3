@@ -1,22 +1,31 @@
 import { createClient } from "contentful";
+import { CreateClientParams } from "contentful";
 
-export default defineNuxtPlugin(() => {
-  const configContentful = useRuntimeConfig();
-  console.log(configContentful);
+export default defineNuxtPlugin(async () => {
+  const configContentful = await useRuntimeConfig();
 
-  console.log("テスト");
-  console.log("configContentful.public.contentfulAccessToken");
-  console.log(configContentful.public.contentfulAccessToken);
-  console.log("configContentful.public.contentfulSpaceId");
-  console.log(configContentful.public.contentfulSpaceId);
+  if (	configContentful.public.contentfulSpaceId 		=== undefined ||
+    		configContentful.public.contentfulAccessToken === undefined) {
+    return {
+      provide: {
+        client: createClient({
+          space: "",
+          accessToken: "",
+        }),
+      },
+    };
+  }
 
+  const test: CreateClientParams = {
+    space: configContentful.public.contentfulSpaceId,
+    accessToken: configContentful.public.contentfulAccessToken,
+  };
+
+  const client = await createClient(test);
 
   return {
-	provide: {
-      client: createClient({
-        space: configContentful.public.contentfulSpaceId,
-        accessToken: configContentful.public.contentfulAccessToken,
-      }),
+    provide: {
+      client: client,
     },
   };
 });
