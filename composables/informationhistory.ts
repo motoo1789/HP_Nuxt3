@@ -1,5 +1,5 @@
 export const useCMSContents = async () => {
-    const {$client} = await useNuxtApp()
+    const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
     
     const contents = getContents.value?.items;
@@ -8,7 +8,7 @@ export const useCMSContents = async () => {
 };
 
 export const useCMSContent = () => {
-    const cmsComtents = useState("cmsComtents" , async () => await useCMSContents() );
+    const cmsComtents = useState("cmsComtents" , () => useCMSContents() );
     return { 
         cmsComtents: readonly(cmsComtents),
     }
@@ -19,7 +19,7 @@ export const useUpdateInformation = () => {
         const { cmsComtents } = await useCMSContent()
 
         const contentsValueObject = await cmsComtents.value;
-        const hobbyArray = contentsValueObject?.filter(cmsContent => {
+                const hobbyArray = contentsValueObject?.filter(cmsContent => {
             return cmsContent.hasOwnProperty('updateDate')
         })
         const afterSortHobbyArray = hobbyArray.sort((a,b) => Date.parse(b.updateDate) - Date.parse(a.updateDate));
