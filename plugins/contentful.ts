@@ -17,8 +17,8 @@ export default defineNuxtPlugin(async () => {
   }
 
   const test: CreateClientParams = {
-    space: configContentful.public.contentfulSpaceId,
-    accessToken: configContentful.public.contentfulAccessToken,
+    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
   };
 
   const client = await createClient(test);
