@@ -16,8 +16,8 @@
                       :key="key"
                   >
                   <!-- HACK: -するの好きじゃないのでどうにかしたい -->
-                     <v-expansion-panel-title>{{ newinformation.updateDate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
-                  <v-expansion-panel-text>{{ newinformation.detaile }}</v-expansion-panel-text>
+                     <v-expansion-panel-title >{{ newinformation.updateDate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
+                  <v-expansion-panel-text class="msg-wrapper">{{ newinformation.detaile }}</v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
             </v-col>
@@ -35,5 +35,7 @@ const { currentpage } = useCurrentPage();
 </script>
 
 <style>
-
+.msg-wrapper {
+  white-space: pre-line;
+}
 </style>
