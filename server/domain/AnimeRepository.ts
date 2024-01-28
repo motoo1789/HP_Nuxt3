@@ -1,0 +1,3 @@
+interface AnimeRepository {
+    find() : Object;
+}

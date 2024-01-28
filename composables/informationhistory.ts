@@ -1,3 +1,7 @@
+/**
+ * このファイルはinformationの作成の際に呼ばれるのみ
+ * 現状componentとpagesで機能がまたがっているから共通の場所として使っていると思われる
+ */
 export const useCMSContents = async () => {
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
