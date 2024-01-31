@@ -1,0 +1,3 @@
+class AnimeFactory extends BaseFactory {
+
+}

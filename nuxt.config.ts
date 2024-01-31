@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       contentfulSpaceId: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+      contentfulEnviroment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT,
       contentfulAccessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
     },
   },
@@ -47,7 +48,7 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    origin: 'https://hp-nuxt3-motoo1789.vercel.app'
+    // origin: 'https://hp-nuxt3-motoo1789.vercel.app'
   },
 
   redirect: {

@@ -6,8 +6,10 @@ export default defineEventHandler(async (event) => {
 
     if (event.node.req.method === 'GET') 
     {
-
+        // repository 問い合わせ
         
+
+        // 返却値をそのまま返す
         return {};
     }
 })
