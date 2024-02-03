@@ -1,8 +1,8 @@
 export interface BaseRepository {
-    findByState()   : Object | boolean
-    findByCMS()     : Object | boolean
-    saveToState()   : Object;
-    saveToCMS()     : Object;
+    findByState() : Object | boolean
+    findByCMS() : Object | boolean
+    saveToState(cmsContents : Array<Object>) : Object;
+    saveToCMS() : Object;
 }
 
 
@@ -27,7 +27,11 @@ export class AnimeRepository implements BaseRepository {
         return false;
     }
 
-    saveToState() : Object {
+    saveToState(cmsContents : Array<Object>) : Object {
+        // a:(27) ['アイドルマスターシリーズ', 'アウトブレイク・カンパニー', 'アクセル・ワールド', 
+        // この形で保存したい
+        console.log("saveToState");
+        console.log(cmsContents);
         return {}
     }
 

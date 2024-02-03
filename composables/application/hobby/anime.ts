@@ -7,22 +7,22 @@ export const getAnimeContents = () => {
 		try {
 			// repositoryにコンテンツがあるかの確認
 			// あったら取得して早期リターン
-			const stateContents = animerepository.findByState();
+			const stateContents = await animerepository.findByState();
 			if(stateContents){
 				console.log("Stateからコンテンツ取得")
 				return {}
 			}
 
 			// なかったら取得　デプロイ後の最初のアクセス
-			// const { data:response } = await useFetch("/api/hobby/anime/GetAnimeContents")
-
-			// if (response === null) {
-			// 	console.log("Not contens ...");
-			// }
+			const { data:response } = await useFetch("/api/hobby/anime/GetAnimeContents")
+			if (response === null) {
+				console.log("Not contens ...");
+			}
 
 			/**
 			 *  domain部分にお願い
 			*/
+			await animerepository.saveToState(response.value!);
 
 			return animerepository.findByCMS()
 
