@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  imports: {
+    dirs: [
+      'composables/**'
+    ]
+  },
+
   runtimeConfig: {
     public: {
       contentfulSpaceId: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
@@ -42,6 +49,7 @@ export default defineNuxtConfig({
   serverMiddleware: [
     { path: "api/anime", handler: "~/server/api/anime" },
     { path: "api/contentful", handler: "~/server/api/contentful" },
+    { path: "api/hobby/anime", handler: "~/server/api/hobby/anime" },
   ],
 
   modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],

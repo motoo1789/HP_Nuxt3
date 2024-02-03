@@ -32,8 +32,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
+const { animeContents } = getAnimeContents();
+
+const  anime  =  await animeContents();
 console.log("index");
+console.log(anime);
 
 </script>
