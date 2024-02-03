@@ -26,9 +26,7 @@ export default defineEventHandler(async (event) => {
         });
         return syllabaryContent;
     }))
-
-    console.log("content");
-    console.log(contents);
+    
     return contents
 } );
 
