@@ -1,39 +1,34 @@
-import contentful from "contentful-management";
-import createClient  from "contentful";
+import clientContentful  from "contentful";
 import { CreateClientParams } from "contentful";
 
-const Syllabary = {
-    A : "animeA",
-    Ka : "animeKa"
-} as const
+const SyllabaryArray = [
+    "animeA",
+    "animeKa"
+ ] as const
 
 /**
  * CMSからアニメコンテンツを持ってくる
- * @params contentTtype string 
  * 
- * @returns Array<Object>
+ * @returns Object
  */
 export default defineEventHandler(async (event) => {
-    // const {$client} = useNuxtApp()
-    const client = await contentful.createClient({
-        accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
-        host: "api.contentful.com" // ホストは共通なので.envに記載しない
-    });
-    const test: CreateClientParams = {
+    const CONTENS_LIMIT = 500;
+    const clientParams: CreateClientParams = {
         space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
         accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
-      };
-    const tmp = await createClient.createClient(test)
-    const content = await tmp.getEntries( { content_type: Syllabary.A });
+    };
+    const clientedClient = await clientContentful.createClient(clientParams)
 
-    // const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!);
-    // const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!);
-    // const { data:getContents } = await myEnvironment.getEntries({
-    //     content_type: Syllabary.A
-    // });
+    const contents = await Promise.all(SyllabaryArray.map( async (syllabary) => {
+        const syllabaryContent = await clientedClient.getEntries({
+             content_type: syllabary,
+             limit: CONTENS_LIMIT
+        });
+        return syllabaryContent;
+    }))
+
     console.log("content");
-    console.log(content);
-    return content
-    //return {a: "ア行のアニメ", i:"異形のアニメ"}
-});
+    console.log(contents);
+    return contents
+} );
 

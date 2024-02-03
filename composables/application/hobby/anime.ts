@@ -12,7 +12,6 @@ export const getAnimeContents = () => {
 		} catch (err) {
 			await navigateTo('/error')
 		}
-
 	}
 
 	return {
