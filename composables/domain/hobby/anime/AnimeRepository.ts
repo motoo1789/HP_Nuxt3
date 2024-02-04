@@ -1,3 +1,6 @@
+import { AnimeFactory } from "./AnimeFactory"
+import { BaseFactory } from "./BaseFactory"
+
 export interface BaseRepository {
     findByState() : Object | boolean
     findByCMS() : Object | boolean
@@ -7,7 +10,7 @@ export interface BaseRepository {
 
 
 export class AnimeRepository implements BaseRepository {
-
+    
     constructor() {
         console.log("ああああ");
     }
@@ -31,7 +34,17 @@ export class AnimeRepository implements BaseRepository {
         // a:(27) ['アイドルマスターシリーズ', 'アウトブレイク・カンパニー', 'アクセル・ワールド', 
         // この形で保存したい
         console.log("saveToState");
-        console.log(cmsContents);
+        try {
+            const animeEntryFactory : BaseFactory = new AnimeFactory();
+            console.log("saveToState animeEntryFactory");
+            animeEntryFactory.createEntity(cmsContents);
+
+
+        } catch(err){
+            console.log("error error");
+            console.log(err)
+        }
+        
         return {}
     }
 
@@ -40,7 +53,3 @@ export class AnimeRepository implements BaseRepository {
     }
 
 }
-
-// 正規化
-// const contents = getContents.value?.items;
-// const parseContents = contents.map(item => item.fields);

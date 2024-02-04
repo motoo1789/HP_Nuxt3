@@ -20,7 +20,7 @@ export const getAnimeContents = () => {
 			}
 
 			/**
-			 *  domain部分にお願い
+			 *  domain部分に正規化お願い
 			*/
 			await animerepository.saveToState(response.value!);
 
