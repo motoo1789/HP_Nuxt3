@@ -1,4 +1,8 @@
 import { BaseFactory } from "./BaseFactory"
+// import { Anime } from "./anime"
+import { EntryId } from "./EntryId"
+import { Title } from "./Title"
+
 
 interface Anime {
     title: string,
@@ -47,6 +51,12 @@ export class AnimeFactory extends BaseFactory {
 
         console.log(createdAnimeArray);
 
+        this.makeSyllabaryNormalization(createdAnimeArray)
+        //return this.make(createdAnimeArray)
+    }
+
+    private makeSyllabaryNormalization(createdAnimeArray : Array<Array<Anime>>) : SyllabaryNormalization {
+        
         const normalizedAnimeContents : SyllabaryNormalization= {
             animeA	: [],
             animeKa	: [],
@@ -66,12 +76,15 @@ export class AnimeFactory extends BaseFactory {
         }
 
         Object.keys(normalizedAnimeContents).forEach((key, index) => {
-            if(key === "animeA" || key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" || key === "animeHa" || key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
+            if(	key === "animeA" 	|| key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" ||
+                key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
             {
                 normalizedAnimeContents[key] = createdAnimeArray[index];
             }
         });
+        
+        console.log(normalizedAnimeContents);
 
-		console.log(normalizedAnimeContents);
+        return normalizedAnimeContents; 
     }
 }
