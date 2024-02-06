@@ -11,8 +11,10 @@ export interface BaseRepository {
 
 export class AnimeRepository implements BaseRepository {
     
+    private map = new Map<string, Array<Anime>>();
+
     constructor() {
-        console.log("ああああ");
+        console.log("AnimeRepository");
     }
 
     findByState() : Object | boolean{

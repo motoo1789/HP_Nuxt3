@@ -1,16 +1,21 @@
 import { BaseFactory } from "./BaseFactory"
 
+interface Anime {
+    title: string,
+    entryId: string,
+}
+
 interface SyllabaryNormalization {
-    "animeA"  : Array<string>, 
-    "animeKa" : Array<string>,
-    "animeSa" : Array<string>,
-    "animeTa" : Array<string>,
-    "animeNa" : Array<string>,
-    "animeHa" : Array<string>,
-    "animeMa" : Array<string>,
-    "animeYa" : Array<string>,
-    "animeRa" : Array<string>,
-    "animeWa" : Array<string>
+    "animeA"  : Array<Anime>, 
+    "animeKa" : Array<Anime>,
+    "animeSa" : Array<Anime>,
+    "animeTa" : Array<Anime>,
+    "animeNa" : Array<Anime>,
+    "animeHa" : Array<Anime>,
+    "animeMa" : Array<Anime>,
+    "animeYa" : Array<Anime>,
+    "animeRa" : Array<Anime>,
+    "animeWa" : Array<Anime>
 }
 
 export class AnimeFactory extends BaseFactory {
@@ -23,18 +28,26 @@ export class AnimeFactory extends BaseFactory {
     create(cmsContents : Array<Object>): void {
         console.log("AnimeFactory create");
         console.log(cmsContents);
-        const tmparray = new Array<Array<string>>;
+        const createdAnimeArray = new Array<Array<Anime>>;
 
-        // // itemsからarrayを全て確保ｓる
+        // // itemsからarrayを全て確保
         cmsContents.forEach( animeContentObject => {
-            const animeContentsArray = animeContentObject.items;
-            const tmp = animeContentsArray.map(animeItem => animeItem.fields); // [{title : "アニメ"},{title : "アニメ"}]
-            tmparray.push(tmp.map(anime => anime.title));
-            
-        });
-        console.log(tmparray);
 
-        let obj : SyllabaryNormalization= {
+            const syllabaryArray = new Array<Anime>;
+            animeContentObject.items.forEach( notNormalizeAnimeContent => {
+                const normalizeAnimeContent : Anime = {
+                    title: notNormalizeAnimeContent.fields.title,
+                    entryId: notNormalizeAnimeContent.sys.id,
+                }
+                syllabaryArray.push(normalizeAnimeContent);
+            });
+            createdAnimeArray.push(syllabaryArray);
+
+        });
+
+        console.log(createdAnimeArray);
+
+        const normalizedAnimeContents : SyllabaryNormalization= {
             animeA	: [],
             animeKa	: [],
             animeSa	: [],
@@ -47,18 +60,18 @@ export class AnimeFactory extends BaseFactory {
             animeWa	: [],
         }
 
-        if(Object.keys(obj).length !== tmparray.length){
+        if(Object.keys(normalizedAnimeContents).length !== createdAnimeArray.length){
             // 長さが異なればreturnしていい
             //return {}
         }
 
-        Object.keys(obj).forEach((key, index) => {
+        Object.keys(normalizedAnimeContents).forEach((key, index) => {
             if(key === "animeA" || key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" || key === "animeHa" || key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
             {
-                obj[key] = tmparray[index];
+                normalizedAnimeContents[key] = createdAnimeArray[index];
             }
         });
 
-		console.log(obj);
+		console.log(normalizedAnimeContents);
     }
 }
