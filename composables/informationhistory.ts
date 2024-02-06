@@ -1,3 +1,7 @@
+/**
+ * このファイルはinformationの作成の際に呼ばれるのみ
+ * 現状componentとpagesで機能がまたがっているから共通の場所として使っていると思われる
+ */
 export const useCMSContents = async () => {
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
@@ -19,7 +23,7 @@ export const useUpdateInformation = () => {
         const { cmsComtents } = await useCMSContent()
 
         const contentsValueObject = await cmsComtents.value;
-        const hobbyArray = contentsValueObject?.filter(cmsContent => {
+                const hobbyArray = contentsValueObject?.filter(cmsContent => {
             return cmsContent.hasOwnProperty('updateDate')
         })
         const afterSortHobbyArray = hobbyArray.sort((a,b) => Date.parse(b.updateDate) - Date.parse(a.updateDate));

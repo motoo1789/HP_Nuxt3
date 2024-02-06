@@ -17,11 +17,11 @@ export default defineEventHandler(async (event) => {
     {
         const client = await contentful.createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
-            //host: "api.contentful.com" // ホストは共通なので.envに記載しない
+            host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });
 
-        const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID);
-        const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT);
+        const mySpace = await client.getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!);
+        const myEnvironment = await mySpace.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT!);
         const assetRes = await myEnvironment.createEntry(process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_NEWINFORMATION!,{
             fields: {
                 abstract: {
