@@ -3,9 +3,16 @@ import { CreateClientParams } from "contentful";
 
 const SyllabaryArray = [
     "animeA",
-    "animeKa"
+    "animeKa",
+    "animeSa",
+    "animeTa",
+    "animeNa",
+    "animeHa",
+    "animeMa",
+    "animeYa",
+    "animeRa",
+    "animeWa",
  ] as const
-
 /**
  * CMSからアニメコンテンツを持ってくる
  * 

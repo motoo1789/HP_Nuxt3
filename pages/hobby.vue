@@ -2,7 +2,6 @@
     <div>
         <v-card class="my-2">
             <v-card-title class="text-center justify-center py-3  color">
-                
                     アニメ
             </v-card-title>
             <v-tabs
@@ -18,10 +17,8 @@
             </v-tabs>
 
             <v-card-text>
-
                 <v-window v-model="tab" v-for="(animetitles, animeskey) in animes" :key="animeskey">
                     <v-window-item :value=animeskey> 
-
                         <v-row>
                             <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
                                 lg="4"    
@@ -87,6 +84,22 @@
 </template>
 
 <script setup lang="ts">
+    interface ViewAnimeContents {
+        "animeA"  : Array<string>, 
+        "animeKa" : Array<string>,
+        "animeSa" : Array<string>,
+        "animeTa" : Array<string>,
+        "animeNa" : Array<string>,
+        "animeHa" : Array<string>,
+        "animeMa" : Array<string>,
+        "animeYa" : Array<string>,
+        "animeRa" : Array<string>,
+        "animeWa" : Array<string>
+    } 
+
+    const { animeContents } = getAnimeContents();
+    let animes : ViewAnimeContents | undefined = await animeContents();
+
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
@@ -99,24 +112,23 @@
         return obj.hasOwnProperty('anime')
     })
 
-    const animes = hobbyArray[0].anime;
+    // const anime = hobbyArray[0].anime;
     const comics = hobbyArray[0].book.comic
     const novels = hobbyArray[0].book.novel
-
 
     let tab = ref(1)
     
     const tabitems = {
-        a:"あ",
-        ka:"か",
-        sa:"さ",
-        ta:"た",
-        na:"な",
-        ha:"は",
-        ma:"ま",
-        ya:"や",
-        ra:"ら",
-        wa:"わ",
+        "animeA":"あ",
+        "animeKa":"か",
+        "animeSa":"さ",
+        "animeTa":"た",
+        "animeNa":"な",
+        "animeHa":"は",
+        "animeMa":"ま",
+        "animeYa":"や",
+        "animeRa":"ら",
+        "animeWa":"わ",
     }
 
 </script>

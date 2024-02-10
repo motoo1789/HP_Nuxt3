@@ -1,8 +1,12 @@
-class EntryId {
+export class EntryId {
 
-    readonly id: string
+    private readonly _id: string
 
     constructor(id: string) {
-        this.id = id
+        this._id = id
+    }
+
+    get id() : string{
+        return this._id
     }
 }

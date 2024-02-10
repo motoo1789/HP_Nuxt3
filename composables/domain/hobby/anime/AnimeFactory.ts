@@ -1,26 +1,8 @@
 import { BaseFactory } from "./BaseFactory"
-// import { Anime } from "./anime"
+import { Anime } from "./anime"
 import { EntryId } from "./EntryId"
 import { Title } from "./Title"
-
-
-interface Anime {
-    title: string,
-    entryId: string,
-}
-
-interface SyllabaryNormalization {
-    "animeA"  : Array<Anime>, 
-    "animeKa" : Array<Anime>,
-    "animeSa" : Array<Anime>,
-    "animeTa" : Array<Anime>,
-    "animeNa" : Array<Anime>,
-    "animeHa" : Array<Anime>,
-    "animeMa" : Array<Anime>,
-    "animeYa" : Array<Anime>,
-    "animeRa" : Array<Anime>,
-    "animeWa" : Array<Anime>
-}
+import { SyllabaryNormalization } from "./SyllabaryNormalization"
 
 export class AnimeFactory extends BaseFactory {
 
@@ -29,9 +11,8 @@ export class AnimeFactory extends BaseFactory {
         console.log("created AnimeFactory instance");
     }
 
-    create(cmsContents : Array<Object>): void {
-        console.log("AnimeFactory create");
-        console.log(cmsContents);
+    create(cmsContents : Array<Object>) : SyllabaryNormalization {
+
         const createdAnimeArray = new Array<Array<Anime>>;
 
         // // itemsからarrayを全て確保
@@ -39,20 +20,17 @@ export class AnimeFactory extends BaseFactory {
 
             const syllabaryArray = new Array<Anime>;
             animeContentObject.items.forEach( notNormalizeAnimeContent => {
-                const normalizeAnimeContent : Anime = {
-                    title: notNormalizeAnimeContent.fields.title,
-                    entryId: notNormalizeAnimeContent.sys.id,
-                }
+                const normalizeAnimeContent : Anime = new Anime(
+					new EntryId(notNormalizeAnimeContent.sys.id),
+                    new Title(notNormalizeAnimeContent.fields.title)
+				)
                 syllabaryArray.push(normalizeAnimeContent);
             });
             createdAnimeArray.push(syllabaryArray);
 
         });
 
-        console.log(createdAnimeArray);
-
-        this.makeSyllabaryNormalization(createdAnimeArray)
-        //return this.make(createdAnimeArray)
+        return this.makeSyllabaryNormalization(createdAnimeArray)
     }
 
     private makeSyllabaryNormalization(createdAnimeArray : Array<Array<Anime>>) : SyllabaryNormalization {
@@ -71,8 +49,8 @@ export class AnimeFactory extends BaseFactory {
         }
 
         if(Object.keys(normalizedAnimeContents).length !== createdAnimeArray.length){
-            // 長さが異なればreturnしていい
-            //return {}
+            // 長さが異なれば初期化状態でreturnしてみる
+            return normalizedAnimeContents
         }
 
         Object.keys(normalizedAnimeContents).forEach((key, index) => {
@@ -82,8 +60,6 @@ export class AnimeFactory extends BaseFactory {
                 normalizedAnimeContents[key] = createdAnimeArray[index];
             }
         });
-        
-        console.log(normalizedAnimeContents);
 
         return normalizedAnimeContents; 
     }

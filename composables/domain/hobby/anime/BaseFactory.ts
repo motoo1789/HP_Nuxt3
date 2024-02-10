@@ -1,14 +1,15 @@
+import { SyllabaryNormalization } from "./SyllabaryNormalization"
+
 export abstract class BaseFactory {
 
     constructor() {
         console.log("BaseFactory");
     }
 
-    createEntity(cmsContents : Array<Object>) : any{
+    createEntity(cmsContents : Array<Object>) : SyllabaryNormalization {
         console.log("createEntity");
-        this.create(cmsContents);
-        // return new Anime(new EntryId(""), new Title(""));
+        return this.create(cmsContents);
     }
 
-    abstract create(cmsContents : Array<Object>) : void;
+    abstract create(cmsContents : Array<Object>) : SyllabaryNormalization;
 }

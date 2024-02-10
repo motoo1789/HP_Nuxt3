@@ -1,8 +1,12 @@
-class Title {
+export class Title {
 
-    readonly title: string
+    private readonly _title: string
 
     constructor(title: string) {
-        this.title  = title
+        this._title  = title
+    }
+
+    get title() : string {
+        return this._title
     }
 }

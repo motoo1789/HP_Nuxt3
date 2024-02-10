@@ -1,8 +1,10 @@
+import { SyllabaryNormalization } from "./SyllabaryNormalization"
 import { AnimeFactory } from "./AnimeFactory"
 import { BaseFactory } from "./BaseFactory"
+import { Anime } from "./anime"
 
 export interface BaseRepository {
-    findByState() : Object | boolean
+    findByState() : Object | undefined
     findByCMS() : Object | boolean
     saveToState(cmsContents : Array<Object>) : Object;
     saveToCMS() : Object;
@@ -11,39 +13,36 @@ export interface BaseRepository {
 
 export class AnimeRepository implements BaseRepository {
     
-    private map = new Map<string, Array<Anime>>();
+    private animeRepository : SyllabaryNormalization | undefined;
 
     constructor() {
         console.log("AnimeRepository");
+        this.animeRepository = undefined;
     }
 
-    findByState() : Object | boolean{
-        if(false) {
-            return {a : "aaa"};
+    async findByState() : Promise<SyllabaryNormalization> {
+        if(this.animeRepository === undefined) {
+            return undefined;
         }
-        return false;
+        return this.animeRepository;
     }
 
-    findByCMS() : Object | boolean {
-        
-        if(true) {
-            return {a : "aaa"};
-        }
-        return false;
+    async findByCMS() : Promise<data> {
+		console.log("findByCMS");
+		const { data : response } = await useFetch("/api/hobby/anime/GetAnimeContents")
+		if(response === undefined) {
+			return undefined;
+		}
+		return response;
     }
 
     saveToState(cmsContents : Array<Object>) : Object {
-        // a:(27) ['アイドルマスターシリーズ', 'アウトブレイク・カンパニー', 'アクセル・ワールド', 
-        // この形で保存したい
         console.log("saveToState");
         try {
             const animeEntryFactory : BaseFactory = new AnimeFactory();
-            console.log("saveToState animeEntryFactory");
-            animeEntryFactory.createEntity(cmsContents);
-
-
+            this.animeRepository = animeEntryFactory.createEntity(cmsContents);
         } catch(err){
-            console.log("error error");
+            console.log("saveToState error");
             console.log(err)
         }
         
