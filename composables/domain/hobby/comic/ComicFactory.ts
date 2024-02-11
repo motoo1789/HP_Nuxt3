@@ -1,5 +1,5 @@
 // import { BaseFactory } from "./BaseFactory"
-import { Comic } from "./Comic"
+import { Comic } from "./comic"
 import { EntryId } from "../field/EntryId"
 import { Title } from "../field//Title"
 
