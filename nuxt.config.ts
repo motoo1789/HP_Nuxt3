@@ -50,6 +50,7 @@ export default defineNuxtConfig({
     { path: "api/anime", handler: "~/server/api/anime" },
     { path: "api/contentful", handler: "~/server/api/contentful" },
     { path: "api/hobby/anime", handler: "~/server/api/hobby/anime" },
+    // { path: "api/contentful/migrationAnime", handler: "~/server/api/contentful/migrationAnime" }, // Entityを追加するようapi通常時は使わない
   ],
 
   modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],

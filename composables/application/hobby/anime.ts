@@ -33,10 +33,6 @@ export const getAnimeContents = () => {
 				console.log("animeContents error");
 				console.log(err)
 			}
-			
-
-			
-
 		} catch (err) {
 			await navigateTo('/error')
 		}

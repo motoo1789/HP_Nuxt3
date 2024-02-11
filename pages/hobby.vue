@@ -103,21 +103,8 @@
     const { comicContents } = getComicContents();
     const comics = await comicContents();
 
-    const {$client} = useNuxtApp()
-    const { data:getContents } = await useAsyncData( () => $client.getEntries())
-
-    const contents = getContents.value?.items;
-    const parseContents = contents.map(item => item.fields);
-    const getContentArray = [];
-    parseContents.forEach(content => getContentArray.push(content))
-
-    const hobbyArray = getContentArray?.filter(obj => {
-        return obj.hasOwnProperty('anime')
-    })
-
-    // const anime = hobbyArray[0].anime;
-    // const comics = hobbyArray[0].book.comic
-    const novels = hobbyArray[0].book.novel
+    const { novelContents } = getNovelContents();
+    const novels = await novelContents();    
 
     let tab = ref(1)
     
