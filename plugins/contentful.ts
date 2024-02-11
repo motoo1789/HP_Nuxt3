@@ -18,6 +18,7 @@ export default defineNuxtPlugin(async () => {
 
   const test: CreateClientParams = {
     space: configContentful.public.contentfulSpaceId,
+    environment: configContentful.public.contentfulEnviroment,
     accessToken: configContentful.public.contentfulAccessToken,
   };
 
@@ -29,3 +30,4 @@ export default defineNuxtPlugin(async () => {
     },
   };
 });
+
