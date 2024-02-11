@@ -1,7 +1,7 @@
 
 import { ComicFactory } from "./ComicFactory"
 // import { BaseFactory } from "./BaseFactory" どこに置くか・使うか検討中
-import { Comic } from "./Comic"
+import { Comic } from "./comic"
 
 export interface BaseRepository {
     findByState() : Promise<Array<Comic>>

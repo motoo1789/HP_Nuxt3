@@ -1,5 +1,5 @@
 import { BaseRepository } from "../../domain/hobby/comic/ComicRepository"
-import { Comic } from "../../domain/hobby/comic/Comic"
+import { Comic } from "../../domain/hobby/comic/comic"
 
 const repository: BaseRepository = new ComicRepository();
 
