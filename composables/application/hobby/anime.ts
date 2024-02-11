@@ -83,7 +83,7 @@ async function normalizeViewContents(beforeViewAnimeContents : SyllabaryNormaliz
 		}
 		beforeViewAnimeContents[key].forEach(anime => {
 			if(	key === "animeA" 	|| key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" ||
-			key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
+				key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
 			{
 				viewAnimeContents[key].push(anime.title.title)
 			}

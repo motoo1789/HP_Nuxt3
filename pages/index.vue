@@ -34,10 +34,9 @@
 
 <script setup lang="ts">
 
-const { animeContents } = getAnimeContents();
-
-const  anime  =  await animeContents();
+const { comicContents } = getComicContents();
+const comic = await comicContents();
 console.log("index");
-console.log(anime);
+console.log(comic);
 
 </script>

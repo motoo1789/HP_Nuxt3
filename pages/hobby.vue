@@ -98,7 +98,7 @@
     } 
 
     const { animeContents } = getAnimeContents();
-    let animes : ViewAnimeContents | undefined = await animeContents();
+    const animes : ViewAnimeContents | undefined = await animeContents();
 
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
