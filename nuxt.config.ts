@@ -1,8 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  imports: {
+    dirs: [
+      'composables/**'
+    ]
+  },
+
   runtimeConfig: {
     public: {
       contentfulSpaceId: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
+      contentfulEnviroment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT,
       contentfulAccessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
     },
   },
@@ -41,6 +49,8 @@ export default defineNuxtConfig({
   serverMiddleware: [
     { path: "api/anime", handler: "~/server/api/anime" },
     { path: "api/contentful", handler: "~/server/api/contentful" },
+    { path: "api/hobby/anime", handler: "~/server/api/hobby/anime" },
+    // { path: "api/contentful/migrationAnime", handler: "~/server/api/contentful/migrationAnime" }, // Entityを追加するようapi通常時は使わない
   ],
 
   modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],

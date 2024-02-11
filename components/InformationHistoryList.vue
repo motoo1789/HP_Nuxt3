@@ -15,11 +15,11 @@
                       v-for="(newinformation, key) in informationhisotory[currentpage - 1].contents"
                       :key="key"
                   >
-                  <!-- HACK: -するの好きじゃないのでどうにかしたい -->
+
                      <v-expansion-panel-title >{{ newinformation.updateDate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
-                  <v-expansion-panel-text class="msg-wrapper">{{ newinformation.detaile }}</v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
+                    <v-expansion-panel-text class="msg-wrapper">{{ newinformation.detaile }}</v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
             </v-col>
         </v-row>
     </v-card>
@@ -30,6 +30,7 @@
 
 const { parseUpdateInformation } = useUpdateInformation();
 const informationhisotory = await parseUpdateInformation();
+console.log(informationhisotory)
 const { currentpage } = useCurrentPage();
 
 </script>
