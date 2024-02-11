@@ -1,7 +1,7 @@
 
 import { NovelFactory } from "./NovelFactory"
 // import { BaseFactory } from "./BaseFactory" どこに置くか・使うか検討中
-import { Novel } from "./Novel"
+import { Novel } from "./novel"
 
 export interface BaseRepository {
     findByState() : Promise<Array<Novel>>
