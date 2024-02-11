@@ -27,9 +27,8 @@ export const getAnimeContents = () => {
 				//await animerepository.saveToState(response.value!);
 				await animerepository.saveToState(response.value!);
 				const viewanime = await animerepository.findByState();
-				const aaa =  await normalizeViewContents(viewanime);
-				console.log(aaa);
-				return aaa;
+				const normalizedViewContents =  await normalizeViewContents(viewanime);
+				return normalizedViewContents;
 			} catch(err){
 				console.log("animeContents error");
 				console.log(err)

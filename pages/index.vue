@@ -34,9 +34,5 @@
 
 <script setup lang="ts">
 
-const { comicContents } = getComicContents();
-const comic = await comicContents();
-console.log("index");
-console.log(comic);
 
 </script>

@@ -100,6 +100,9 @@
     const { animeContents } = getAnimeContents();
     const animes : ViewAnimeContents | undefined = await animeContents();
 
+    const { comicContents } = getComicContents();
+    const comics = await comicContents();
+
     const {$client} = useNuxtApp()
     const { data:getContents } = await useAsyncData( () => $client.getEntries())
 
@@ -113,7 +116,7 @@
     })
 
     // const anime = hobbyArray[0].anime;
-    const comics = hobbyArray[0].book.comic
+    // const comics = hobbyArray[0].book.comic
     const novels = hobbyArray[0].book.novel
 
     let tab = ref(1)

@@ -9,7 +9,7 @@ export class ComicFactory {
         console.log("created ComicFactory instance");
     }
 
-    create(cmsContents : Array<Object>) : Object{
+    create(cmsContents : Array<Object>) : Array<Comic> {
 
         const createdComicArray = new Array<Comic>;
 
@@ -23,35 +23,4 @@ export class ComicFactory {
 
         return createdComicArray
     }
-
-    // private makeSyllabaryNormalization(createdAnimeArray : Array<Array<Anime>>) : SyllabaryNormalization {
-        
-    //     const normalizedAnimeContents : SyllabaryNormalization= {
-    //         animeA	: [],
-    //         animeKa	: [],
-    //         animeSa	: [],
-    //         animeTa	: [],
-    //         animeNa	: [],
-    //         animeHa	: [],
-    //         animeMa	: [],
-    //         animeYa	: [],
-    //         animeRa	: [],
-    //         animeWa	: [],
-    //     }
-
-    //     if(Object.keys(normalizedAnimeContents).length !== createdAnimeArray.length){
-    //         // 長さが異なれば初期化状態でreturnしてみる
-    //         return normalizedAnimeContents
-    //     }
-
-    //     Object.keys(normalizedAnimeContents).forEach((key, index) => {
-    //         if(	key === "animeA" 	|| key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" ||
-    //             key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
-    //         {
-    //             normalizedAnimeContents[key] = createdAnimeArray[index];
-    //         }
-    //     });
-
-    //     return normalizedAnimeContents; 
-    // }
 }
