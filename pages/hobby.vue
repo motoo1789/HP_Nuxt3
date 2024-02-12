@@ -97,8 +97,8 @@
         "animeWa" : Array<string>
     } 
 
-    const { animeContents } = getAnimeContents();
-    const animes : ViewAnimeContents | undefined = await animeContents();
+    const { getAnimeContents } = animeContents();
+    const animes : ViewAnimeContents | undefined = await getAnimeContents();
 
     const { comicContents } = getComicContents();
     const comics = await comicContents();

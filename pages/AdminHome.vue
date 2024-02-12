@@ -34,6 +34,11 @@ const adminpageCards = [
         link: "addinformation"
     },
     {
+        title: "アニメ追加",
+        src: "images/kizu.png",
+        link: "addanime"
+    },
+    {
         title: "プロジェクト追加",
         src: "images/desk1.png",
         link: "addproject"
