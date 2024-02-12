@@ -1,10 +1,15 @@
 import { BaseRepository } from "../../domain/hobby/anime/AnimeRepository"
-import { SyllabaryNormalization } from "./SyllabaryNormalization"
+import { SyllabaryNormalization } from "../../domain/hobby/anime/SyllabaryNormalization"
+
+interface POSTFormat {
+    syllabary : string,
+    title : string
+}
 
 const animerepository: BaseRepository = new AnimeRepository();
 
-export const getAnimeContents = () => {
-    const animeContents = async () => {
+export const animeContents = () => {
+    const getAnimeContents = async () => {
 		try {
 			// repositoryにコンテンツがあるかの確認
 			// あったら取得して早期リターン
@@ -38,8 +43,13 @@ export const getAnimeContents = () => {
 		}
 	}
 
+	const postAnimeEntity = async (formAnimeEntity : POSTFormat) => {
+		await animerepository.saveToCMS(formAnimeEntity);
+	}
+
 	return {
-		animeContents
+		getAnimeContents,
+		postAnimeEntity
 	}
 };
 
@@ -72,17 +82,17 @@ async function normalizeViewContents(beforeViewAnimeContents : SyllabaryNormaliz
 	}
 
 	Object.keys(beforeViewAnimeContents).forEach((key, index) => {
-		if(beforeViewAnimeContents[key] === undefined) {
-			console.log("undefinedだよ");
-			return;
-		}
-		beforeViewAnimeContents[key].forEach(anime => {
-			if(	key === "animeA" 	|| key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" ||
-				key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
-			{
-				viewAnimeContents[key].push(anime.title.title)
+		if(	key === "animeA" 	|| key === "animeKa" || key === "animeSa" || key === "animeTa" || key === "animeNa" ||
+			key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
+		{
+			if(beforeViewAnimeContents[key] === undefined) {
+				console.log("undefinedだよ");
+				return;
 			}
-		});
+			beforeViewAnimeContents[key].forEach(anime => {
+				viewAnimeContents[key].push(anime.title.title)
+			});
+		}
 	});
 	
 	return viewAnimeContents;

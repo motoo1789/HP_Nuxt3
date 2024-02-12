@@ -7,9 +7,13 @@ export interface BaseRepository {
     findByState() : Object | undefined
     findByCMS() : Object | boolean
     saveToState(cmsContents : Array<Object>) : Object;
-    saveToCMS() : Object;
+    saveToCMS(formAnimeEntity : POSTFormat) : Promise<boolean>;
 }
 
+interface POSTFormat {
+    syllabary : string,
+    title : string
+}
 
 export class AnimeRepository implements BaseRepository {
     
@@ -49,8 +53,25 @@ export class AnimeRepository implements BaseRepository {
         return {}
     }
 
-    saveToCMS() : Object {
-        return {}
+    async saveToCMS(formAnimeEntity : POSTFormat) : Promise<boolean> {
+        try {
+            const response = await useFetch("/api/hobby/anime/PostAnimeEntity", {
+                method: 'POST',
+                body: formAnimeEntity,
+                headers: {
+                    Accept: 'application/json'
+                }
+            })
+    
+            if (response.data.value === "success") {
+
+            } else {
+                return false;
+            }
+        } catch (err) {
+            await navigateTo('/error')
+        }
+        return true;
     }
 
 }
