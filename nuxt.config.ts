@@ -12,6 +12,7 @@ export default defineNuxtConfig({
       contentfulSpaceId: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
       contentfulEnviroment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT,
       contentfulAccessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
+      contentfulProject : process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT,
     },
   },
 

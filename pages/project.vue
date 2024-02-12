@@ -166,17 +166,17 @@ import { ref } from "vue";
 import { ofetch } from 'ofetch'
 import { string } from "yup";
 const { data: animes } = await useFetch('/api/anime');
+const configContentful = await useRuntimeConfig();
 
-// const png_id = "4J3u7b0DkC26yQGjn0DuS0"
-// const id = "4cc9JW3vkGlnH8B97ofmn9"
 
 const id = process.env.CONTENTFUL_ENTRY_ID!
+const LIMIT = 50;
+
 const { $client } = useNuxtApp()
-// const { data: cms } = await useAsyncData(id, () => $client.getEntry(id));
-const { data: getContents } = await useAsyncData(() => $client.getEntries())
-
-
-
+const { data: getContents } = await useAsyncData(() => $client.getEntries({
+    content_type: configContentful.public.contentfulProject,
+    limit: LIMIT
+}))
 
 const contents = getContents.value?.items;
 const parseContents = contents.map(item => item.fields);
