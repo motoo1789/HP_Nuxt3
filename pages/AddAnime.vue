@@ -4,7 +4,7 @@
 		<v-container>
 			<v-row>
 				<v-col>
-					<p class="text-center text-h6">新着情報追加</p>
+					<p class="text-center text-h6">アニメの追加</p>
 				</v-col>
 			</v-row>
 			<v-row>
@@ -30,7 +30,7 @@
 							id="error-name-required" aria-live="assertive">
 							タイトルが未入力です！
 						</v-alert>
-						<v-textarea label="アニメタイトル" name="title" v-model="title"></v-textarea>
+						<v-textarea label="アニメタイトル（複数の場合は改行）" name="title" v-model="title"></v-textarea>
 
 
 						<div class="text-center justify-center">
