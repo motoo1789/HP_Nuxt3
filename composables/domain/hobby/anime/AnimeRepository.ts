@@ -12,7 +12,7 @@ export interface BaseRepository {
 
 interface POSTFormat {
     syllabary : string,
-    title : string
+    title : string[]
 }
 
 export class AnimeRepository implements BaseRepository {
@@ -63,15 +63,13 @@ export class AnimeRepository implements BaseRepository {
                 }
             })
     
-            if (response.data.value === "success") {
-
-            } else {
+            if (response.data.value !== "success") {
                 return false;
             }
         } catch (err) {
             await navigateTo('/error')
         }
-        return true;
+        return true
     }
 
 }

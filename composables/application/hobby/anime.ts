@@ -3,7 +3,7 @@ import { SyllabaryNormalization } from "../../domain/hobby/anime/SyllabaryNormal
 
 interface POSTFormat {
     syllabary : string,
-    title : string
+    title : string[]
 }
 
 const animerepository: BaseRepository = new AnimeRepository();
@@ -44,7 +44,7 @@ export const animeContents = () => {
 	}
 
 	const postAnimeEntity = async (formAnimeEntity : POSTFormat) => {
-		await animerepository.saveToCMS(formAnimeEntity);
+		return await animerepository.saveToCMS(formAnimeEntity);
 	}
 
 	return {

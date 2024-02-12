@@ -12,12 +12,16 @@
 					<form @submit="onSubmit">
 
 						<!--五十音-->
-						<v-radio-group inline label="五十音">
+						<v-alert variant="text" type="warning" density="compact" v-if="errors.syllabary"
+							id="error-name-required" aria-live="assertive">
+							選択されていません！
+						</v-alert>
+						<v-radio-group inline label="五十音" name="syllabary" v-model="syllabary">
 							<v-radio  v-for="(radioSyllabary, radioSyllabarykey) in radioSyllabarys" 
 								class="mx-auto"
 								:key="radioSyllabarykey" 
 								:label=radioSyllabary.label 
-								:value=radioSyllabary.value>
+								:value=radioSyllabary.value>	
 							</v-radio>
 						</v-radio-group>
 
@@ -88,7 +92,7 @@ const [syllabary, title]
 
 interface POSTFormat {
     syllabary : string,
-    title : string
+    title : string[]
 }
 
 let notifySuccess = ref(false)
@@ -96,13 +100,23 @@ let notifyError = ref(false);
 let prograssCircular = ref(false);
 let overlay = ref(false);
 
+const { postAnimeEntity } = animeContents();
+
 const onSubmit = handleSubmit(async (values) => {
 	prograssCircular.value = true;
 	overlay.value = true;
 
 	const formData = {
 		syllabary: values.syllabary,
-		title: values.title,
+		title: values.title.split(/\n/),
+	}
+	console.log(formData);
+	const postState : boolean = await postAnimeEntity(formData);
+	
+	if(postState) {
+		overlay.value = false;
+		prograssCircular.value = false;
+		notifySuccess.value = true;
 	}
 
 })
