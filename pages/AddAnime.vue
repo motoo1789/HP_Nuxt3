@@ -110,9 +110,8 @@ const onSubmit = handleSubmit(async (values) => {
 		syllabary: values.syllabary,
 		title: values.title.split(/\n/),
 	}
-	console.log(formData);
-	const postState : boolean = await postAnimeEntity(formData);
-	
+
+	const postState : boolean = await postAnimeEntity(formData);	
 	if(postState) {
 		overlay.value = false;
 		prograssCircular.value = false;
