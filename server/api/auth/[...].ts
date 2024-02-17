@@ -23,6 +23,16 @@ export default NuxtAuthHandler({
 				password: { label: 'Password', type: 'password', placeholder: '(hint: hunter2)' }
 			},
 			async authorize(credentials: { email: string, password: string }) {
+				if(credentials.email === "" || credentials.password === "") 
+				{
+					/**
+					 * HACK:そもそもバックエンドでやる処理じゃない
+					 * 		緊急対応なので後で直す
+					 */
+
+					console.log("メールアドレスとパスワードどちらも未入力")	
+					return null;
+				}
 
 				const dbUserId:string = await getEmailUser(credentials.email);
 				if(dbUserId === "No acount")
@@ -39,7 +49,7 @@ export default NuxtAuthHandler({
 					return true
 				}
 				else {
-					//console.error('Warning: Malicious login attempt registered, bad credentials provided');
+					console.error('Warning: Malicious login attempt registered, bad credentials provided');
 					return null
 					
 				}
@@ -52,7 +62,7 @@ export default NuxtAuthHandler({
 const getEmailUser = async ( email:string ): Promise<string> => 
 {
 	const { rows, fields } = await sql`SELECT user_id FROM users WHERE email = ${email}`;
-	return rows[0]?.user_id ?? "No acount";
+		return rows[0]?.user_id ?? "No acount";
 }
 
 const checkPassword = async ( dbUserId:string, password:string ): Promise<boolean> => 
