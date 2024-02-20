@@ -168,6 +168,9 @@ import { string } from "yup";
 const { data: animes } = await useFetch('/api/anime');
 const configContentful = await useRuntimeConfig();
 
+const { projectContents } = getProjectContents();
+const comics = await projectContents();
+
 
 const id = process.env.CONTENTFUL_ENTRY_ID!
 const LIMIT = 50;

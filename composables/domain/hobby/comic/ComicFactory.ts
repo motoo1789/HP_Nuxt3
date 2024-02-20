@@ -1,7 +1,7 @@
 // import { BaseFactory } from "./BaseFactory"
 import { Comic } from "./comic"
-import { EntryId } from "../field/EntryId"
-import { Title } from "../field//Title"
+import { EntryId } from "../../field/EntryId"
+import { Title } from "../../field/Title"
 
 export class ComicFactory {
 
