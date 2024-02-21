@@ -6,7 +6,6 @@ import { Title } from "../../field/Title"
 export class ComicFactory {
 
     constructor() {
-        console.log("created ComicFactory instance");
     }
 
     create(cmsContents : Array<Object>) : Array<Comic> {

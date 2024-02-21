@@ -30,7 +30,7 @@
 
 const { parseUpdateInformation } = useUpdateInformation();
 const informationhisotory = await parseUpdateInformation();
-console.log(informationhisotory)
+
 const { currentpage } = useCurrentPage();
 
 </script>

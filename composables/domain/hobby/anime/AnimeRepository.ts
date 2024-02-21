@@ -20,7 +20,6 @@ export class AnimeRepository implements BaseRepository {
     private animeRepository : SyllabaryNormalization | undefined;
 
     constructor() {
-        console.log("AnimeRepository");
         this.animeRepository = undefined;
     }
 
@@ -32,7 +31,6 @@ export class AnimeRepository implements BaseRepository {
     }
 
     async findByCMS() : Promise<data> {
-		console.log("findByCMS");
 		const { data : response } = await useFetch("/api/hobby/anime/GetAnimeContents")
 		if(response === undefined) {
 			return undefined;
@@ -41,7 +39,6 @@ export class AnimeRepository implements BaseRepository {
     }
 
     saveToState(cmsContents : Array<Object>) : Object {
-        console.log("saveToState");
         try {
             const animeEntryFactory : BaseFactory = new AnimeFactory();
             this.animeRepository = animeEntryFactory.createEntity(cmsContents);

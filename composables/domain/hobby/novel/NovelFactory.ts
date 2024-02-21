@@ -6,7 +6,6 @@ import { Title } from "../../field/Title"
 export class NovelFactory {
 
     constructor() {
-        console.log("created NovelFactory instance");
     }
 
     create(cmsContents : Array<Object>) : Array<Novel> {

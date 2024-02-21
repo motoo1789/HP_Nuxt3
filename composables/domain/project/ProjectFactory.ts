@@ -14,7 +14,6 @@ import { Abstract } from "./Abstract"
 export class ProjectFactory {
 
     constructor() {
-        console.log("created ComicFactory instance");
     }
 
     create(cmsContents : Array<Object>) : Array<Project> {

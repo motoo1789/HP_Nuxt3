@@ -15,12 +15,10 @@ export class NovelRepository implements BaseRepository {
     private repository : Array<Novel> | undefined;
 
     constructor() {
-        console.log("NovelRepository");
         this.repository = undefined;
     }
 
     async findByState() : Promise<Array<Novel>>  {
-        console.log("findByState");
         if(this.repository === undefined) {
             return undefined;
         }
@@ -29,7 +27,6 @@ export class NovelRepository implements BaseRepository {
     }
 
     async findByCMS() : Promise<data> {
-		console.log("NovelRepository findByCMS");
         try {
             const { data : response } = await useFetch("/api/hobby/novel/GetNovelContents")
             if(response === undefined) {
@@ -42,7 +39,6 @@ export class NovelRepository implements BaseRepository {
     }
 
     saveToState(cmsContents : Array<Object>) : Object {
-        console.log("NovelRepository saveToState");
         try {
             const comicEntryFactory : NovelFactory = new NovelFactory();
             this.repository = comicEntryFactory.create(cmsContents);

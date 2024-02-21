@@ -15,7 +15,7 @@ export const animeContents = () => {
 			// あったら取得して早期リターン
 			const stateContents = await animerepository.findByState();
 			if(stateContents){
-				console.log("Stateからコンテンツ取得")
+
 				return await normalizeViewContents(stateContents);
 			}
 
@@ -86,7 +86,7 @@ async function normalizeViewContents(beforeViewAnimeContents : SyllabaryNormaliz
 			key === "animeHa" 	|| key === "animeMa" || key === "animeYa" || key === "animeRa" || key === "animeWa")
 		{
 			if(beforeViewAnimeContents[key] === undefined) {
-				console.log("undefinedだよ");
+				console.log("undefined");
 				return;
 			}
 			beforeViewAnimeContents[key].forEach(anime => {

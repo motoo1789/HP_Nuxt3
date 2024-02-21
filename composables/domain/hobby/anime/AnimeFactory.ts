@@ -8,7 +8,6 @@ export class AnimeFactory extends BaseFactory {
 
     constructor() {
         super();
-        console.log("created AnimeFactory instance");
     }
 
     create(cmsContents : Array<Object>) : SyllabaryNormalization {

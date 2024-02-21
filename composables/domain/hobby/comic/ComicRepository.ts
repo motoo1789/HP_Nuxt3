@@ -15,12 +15,12 @@ export class ComicRepository implements BaseRepository {
     private repository : Array<Comic> | undefined;
 
     constructor() {
-        console.log("ComicRepository");
+
         this.repository = undefined;
     }
 
     async findByState() : Promise<Array<Comic>>  {
-        console.log("findByState");
+
         if(this.repository === undefined) {
             return undefined;
         }
@@ -29,7 +29,7 @@ export class ComicRepository implements BaseRepository {
     }
 
     async findByCMS() : Promise<data> {
-		console.log("ComicRepository findByCMS");
+
         try {
             const { data : response } = await useFetch("/api/hobby/comic/GetComicContents")
             if(response === undefined) {
@@ -42,7 +42,7 @@ export class ComicRepository implements BaseRepository {
     }
 
     saveToState(cmsContents : Array<Object>) : Object {
-        console.log("ComicRepository saveToState");
+
         try {
             const comicEntryFactory : ComicFactory = new ComicFactory();
             this.repository = comicEntryFactory.create(cmsContents);

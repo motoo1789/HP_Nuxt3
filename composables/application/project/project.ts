@@ -12,7 +12,6 @@ export const getProjectContents = () => {
 			// あったら取得して早期リターン
 			const stateContents = await repository.findByState();
 			if(stateContents){
-				console.log("Stateからコンテンツ取得")
 				return await normalizeViewContents(stateContents);
 			}
 
