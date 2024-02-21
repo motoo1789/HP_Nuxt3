@@ -1,8 +1,13 @@
 
 export class Detail {
 
-    private readonly detail : string;
+    private readonly _detail : string;
+
     constructor(detail : string) {
-        this.detail = detail
+        this._detail = detail
+    }
+
+    get detail() : string {
+        return this._detail
     }
 }

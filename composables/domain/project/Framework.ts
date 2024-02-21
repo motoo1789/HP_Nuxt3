@@ -1,8 +1,13 @@
 
 export class Framework {
 
-    private readonly framework : string;
+    private readonly _framework : string;
+
     constructor(framework : string) {
-        this.framework = framework
+        this._framework = framework
+    }
+
+    get framework() : string {
+        return this._framework
     }
 }

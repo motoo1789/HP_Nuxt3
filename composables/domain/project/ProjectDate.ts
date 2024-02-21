@@ -1,8 +1,13 @@
 
 export class ProjectDate {
 
-    private readonly date : string;
+    private readonly _date : string;
+    
     constructor(date : string) {
-        this.date = date
+        this._date = date
+    }
+
+    get date() : string {
+        return this._date
     }
 }

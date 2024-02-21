@@ -1,8 +1,13 @@
 
 export class Language {
 
-    private readonly language : string;
+    private readonly _language : string;
+
     constructor(language : string) {
-        this.language = language
+        this._language = language
+    }
+
+    get language() : string {
+        return this._language
     }
 }

@@ -1,3 +1,4 @@
+import { Project } from "~~/.nuxt/imports";
 import { BaseRepository } from "../../domain/project/ProjectRepository"
 
 
@@ -24,15 +25,14 @@ export const getProjectContents = () => {
 				/**
 				 *  domain部分に正規化お願い
 				*/
-                console.log(response.value);
 				await repository.saveToState(response.value!);
-				// const viewcontents : Array<Novel> = await repository.findByState();
-				// const normalizedViewContents =  await normalizeViewContents(viewcontents);
-				
-		// 	    return normalizedViewContents;
+				const viewcontents : Array<Project> = await repository.findByState();
+				const normalizedViewContents =  await normalizeViewContents(viewcontents);
+			
+				return normalizedViewContents;
                 
 			} catch(err){
-				console.log("Novel Contents error");
+				console.log("Projecgt Contents error");
 				console.log(err)
 			}
 
@@ -46,11 +46,40 @@ export const getProjectContents = () => {
 	}
 };
 
-async function normalizeViewContents(beforeViewContents : Array<Novel>) : Promise<Array<string>> {
+interface ViewProjectFormat {
+	url: String,
+	detail: String,
+	abstract: String,
+	environments: {
+		language: String,
+		framework: String,
+		library: String,
+	},
+	img: String,
+	title: String,
+	movie: String,
+}
 
-	const viewAnimeContents : Array<string> = []
-    beforeViewContents.forEach( content => {
-        viewAnimeContents.push(content.title.title);
+async function normalizeViewContents(beforeViewContents : Array<Project>) : Promise<Array<ViewProjectFormat>> {
+
+	const viewAnimeContents : Array<ViewProjectFormat> = []
+    beforeViewContents.forEach( (content, index) => {
+		const joinContent = {
+			projectNum: index,
+			title: content.title.title,
+			abstract: content.abstract.abstract,
+			environments: {
+				language: content.language.language,
+				framework: content.framework.framework,
+				library: content.library.library,
+			},
+
+			detail: content.detail.detail,
+			url: content.github.github,
+			img: content.img.url,
+			movie: content.movie.url,
+		}
+        viewAnimeContents.push(joinContent);
     })
 	
 	return viewAnimeContents;

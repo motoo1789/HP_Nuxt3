@@ -1,8 +1,13 @@
 
 export class Abstract {
 
-    private readonly abstract : string;
+    private readonly _abstract : string;
+    
     constructor(abstract : string) {
-        this.abstract = abstract
+        this._abstract = abstract
+    }
+
+    get abstract() : string {
+        return this._abstract
     }
 }

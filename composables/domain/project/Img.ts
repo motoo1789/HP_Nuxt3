@@ -1,14 +1,18 @@
 
 export class Img {
 
-    private readonly title : string;
-    private readonly url : string;
-    private readonly fileName : string;
+    private readonly _title : string;
+    private readonly _url : string;
+    private readonly _fileName : string;
 
 
     constructor(title : string, url : string, fileName : string) {
-        this.title = title;
-        this.url = url;
-        this.fileName = fileName;
+        this._title = title;
+        this._url = url;
+        this._fileName = fileName;
+    }
+
+    get url() : string {
+        return this._url
     }
 }

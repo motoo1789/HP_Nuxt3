@@ -10,7 +10,7 @@ export interface BaseRepository {
 
 export class ProjectRepository implements BaseRepository {
     
-    private repository : Array<Comic> | undefined;
+    private repository : Array<Project> | undefined;
 
     constructor() {
         console.log("ComicRepository");

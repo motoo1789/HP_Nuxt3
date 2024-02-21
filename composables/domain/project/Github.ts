@@ -1,8 +1,13 @@
 
 export class Github {
 
-    private readonly github : string;
+    private readonly _github : string;
+
     constructor(github : string) {
-        this.github = github
+        this._github = github
+    }
+
+    get github() : string {
+        return this._github
     }
 }

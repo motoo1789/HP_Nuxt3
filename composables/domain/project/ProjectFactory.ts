@@ -9,6 +9,7 @@ import { Github } from "./Github"
 import { Img } from "./Img"
 import { Movie } from "./Movie"
 import { ProjectDate } from "./ProjectDate"
+import { Abstract } from "./Abstract"
 
 export class ProjectFactory {
 
@@ -23,16 +24,16 @@ export class ProjectFactory {
         cmsContents.items.forEach( notNormalizeContent => {
             const normalizeContent : Project = new Project(
                 new EntryId(notNormalizeContent.sys.id), // kari
-                new Title(notNormalizeContent.sys.id), // kari
-                new Abstract(notNormalizeContent.sys.abstract),
-                new Language(notNormalizeContent.sys.language),
-                new Framework(notNormalizeContent.sys.framework),
-                new Library(notNormalizeContent.sys.library),
-                new Detail(notNormalizeContent.sys.detail),
-                new Github(notNormalizeContent.sys.github),
-                new Img(notNormalizeContent.sys.id,notNormalizeContent.sys.id,notNormalizeContent.sys.id), // かり
-                new Movie(notNormalizeContent.sys.id,notNormalizeContent.sys.id,notNormalizeContent.sys.id), // かり
-                new ProjectDate(notNormalizeContent.sys.createdDate)
+                new Title(notNormalizeContent.fields.title), // kari
+                new Abstract(notNormalizeContent.fields.abstract),
+                new Language(notNormalizeContent.fields.language),
+                new Framework(notNormalizeContent.fields.framework),
+                new Library(notNormalizeContent.fields.library),
+                new Detail(notNormalizeContent.fields.detail),
+                new Github(notNormalizeContent.fields.github),
+                new Img(notNormalizeContent.sys.title,notNormalizeContent.fields.img.fields.file.url,notNormalizeContent.fields.img.fields.file.fileName), // かり
+                new Movie(notNormalizeContent.sys.title,notNormalizeContent.fields.movie.fields.file.url,notNormalizeContent.fields.movie.fields.file.fileName), // かり
+                new ProjectDate("") // contentfulに現状データはない
             )
             createdComicArray.push(normalizeContent);
         });

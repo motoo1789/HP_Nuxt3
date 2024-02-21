@@ -1,5 +1,14 @@
-
-
+import { EntryId } from "../field/EntryId"
+import { Title } from "../field/Title"
+import { Language } from "./Language"
+import { Framework } from "./Framework"
+import { Library } from "./Library"
+import { Detail } from "./Detail"
+import { Github } from "./Github"
+import { Img } from "./Img"
+import { Movie } from "./Movie"
+import { ProjectDate } from "./ProjectDate"
+import { Abstract } from "./Abstract"
 
 export class Project {
     readonly id: EntryId;
