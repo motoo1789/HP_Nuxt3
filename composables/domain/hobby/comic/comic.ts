@@ -1,5 +1,5 @@
-import { EntryId } from "../field/EntryId"
-import { Title } from "../field/Title"
+import { EntryId } from "../../field/EntryId"
+import { Title } from "../../field/Title"
 
 export class Comic {
     readonly id: EntryId;
