@@ -8,8 +8,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "start": "nuxt start",
-    "slicemachine": "start-slicemachine",
-    "test": "vitest"
+    "slicemachine": "start-slicemachine"
   },
   "devDependencies": {
     "@jamescoyle/vue-icon": "^0.1.2",
@@ -18,7 +17,6 @@
     "@nuxtjs/prismic": "^3.0.1",
     "@nuxtjs/vuetify": "^1.12.3",
     "@slicemachine/adapter-nuxt": "^0.3.1",
-    "happy-dom": "^12.10.3",
     "next-auth": "^4.22.0",
     "nuxt": "^3.3.2",
     "sass": "^1.60.0",
