@@ -1,6 +1,0 @@
-{
-    "builds": [
-      { "src": "build-command-here", "use": "@vercel/node" }
-    ]
-  }
-  
