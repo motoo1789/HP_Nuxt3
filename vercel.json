@@ -4,5 +4,12 @@
         "source": "/(.*)",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "builds": [
+        {
+          "src": "nuxt.config.js",
+          "use": "@nuxtjs/vercel-builder",
+          "config": {}
+        }
+      ]
   }
