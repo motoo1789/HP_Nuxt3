@@ -57,7 +57,6 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/prismic",
     "@sidebase/nuxt-auth",
-    //'nuxt-vitest'
   ],
 
 
