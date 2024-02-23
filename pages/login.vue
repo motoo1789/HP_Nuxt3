@@ -11,14 +11,18 @@
 				</v-alert>
 				<v-text-field variant="underlined" v-model="email" label="User Mail"></v-text-field>
 
-				<v-text-field variant="underlined" v-model="password" label="Password"></v-text-field>
+				<v-text-field variant="underlined" v-model="password" label="Password" 
+					:type="showPasswaord ? 'text' : 'password'"
+					:append-inner-icon="showPasswaord ? 'mdi-eye' : 'mdi-eye-off'"
+					@click:append-inner="showPasswaord = !showPasswaord"
+				>
+				</v-text-field>
 
 				<v-btn type="submit" variant="outlined" color="light-blue-accent-3" block class="mt-2" v-if="status === 'unauthenticated'">ログイン</v-btn>
 
 				<!-- <v-btn @click="signIn('github')" type="submit" variant="outlined" color="light-blue-accent-3" block v-if="status === 'unauthenticated'"
 				class="mt-2">Githubでログイン</v-btn> -->
 
-				
 			</v-form>
 		</v-sheet>
 
@@ -41,6 +45,7 @@ const { status, data, signIn } = useAuth()
 const email = ref("");
 const password = ref("");
 let showAlert = ref(false);
+let showPasswaord = ref(false);
 
 const loginMailPass = async () => {
 	const result = await signIn('credentials', { email: email.value, password: password.value, redirect: false, callbackUrl: "/" })

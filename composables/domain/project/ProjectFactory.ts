@@ -22,16 +22,16 @@ export class ProjectFactory {
 
         cmsContents.items.forEach( notNormalizeContent => {
             const normalizeContent : Project = new Project(
-                new EntryId(notNormalizeContent.sys.id), // kari
-                new Title(notNormalizeContent.fields.title), // kari
+                new EntryId(notNormalizeContent.sys.id),
+                new Title(notNormalizeContent.fields.title),
                 new Abstract(notNormalizeContent.fields.abstract),
                 new Language(notNormalizeContent.fields.language),
                 new Framework(notNormalizeContent.fields.framework),
                 new Library(notNormalizeContent.fields.library),
                 new Detail(notNormalizeContent.fields.detail),
                 new Github(notNormalizeContent.fields.github),
-                new Img(notNormalizeContent.sys.title,notNormalizeContent.fields.img.fields.file.url,notNormalizeContent.fields.img.fields.file.fileName), // かり
-                new Movie(notNormalizeContent.sys.title,notNormalizeContent.fields.movie.fields.file.url,notNormalizeContent.fields.movie.fields.file.fileName), // かり
+                new Img(notNormalizeContent.sys.title,notNormalizeContent.fields.img.fields.file.url,notNormalizeContent.fields.img.fields.file.fileName),
+                new Movie(notNormalizeContent.sys.title,notNormalizeContent.fields.movie.fields.file.url,notNormalizeContent.fields.movie.fields.file.fileName),
                 new ProjectDate("") // contentfulに現状データはない
             )
             createdComicArray.push(normalizeContent);
