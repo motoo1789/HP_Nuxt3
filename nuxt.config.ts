@@ -54,7 +54,12 @@ export default defineNuxtConfig({
     // { path: "api/contentful/migrationAnime", handler: "~/server/api/contentful/migrationAnime" }, // Entityを追加するようapi通常時は使わない
   ],
 
-  modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
+  modules: [
+    "@nuxtjs/prismic",
+    "@sidebase/nuxt-auth",
+    'nuxt-vitest'
+  ],
+
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
