@@ -16,7 +16,7 @@
                       :key="key"
                   >
 
-                     <v-expansion-panel-title >{{ newinformation.updateDate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
+                    <v-expansion-panel-title >{{ newinformation.updateDate }}   {{ newinformation.abstract }}</v-expansion-panel-title>
                     <v-expansion-panel-text class="msg-wrapper">{{ newinformation.detaile }}</v-expansion-panel-text>
                   </v-expansion-panel>
                 </v-expansion-panels>
