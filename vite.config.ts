@@ -9,5 +9,9 @@ export default defineConfig({
         additionalData: `@import "${resolve(__dirname, 'assets/css/font.css')}";`
       }
     }
+  },
+  build: {
+    target: 'esnext', // ビルドのターゲットを指定
+    // その他のビルド設定...
   }
 })
