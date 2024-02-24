@@ -177,8 +177,6 @@ const [title, abstract, detail, language, library, framework, github, createdPro
 
 watch(createdProjectDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
 	// .valueは不要
-	console.log("old ", oldCreatedProjectDate)
-	console.log("new ", newCreatedProjectDate)
 	createdProjectDate.value = <string>newCreatedProjectDate.replace('UTC', '');
 })
 
@@ -202,12 +200,7 @@ const onSubmit = handleSubmit(async (values) => {
 
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
-		console.log(value)
 		formData.append(key, value)
-	})
-
-	try {
-
 		const response = await useFetch ("/api/contentful/post", {
 
 
@@ -218,11 +211,6 @@ const onSubmit = handleSubmit(async (values) => {
 		if (response.data.value === 'success') {
 			await navigateTo('/thanks')
 		} else {
-			console.log(response)
-			// await navigateTo('/error')
-		}
-	} catch (err) {
-		await navigateTo('/error')
 	}
 })
 </script>

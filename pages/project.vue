@@ -163,65 +163,25 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { ofetch } from 'ofetch'
-import { string } from "yup";
-const { data: animes } = await useFetch('/api/anime');
 
-// const png_id = "4J3u7b0DkC26yQGjn0DuS0"
-// const id = "4cc9JW3vkGlnH8B97ofmn9"
-
-const id = process.env.CONTENTFUL_ENTRY_ID!
-const { $client } = useNuxtApp()
-// const { data: cms } = await useAsyncData(id, () => $client.getEntry(id));
-const { data: getContents } = await useAsyncData(() => $client.getEntries())
-
-
-
-
-const contents = getContents.value?.items;
-const parseContents = contents.map(item => item.fields);
-
-const getContentArray = [];
-parseContents.forEach(tmp => getContentArray.push(tmp))
-
-const projectArray = getContentArray?.filter(obj => {
-    return obj.hasOwnProperty('title')
-})
-
-const projects = []
-projectArray?.forEach((content, index) => {
-    const joinContent = {
-        projectNum: index,
-        title: content.title,
-        environments: {
-            language: content.language,
-            framework: content.framework,
-            library: content.library,
-        },
-        abstract: content.abstract,
-        detail: content.detail,
-        url: content.github,
-        img: content.img.fields.file.url,
-        movie: content.movie.fields.file.url,
-    }
-    projects.push(joinContent)
-});
+const { projectContents } = getProjectContents();
+const projects = await projectContents();
 
 let dialog = ref(false)
 let selectProjectIndex = ref(-1)
 let showDialogProject = ref({
-    url: URL,
+    url: String,
     detail: String,
+    abstract: String,
     environments: {
         language: String,
         framework: String,
         library: String,
     },
+    img: String,
     title: String,
-    movie: URL,
+    movie: String,
 })
-
-
 
 const jumpGithubPage = (url: any) => {
     window.open(url, '_blank')
@@ -232,7 +192,7 @@ const closeDialogProjectDetail = () => {
 }
 
 const openDialogProjectDetail = (project: any) => {
-    selectProjectIndex.value = projects.indexOf(project)
+    selectProjectIndex.value = projects!.indexOf(project)
     showDialogProject.value = Object.assign({}, project)
     dialog.value = true
 }

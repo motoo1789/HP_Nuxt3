@@ -9,19 +9,6 @@
       </v-container>
       </v-main>
     </v-app>
-    
-    <!-- <v-main>
-      <v-container>
-        <slot />
-      </v-container>
-    </v-main> -->
-    
-    <!-- <v-footer
-      :absolute="!fixed"
-      app
-    >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer> -->
 </template>
 
 <script>

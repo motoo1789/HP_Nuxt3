@@ -245,7 +245,6 @@ const onSubmit = handleSubmit(async (values) => {
 			overlay.value = false;
 			prograssCircular.value = false;
 			notifyError.value = true;
-			console.log(response)
 		}
 	} catch (err) {
 		await navigateTo('/error')

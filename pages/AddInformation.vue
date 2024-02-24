@@ -96,8 +96,6 @@ const [abstract, detaile, createdInformationDate]
 
 watch(createdInformationDate, (newCreatedProjectDate, oldCreatedProjectDate) => {
 	// .valueは不要
-	console.log("old ", oldCreatedProjectDate)
-	console.log("new ", newCreatedProjectDate)
 	createdInformationDate.value = <string>newCreatedProjectDate.replace('UTC', '');
 })
 
@@ -139,7 +137,10 @@ const onSubmit = handleSubmit(async (values) => {
 			overlay.value = false;
 			prograssCircular.value = false;
 			notifyError.value = true;
+<<<<<<< HEAD
 			console.log(response)
+=======
+>>>>>>> 334911a7a4d239f7a4a87ac1294b39ada42f574e
 		}
 	} catch (err) {
 		await navigateTo('/error')

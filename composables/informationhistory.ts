@@ -1,6 +1,14 @@
+/**
+ * このファイルはinformationの作成の際に呼ばれるのみ
+ * 現状componentとpagesで機能がまたがっているから共通の場所として使っていると思われる
+ */
 export const useCMSContents = async () => {
+    const CONTENS_LIMIT = 500;
     const {$client} = useNuxtApp()
-    const { data:getContents } = await useAsyncData( () => $client.getEntries())
+    const { data:getContents } = await useAsyncData( () => $client.getEntries({
+        content_type: process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_INFORMATIONL,
+        limit: CONTENS_LIMIT
+    }))
     
     const contents = getContents.value?.items;
     const parseContents = contents.map(item => item.fields);
@@ -19,8 +27,12 @@ export const useUpdateInformation = () => {
         const { cmsComtents } = await useCMSContent()
 
         const contentsValueObject = await cmsComtents.value;
+<<<<<<< HEAD
         console.log(contentsValueObject)
         const hobbyArray = contentsValueObject?.filter(cmsContent => {
+=======
+                const hobbyArray = contentsValueObject?.filter(cmsContent => {
+>>>>>>> 334911a7a4d239f7a4a87ac1294b39ada42f574e
             return cmsContent.hasOwnProperty('updateDate')
         })
         const afterSortHobbyArray = hobbyArray.sort((a,b) => Date.parse(b.updateDate) - Date.parse(a.updateDate));
