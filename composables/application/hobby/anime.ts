@@ -29,7 +29,6 @@ export const animeContents = () => {
 				/**
 				 *  domain部分に正規化お願い
 				*/
-				//await animerepository.saveToState(response.value!);
 				await animerepository.saveToState(response.value!);
 				const viewanime = await animerepository.findByState();
 				const normalizedViewContents =  await normalizeViewContents(viewanime);
