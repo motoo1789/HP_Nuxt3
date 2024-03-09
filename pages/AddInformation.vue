@@ -110,6 +110,9 @@ let notifyError = ref(false);
 let prograssCircular = ref(false);
 let overlay = ref(false);
 
+
+const { postInformationEntity } = informationContents();
+
 const onSubmit = handleSubmit(async (values) => {
 	prograssCircular.value = true;
 	overlay.value = true;
@@ -121,22 +124,11 @@ const onSubmit = handleSubmit(async (values) => {
 	}
 
 	try {
-		const response = await useFetch("/api/contentful/PostInformation", {
-			method: 'POST',
-			body: formData,
-			headers: {
-				Accept: 'application/json'
-			}
-		})
-
-		if (response.data.value === "success") {
+		const postState : boolean = await postInformationEntity(formData);
+		if(postState) {
 			overlay.value = false;
 			prograssCircular.value = false;
 			notifySuccess.value = true;
-		} else {
-			overlay.value = false;
-			prograssCircular.value = false;
-			notifyError.value = true;
 		}
 	} catch (err) {
 		await navigateTo('/error')
