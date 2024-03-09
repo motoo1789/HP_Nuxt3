@@ -14,7 +14,7 @@ export class AnimeFactory extends BaseFactory {
 
         const createdAnimeArray = new Array<Array<Anime>>;
 
-        // // itemsからarrayを全て確保
+        // itemsからarrayを全て確保
         cmsContents.forEach( animeContentObject => {
 
             const syllabaryArray = new Array<Anime>;
