@@ -232,7 +232,7 @@ const onSubmit = handleSubmit(async (values) => {
 	}
 
 	try {
-		const response = await useFetch("/api/contentful/PostProject", {
+		const response = await useFetch("/api/project/PostProject", {
 			method: 'POST',
 			body: postDataObject,
 		})

@@ -2,8 +2,8 @@
 
 export interface BaseRepository {
     findByState() : Promise<Array<any>>
-    findByCMS() :  Promise<data> | undefined
-    saveToState(cmsContents : Array<Object>) : Object;
+    findByCMS() :  Promise<data>
+    saveToState(cmsContents : Array<Object>) : void;
     saveToCMS(information : POSTFormat) : Object;
 }
 
@@ -28,18 +28,32 @@ export class InformationRepository implements BaseRepository {
     }
 
     async findByCMS() : Promise<data> {
+        try {
+            const { data : response } = await useFetch("/api/information/GetInformation")
+            if(response === undefined) {
+                return undefined;
+            }
+            return response;
+        } catch(err) {
 
+        }
     }
 
-    saveToState(cmsContents : Array<Object>) : Object {
+    saveToState(cmsContents : Array<Object>) {
 
-        
-        return {}
+        try {
+            const projectEntryFactory : ProjectFactory = new ProjectFactory();
+            this.repository = projectEntryFactory.create(cmsContents);
+        } catch(err){
+            console.log("saveToState error");
+            console.log(err)
+        }
+
     }
 
     async saveToCMS(information : POSTFormat) : Promise<boolean> {
         try {
-            const response = await useFetch("/api/contentful/PostInformation", {
+            const response = await useFetch("/api/information/PostInformation", {
                 method: 'POST',
                 body: information,
                 headers: {

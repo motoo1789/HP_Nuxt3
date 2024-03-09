@@ -3,14 +3,10 @@
  * 現状componentとpagesで機能がまたがっているから共通の場所として使っていると思われる
  */
 export const useCMSContents = async () => {
-    const CONTENS_LIMIT = 500;
-    const {$client} = useNuxtApp()
-    const { data:getContents } = await useAsyncData( () => $client.getEntries({
-        content_type: process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_INFORMATIONL,
-        limit: CONTENS_LIMIT
-    }))
+
+    const { data : response } = await useFetch("/api/information/GetInformation")
     
-    const contents = getContents.value?.items;
+    const contents = response.value?.items;
     const parseContents = contents.map(item => item.fields);
     return parseContents
 };

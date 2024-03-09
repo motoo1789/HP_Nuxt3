@@ -4,7 +4,7 @@ import { ProjectFactory } from "./ProjectFactory"
 export interface BaseRepository {
     findByState() : Promise<Array<Project>>
     findByCMS() :  Promise<data> | undefined
-    saveToState(cmsContents : Array<Object>) : Object;
+    saveToState(cmsContents : Array<Object>) : void;
     saveToCMS() : Object;
 }
 
@@ -39,7 +39,7 @@ export class ProjectRepository implements BaseRepository {
         }
     }
 
-    saveToState(cmsContents : Array<Object>) : Object {
+    saveToState(cmsContents : Array<Object>) {
 
         try {
             const projectEntryFactory : ProjectFactory = new ProjectFactory();
@@ -48,8 +48,7 @@ export class ProjectRepository implements BaseRepository {
             console.log("saveToState error");
             console.log(err)
         }
-        
-        return {}
+
     }
 
     saveToCMS() : Object {
