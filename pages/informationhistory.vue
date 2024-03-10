@@ -14,7 +14,7 @@
         :rounded=true
         :to="`/`"
         class="mx-auto my-5"
-      >
+              >
         HOME
       </v-btn>
     </v-row>
@@ -28,15 +28,14 @@
 <script setup lang="ts">
 
 const { currentpage, updatePage } =  useCurrentPage();
-// const { informationhisotory } =  useInformationHisotry();
-//const { getContent } =  getCMSContent();
+
 const { getInformationContents } = informationContents();
 const informationhisotory = await getInformationContents();
-console.log(informationhisotory)
 
 const pushPagination = () => {
   updatePage(currentpage)
 }
+
   // 初期値をセットする場合
   // const [informationhistory, setInformationhistory] = useState({ histories: homepageNewInformations })
 </script>

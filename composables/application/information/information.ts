@@ -15,12 +15,11 @@ export const informationContents = () => {
 			// repositoryにコンテンツがあるかの確認
 			// あったら取得して早期リターン
 
-            // const stateContents = await repository.findByState();
-            // if(stateContents){
-            //     // todo:正規化は必要かも　そもそも正規化はapulicationでやるべきことなのか？
-			// 	console.log("テスト")
-			// 	return stateContents;
-			// }
+            const stateContents = await repository.findByState();
+            if(stateContents !== undefined){
+                // todo:正規化は必要かも　そもそも正規化はapulicationでやるべきことなのか？
+				return normalizeViewContents(stateContents.slice());
+			}
 
 			// なかったら取得　デプロイ後の最初のアクセス
 			try {
@@ -34,7 +33,7 @@ export const informationContents = () => {
 				*/
                 await repository.saveToState(cmdContents.value!);
 				const viewcontents : Array<Information> = await repository.findByState();
-				const normalizedViewContents =  await normalizeViewContents(viewcontents);
+				const normalizedViewContents = await normalizeViewContents(viewcontents.slice());
 				
 				return normalizedViewContents;
 

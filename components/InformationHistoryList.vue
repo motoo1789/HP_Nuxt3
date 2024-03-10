@@ -27,11 +27,10 @@
 
 <script setup lang="ts">
 
-const { getInformationContents } = informationContents();
-const informationhisotory = await getInformationContents();
-console.log(informationhisotory);
+  const { getInformationContents } = informationContents();
+  const informationhisotory = await getInformationContents();
 
-const { currentpage } = useCurrentPage();
+  const { currentpage } = useCurrentPage();
 
 </script>
 

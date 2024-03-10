@@ -27,7 +27,7 @@ export class AnimeRepository implements BaseRepository {
         if(this.animeRepository === undefined) {
             return undefined;
         }
-        console.log("anme repo");
+        
         return this.animeRepository;
     }
 
