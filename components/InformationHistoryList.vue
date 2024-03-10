@@ -29,6 +29,7 @@
 
 const { getInformationContents } = informationContents();
 const informationhisotory = await getInformationContents();
+console.log(informationhisotory);
 
 const { currentpage } = useCurrentPage();
 

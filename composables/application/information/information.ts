@@ -14,11 +14,13 @@ export const informationContents = () => {
 		try {
 			// repositoryにコンテンツがあるかの確認
 			// あったら取得して早期リターン
-            const stateContents = await repository.findByState();
-            if(stateContents){
-                // todo:正規化は必要かも　そもそも正規化はapulicationでやるべきことなのか？
-				return stateContents;
-			}
+
+            // const stateContents = await repository.findByState();
+            // if(stateContents){
+            //     // todo:正規化は必要かも　そもそも正規化はapulicationでやるべきことなのか？
+			// 	console.log("テスト")
+			// 	return stateContents;
+			// }
 
 			// なかったら取得　デプロイ後の最初のアクセス
 			try {
@@ -56,16 +58,19 @@ export const informationContents = () => {
 };
 
 
-async function normalizeViewContents(beforeViewContents : Array<Information>) : Promise<Array<ViewProjectFormat>> {
+async function normalizeViewContents(beforeViewContents : Array<Information>) : Promise<Array<Object>> {
 
 	const showMaxInformation = 5;
 	const returnPageArray = []
-	const contentLength = beforeViewContents.length
+	const contentLength : number = beforeViewContents.length
+	const endPage : number = Math.ceil(contentLength / showMaxInformation);
 
-	for(let counterPage = 1; counterPage <= Math.ceil(contentLength / showMaxInformation); counterPage++)
+	for(let counterPage = 1; counterPage <= endPage; counterPage++)
 	{
 		const onePageInformation = [];
-		for(let counter = 0; counter < showMaxInformation; counter++) 
+		const showPageContents : number = counterPage === endPage ? (contentLength % showMaxInformation) : showMaxInformation;
+
+		for(let counter = 0; counter < showPageContents; counter++) 
 		{
 			const informationEntity : object | undefined = beforeViewContents.pop()?.view();
 			onePageInformation.push(informationEntity);

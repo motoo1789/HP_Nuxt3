@@ -1,6 +1,7 @@
 <template>
   <div>
     <InformationHistoryList />
+    
     <v-pagination
         v-model="currentpage"
         :length="informationhisotory.length"
@@ -31,6 +32,7 @@ const { currentpage, updatePage } =  useCurrentPage();
 //const { getContent } =  getCMSContent();
 const { getInformationContents } = informationContents();
 const informationhisotory = await getInformationContents();
+console.log(informationhisotory)
 
 const pushPagination = () => {
   updatePage(currentpage)

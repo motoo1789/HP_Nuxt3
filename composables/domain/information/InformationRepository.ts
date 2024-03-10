@@ -19,7 +19,7 @@ export class InformationRepository implements BaseRepository {
     private repository : Array<Information> | undefined;
 
     constructor() {
-        this.repository = undefined;
+        
     }
 
     async findByState() : Promise<Array<Information>>  {
@@ -47,6 +47,7 @@ export class InformationRepository implements BaseRepository {
         try {
             const informationEntryFactory : InformationFactory = new InformationFactory();
             this.repository = informationEntryFactory.create(cmsContents);
+            console.log(this.repository);
         } catch(err){
             console.log("saveToState error");
             console.log(err)
