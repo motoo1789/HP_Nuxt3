@@ -1,4 +1,4 @@
-class ShortContent {
+export class ShortContent {
     
     private readonly _constent : string;
     

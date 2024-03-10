@@ -1,4 +1,4 @@
-class InformationDetail {
+export class InformationDetail {
     private readonly _detail : string;
 
     constructor(detail : string) {

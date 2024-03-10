@@ -5,7 +5,7 @@ export interface BaseRepository {
     findByState() : Promise<Array<Project>>
     findByCMS() :  Promise<data> | undefined
     saveToState(cmsContents : Array<Object>) : void;
-    saveToCMS() : Object;
+    saveToCMS() : void;
 }
 
 export class ProjectRepository implements BaseRepository {
@@ -13,7 +13,6 @@ export class ProjectRepository implements BaseRepository {
     private repository : Array<Project> | undefined;
 
     constructor() {
-
         this.repository = undefined;
     }
 
@@ -51,8 +50,8 @@ export class ProjectRepository implements BaseRepository {
 
     }
 
-    saveToCMS() : Object {
-        return {}
+    saveToCMS() {
+
     }
 
 }

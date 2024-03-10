@@ -1,9 +1,10 @@
-
+import { InformationFactory } from "./InformationFactory"
+import { Information } from "./Information"
 
 export interface BaseRepository {
-    findByState() : Promise<Array<any>>
+    findByState() : Promise<Array<Information>>
     findByCMS() :  Promise<data>
-    saveToState(cmsContents : Array<Object>) : void;
+    saveToState(cmsContents : Array<POSTFormat>) : void;
     saveToCMS(information : POSTFormat) : Object;
 }
 
@@ -15,16 +16,18 @@ interface POSTFormat {
 
 export class InformationRepository implements BaseRepository {
     
-    private repository : Array<any> | undefined;
+    private repository : Array<Information> | undefined;
 
     constructor() {
-
         this.repository = undefined;
     }
 
-    async findByState() : Promise<Array<any>>  {
+    async findByState() : Promise<Array<Information>>  {
 
-        return new Array<any>;
+        if(this.repository === undefined) {
+            return undefined;
+        }
+        return this.repository;
     }
 
     async findByCMS() : Promise<data> {
@@ -39,11 +42,11 @@ export class InformationRepository implements BaseRepository {
         }
     }
 
-    saveToState(cmsContents : Array<Object>) {
+    saveToState(cmsContents : Array<POSTFormat>) {
 
         try {
-            const projectEntryFactory : ProjectFactory = new ProjectFactory();
-            this.repository = projectEntryFactory.create(cmsContents);
+            const informationEntryFactory : InformationFactory = new InformationFactory();
+            this.repository = informationEntryFactory.create(cmsContents);
         } catch(err){
             console.log("saveToState error");
             console.log(err)

@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
         limit: CONTENS_LIMIT
     });
 
-    
     return projectCntents;
 } );
 

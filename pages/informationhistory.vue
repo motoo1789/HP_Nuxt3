@@ -29,10 +29,8 @@
 const { currentpage, updatePage } =  useCurrentPage();
 // const { informationhisotory } =  useInformationHisotry();
 //const { getContent } =  getCMSContent();
-const { parseUpdateInformation } = useUpdateInformation();
-
-const  informationhisotory  =  await parseUpdateInformation();
-
+const { getInformationContents } = informationContents();
+const informationhisotory = await getInformationContents();
 
 const pushPagination = () => {
   updatePage(currentpage)

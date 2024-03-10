@@ -1,4 +1,4 @@
-class InformationAbstract {
+export class InformationAbstract {
 
     private readonly _abstract : string;
     

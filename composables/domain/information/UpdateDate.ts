@@ -1,12 +1,12 @@
-class UpdateDate {
+export class UpdateDate {
     
     private readonly _date : string;
     
-    constructor(abstract : string) {
-        this._date = abstract
+    constructor(date : string) {
+        this._date = date
     }
 
-    get abstract() : string {
+    get updateDate() : string {
         return this._date
     }
 }
