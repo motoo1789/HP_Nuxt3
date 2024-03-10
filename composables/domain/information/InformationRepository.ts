@@ -1,9 +1,10 @@
-
+import { InformationFactory } from "./InformationFactory"
+import { Information } from "./Information"
 
 export interface BaseRepository {
-    findByState() : Promise<Array<any>>
-    findByCMS() :  Promise<data> | undefined
-    saveToState(cmsContents : Array<Object>) : Object;
+    findByState() : Promise<Array<Information>>
+    findByCMS() :  Promise<data>
+    saveToState(cmsContents : Array<POSTFormat>) : void;
     saveToCMS(information : POSTFormat) : Object;
 }
 
@@ -15,31 +16,47 @@ interface POSTFormat {
 
 export class InformationRepository implements BaseRepository {
     
-    private repository : Array<any> | undefined;
+    private repository : Array<Information> | undefined;
 
     constructor() {
-
         this.repository = undefined;
     }
 
-    async findByState() : Promise<Array<any>>  {
+    async findByState() : Promise<Array<Information>>  {
 
-        return new Array<any>;
+        if(this.repository === undefined) {
+            return undefined;
+        }
+        return this.repository;
     }
 
     async findByCMS() : Promise<data> {
+        try {
+            const { data : response } = await useFetch("/api/information/GetInformation")
+            if(response === undefined) {
+                return undefined;
+            }
+            return response;
+        } catch(err) {
 
+        }
     }
 
-    saveToState(cmsContents : Array<Object>) : Object {
+    saveToState(cmsContents : Array<POSTFormat>) {
 
-        
-        return {}
+        try {
+            const informationEntryFactory : InformationFactory = new InformationFactory();
+            this.repository = informationEntryFactory.create(cmsContents);
+        } catch(err){
+            console.log("saveToState error");
+            console.log(err)
+        }
+
     }
 
     async saveToCMS(information : POSTFormat) : Promise<boolean> {
         try {
-            const response = await useFetch("/api/contentful/PostInformation", {
+            const response = await useFetch("/api/information/PostInformation", {
                 method: 'POST',
                 body: information,
                 headers: {

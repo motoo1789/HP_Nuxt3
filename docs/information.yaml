@@ -1,0 +1,21 @@
+openapi: '3.0.3'
+
+info:
+  title: motoo-lab-hobby
+  version: 1.0.0
+
+paths:
+  /api/information:
+    get:
+      responses:
+        200:
+          description: information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  anime:
+                    type: object
+                    properties:
+
