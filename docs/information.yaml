@@ -4,6 +4,7 @@ info:
   title: motoo-lab-hobby
   version: 1.0.0
 
+
 paths:
   /api/information:
     get:
@@ -15,7 +16,15 @@ paths:
               schema:
                 type: object
                 properties:
-                  anime:
+                  information:
                     type: object
                     properties:
+                      title: 
+                        type: string
+                      detail: 
+                        type: string
+                      updatedate:
+                        type: string
+                      shortcontent:
+                        type: string
 
