@@ -15,7 +15,15 @@ paths:
               schema:
                 type: object
                 properties:
-                  anime:
+                  information:
                     type: object
                     properties:
+                      title: 
+                        type: string
+                      detail: 
+                        type: string
+                      updatedate:
+                        type: string
+                      shortcontent:
+                        type: string
 
