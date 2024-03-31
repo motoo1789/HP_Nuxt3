@@ -4,6 +4,7 @@ info:
   title: motoo-lab-hobby
   version: 1.0.0
 
+
 paths:
   /api/information:
     get:
