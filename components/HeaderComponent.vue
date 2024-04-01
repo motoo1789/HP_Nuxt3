@@ -11,9 +11,15 @@
                     <NuxtLink :to="`/`" class="link-style-home ">{{ title }}</NuxtLink>
                 </v-app-bar-title>
 
+                <v-icon 
+                    large
+                    v-for="(icon,key) in icons" :key="key"
+                    @click="jumpPage(icon.url)"
+                    class="mx-2 d-none d-sm-flex"
+                >
+                    {{ icon.mdiIcon }}
+                </v-icon>
 
-                <!-- <v-alert>{{ data?.user?.email }}</v-alert> -->
-                
                 <div class="text-center mx-2" v-if="status === 'authenticated'">
                     <v-menu location="bottom" class="link-style-home">
                         <template v-slot:activator="{ props }">
@@ -38,22 +44,10 @@
                             </v-list-item>
                         </v-list>
                     </v-menu>
-                    <!-- <v-btn class="text-h6" >
-                        <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">管理者ページ</NuxtLink>
-                    </v-btn>
-                    <v-btn class="text-h6" >
-                        <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">ログアウト</NuxtLink>
-                    </v-btn> -->
                 </div>
-                <!--
-                    <v-btn class="text-h6" v-if="status === 'authenticated'">
-                        <NuxtLink @click="signOut({callbackUrl: '/'})"  class="link-style-home ">ログアウト</NuxtLink>
-                    </v-btn> 
-                -->
                 <v-btn class="text-h6" v-else>
                     <NuxtLink :to="`/login`" class="link-style-home ">ログイン</NuxtLink>
                 </v-btn>
-                
                 
             </v-app-bar>     
 
@@ -78,6 +72,21 @@
 
     const show = () => {
         showDrawer.value = !showDrawer.value;
+    }
+
+
+    const icons = [
+        {
+            url: "https://github.com/motoo1789",
+            mdiIcon: "mdi-github"
+        },
+        {
+            url: "https://twitter.com/Motoo1789",
+            mdiIcon: "mdi-twitter "
+        },
+    ]
+    const jumpPage = (url: any) => {
+        window.open(url, '_blank')
     }
 
     const items = [
@@ -111,6 +120,4 @@
     .blue-b{
         border: 1px blue solid
     }
-
-
   </style>
