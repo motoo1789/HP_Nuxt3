@@ -27,7 +27,7 @@
                                 </div>
 
                                 
-                                <v-icon v-else large  @click="jumpGithubPage(project.url)">
+                                <v-icon v-else large  @click="jumpPage(project.url)">
                                     mdi-github
                                 </v-icon>
 
@@ -119,13 +119,10 @@
                                                         </v-tooltip>
                                                     </v-btn> 
  
-                                                    
-                                            
-
                                                     <v-btn 
                                                         color="light-blue-accent-3" 
                                                         :rounded=true
-                                                        @click="jumpGithubPage(showDialogProject.url)"
+                                                        @click="jumpPage(showDialogProject.url)"
                                                         v-else
                                                     >
                                                         <v-icon large>
@@ -183,7 +180,7 @@ let showDialogProject = ref({
     movie: String,
 })
 
-const jumpGithubPage = (url: any) => {
+const jumpPage = (url: any) => {
     window.open(url, '_blank')
 }
 
