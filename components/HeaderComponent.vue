@@ -11,17 +11,21 @@
                     <NuxtLink :to="`/`" class="link-style-home ">{{ title }}</NuxtLink>
                 </v-app-bar-title>
 
-                <v-icon 
-                    large
-                    v-for="(icon,index) in icons" :key="index"
-                    @click="jumpPage(icon.url)"
-                    @mouseover="isHover = index" 
-                    @mouseout="isHover = null" 
-                    class="mx-2 d-none d-sm-flex"
-                    :class="{purupuru: isHover === index}"
-                >
-                    {{ icon.mdiIcon }}
-                </v-icon>
+                <v-tooltip  v-for="(icon,index) in icons" :key="index" :text="icon.service" location="bottom">
+                    <template v-slot:activator="{ props }">
+                        <v-icon 
+                            large
+                            v-bind="props"
+                            @click="jumpPage(icon.url)"
+                            @mouseover="isHover = index" 
+                            @mouseout="isHover = null" 
+                            class="mx-2 d-none d-sm-flex"
+                            :class="{purupuru: isHover === index}"
+                        >
+                            {{ icon.mdiIcon }}
+                        </v-icon>
+                    </template>
+                </v-tooltip>
 
                 <div class="text-center mx-2" v-if="status === 'authenticated'">
                     <v-menu location="bottom" class="link-style-home">
@@ -83,12 +87,19 @@
     const icons = [
         {
             url: "https://github.com/motoo1789",
-            mdiIcon: "mdi-github"
+            mdiIcon: "mdi-github",
+            service: "GitHub"
         },
         {
             url: "https://twitter.com/Motoo1789",
-            mdiIcon: "mdi-twitter "
+            mdiIcon: "mdi-twitter",
+            service: "Twitter"
         },
+        {
+            url: "https://qiita.com/motoo1789",
+            mdiIcon: "mdi-book-edit",
+            service: "Qiita"
+        }
     ]
 
     const jumpPage = (url: any) => {
