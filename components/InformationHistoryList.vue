@@ -4,7 +4,7 @@
         class="mx-auto"
         shaped="true"
     >
-        <v-row class="blue-b" >
+        <v-row>
             <v-col class="green-b" >
                 <v-card-title class="color text-h5">
                   新着情報
