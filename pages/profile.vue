@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div>
+       
             <v-card class="mx-auto" shaped="true">
                 <v-container>
                     <v-row>
@@ -11,7 +11,7 @@
                         <v-col>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-card-title class="color text-h5">
+                                    <v-card-title  class="color text-h5 rounded-t">
                                         名前 山崎 貴弘
                                     </v-card-title>
                                 </v-col>
@@ -44,7 +44,7 @@
                         <v-col>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-card-title class="color text-h5">
+                                    <v-card-title class="color text-h5 rounded-t">
                                         経歴
                                     </v-card-title>
                                 </v-col>
@@ -60,7 +60,7 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <v-card-title class="color text-h5">
+                                    <v-card-title class="color text-h5 rounded-t">
                                         資格
                                     </v-card-title>
                                 </v-col>
@@ -84,7 +84,7 @@
                         <v-col>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-card-title class="color text-h5">
+                                    <v-card-title class="color text-h5 rounded-t">
                                         発表
                                     </v-card-title>
                                 </v-col>
@@ -129,7 +129,7 @@
 
                             <v-row>
                                 <v-col cols="12">
-                                    <v-card-title class="color text-h5">
+                                    <v-card-title class="color text-h5 rounded-t">
                                         スキル（自己評価）
                                     </v-card-title>
                                 </v-col>
@@ -153,7 +153,7 @@
                     </v-row>
                 </v-container>
             </v-card>
-        </div>
+
     </v-container>
 </template>
 
