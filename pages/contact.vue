@@ -65,7 +65,7 @@ const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
  const { vueApp } = useNuxtApp()
  vueApp.use(VueReCaptcha, {
-   siteKey: "6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb",
+   siteKey: process.env.RECAPTCHA!,
    loaderOptions: {
      renderParameters: {
        hl: 'ja'
