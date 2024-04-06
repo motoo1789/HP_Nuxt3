@@ -16,6 +16,9 @@ export default defineNuxtConfig({
       contentfulInformation : process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_INFORMATIONL,
       newt: {
         formEndpoint:  process.env.NEXT_PUBLIC_NEWT
+      },
+      reCAPTCHA: {
+        key: process.env.NEXT_PUBLIC_RECAPTCHA
       }
     },
   },
