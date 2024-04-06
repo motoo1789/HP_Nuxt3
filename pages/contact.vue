@@ -52,6 +52,7 @@ import { useForm } from 'vee-validate'
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 
 import * as yup from "yup"
+const configContentful = useRuntimeConfig();
 
 const schema = yup.object({
 	email: yup.string().email().required(),
@@ -65,7 +66,7 @@ const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
  const { vueApp } = useNuxtApp()
  vueApp.use(VueReCaptcha, {
-   siteKey: process.env.RECAPTCHA!,
+   siteKey: configContentful.public.reCAPTCHA.key!,
    loaderOptions: {
     renderParameters: {
        hl: 'ja'
@@ -74,7 +75,7 @@ const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 })
 const recaptchaInstance = useReCaptcha()
 
-const configContentful = useRuntimeConfig();
+
 const onSubmit = handleSubmit(async (values) => {
 
 	await recaptchaInstance?.recaptchaLoaded()
