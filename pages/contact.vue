@@ -64,23 +64,23 @@ const { useFieldModel, handleSubmit, errors } = useForm({
 })
 const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
- const { vueApp } = useNuxtApp()
- vueApp.use(VueReCaptcha, {
-   siteKey: configContentful.public.reCAPTCHA.key!,
-   loaderOptions: {
-    renderParameters: {
-       hl: 'ja'
-    }
-   }
-})
-const recaptchaInstance = useReCaptcha()
+// const { vueApp } = useNuxtApp()
+// vueApp.use(VueReCaptcha, {
+// siteKey: configContentful.public.reCAPTCHA.key!,
+// loaderOptions: {
+//     renderParameters: {
+//        hl: 'ja'
+//     }
+//    }
+// })
+// const recaptchaInstance = useReCaptcha()
 
 
 const onSubmit = handleSubmit(async (values) => {
-
-	await recaptchaInstance?.recaptchaLoaded()
-	const token = await recaptchaInstance?.executeRecaptcha('submit')
-	values.googleReCaptchaToken = token
+	
+	// await recaptchaInstance?.recaptchaLoaded()
+	// const token = await recaptchaInstance?.executeRecaptcha('submit')
+	// values.googleReCaptchaToken = token
 
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
