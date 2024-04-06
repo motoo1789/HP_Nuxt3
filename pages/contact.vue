@@ -63,9 +63,9 @@ const { useFieldModel, handleSubmit, errors } = useForm({
 })
 const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
-const { vueApp } = useNuxtApp()
-vueApp.use(VueReCaptcha, {
-   siteKey: "6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb",
+ const { vueApp } = useNuxtApp()
+ vueApp.use(VueReCaptcha, {
+   siteKey: process.env.RECAPTCHA!,
    loaderOptions: {
     renderParameters: {
        hl: 'ja'
