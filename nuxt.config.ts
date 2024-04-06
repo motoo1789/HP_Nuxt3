@@ -13,6 +13,10 @@ export default defineNuxtConfig({
       contentfulEnviroment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT,
       contentfulAccessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
       contentfulProject : process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT,
+      contentfulInformation : process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_INFORMATIONL,
+      newt: {
+        formEndpoint:  process.env.NEXT_PUBLIC_NEWT
+      }
     },
   },
 

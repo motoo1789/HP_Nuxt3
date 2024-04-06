@@ -63,18 +63,18 @@ const { useFieldModel, handleSubmit, errors } = useForm({
 })
 const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 
- const { vueApp } = useNuxtApp()
- vueApp.use(VueReCaptcha, {
+const { vueApp } = useNuxtApp()
+vueApp.use(VueReCaptcha, {
    siteKey: "6LdvemQnAAAAANA5WrFjmfpfi7U6oVc8cF-Tz6Gb",
    loaderOptions: {
-     renderParameters: {
+    renderParameters: {
        hl: 'ja'
-     }
+    }
    }
- })
- const recaptchaInstance = useReCaptcha()
+})
+const recaptchaInstance = useReCaptcha()
 
-
+const configContentful = useRuntimeConfig();
 const onSubmit = handleSubmit(async (values) => {
 
 	await recaptchaInstance?.recaptchaLoaded()
@@ -86,10 +86,8 @@ const onSubmit = handleSubmit(async (values) => {
 		formData.append(key, value)
 	})
 
-	
 	try {
-		
-		const response = await fetch(process.env.NEWT_URL!, {
+		const response = await fetch(configContentful.public.newt.formEndpoint!, {
 			method: 'POST',
 			body: formData,
 			headers: {
