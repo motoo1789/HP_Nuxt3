@@ -67,14 +67,14 @@ const [name, email, message] = useFieldModel(['name', 'email', 'message'])
  vueApp.use(VueReCaptcha, {
    siteKey: process.env.RECAPTCHA!,
    loaderOptions: {
-     renderParameters: {
+    renderParameters: {
        hl: 'ja'
-     }
+    }
    }
- })
- const recaptchaInstance = useReCaptcha()
+})
+const recaptchaInstance = useReCaptcha()
 
-
+const configContentful = useRuntimeConfig();
 const onSubmit = handleSubmit(async (values) => {
 
 	await recaptchaInstance?.recaptchaLoaded()
@@ -86,10 +86,8 @@ const onSubmit = handleSubmit(async (values) => {
 		formData.append(key, value)
 	})
 
-	
 	try {
-		
-		const response = await fetch(process.env.NEWT_URL!, {
+		const response = await fetch(configContentful.public.newt.formEndpoint!, {
 			method: 'POST',
 			body: formData,
 			headers: {
