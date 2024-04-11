@@ -5,7 +5,7 @@
                 :key="sidelist.titleJP" 
                 prepend-icon=sidelist.icon
             >
-                <NuxtLink :to="sidelist.path" class="link-style">
+                <NuxtLink :to="sidelist.path" class="link-style" :class="{outage: sidelist.path === '/contact' ? true : false}">
                     <v-list-item-icon>
                         <v-icon > {{ sidelist.icon }}</v-icon>
                     </v-list-item-icon>
@@ -30,5 +30,7 @@
 </script>
 
 <style>
-
+    .outage {
+        text-decoration: line-through;
+    }
 </style>
