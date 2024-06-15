@@ -9,7 +9,7 @@
                     <v-list-item-icon>
                         <v-icon > {{ sidelist.icon }}</v-icon>
                     </v-list-item-icon>
-                        <span :class="{outage: sidelist.path === '/contact' ? true : false}">{{ sidelist.titleJP }}</span>
+                    <span :class="{outage: sidelist.path === '/contact' ? true : false}">{{ sidelist.titleJP }}</span>
                 </NuxtLink>
             </v-list-item> 
         </v-list>
