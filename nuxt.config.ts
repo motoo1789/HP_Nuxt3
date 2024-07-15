@@ -70,7 +70,7 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    // origin: 'https://hp-nuxt3-motoo1789.vercel.app'
+    origin: 'https://motoo1789.net/'
   },
 
   redirect: {
