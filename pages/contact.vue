@@ -50,9 +50,9 @@ useHead({
 
 import { useForm } from 'vee-validate'
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
+import * as yup from "yup"
 definePageMeta({ middleware: 'auth' })
 
-import * as yup from "yup"
 const configContentful = useRuntimeConfig();
 
 const schema = yup.object({
@@ -64,32 +64,30 @@ const { useFieldModel, handleSubmit, errors } = useForm({
 	validationSchema: schema
 })
 const [name, email, message] = useFieldModel(['name', 'email', 'message'])
-
-// const { vueApp } = useNuxtApp()
-// vueApp.use(VueReCaptcha, {
-// siteKey: configContentful.public.reCAPTCHA.key!,
-// loaderOptions: {
-//     renderParameters: {
-//        hl: 'ja'
-//     }
-//    }
-// })
-// const recaptchaInstance = useReCaptcha()
+const { vueApp } = useNuxtApp()
+vueApp.use(VueReCaptcha, {
+	siteKey: configContentful.public.reCAPTCHA.key!,
+	loaderOptions: {
+		renderParameters: {
+			hl: 'ja'
+		}
+	}
+})
+const recaptchaInstance = useReCaptcha()
 
 
 const onSubmit = handleSubmit(async (values) => {
 	
-	// await recaptchaInstance?.recaptchaLoaded()
-	// const token = await recaptchaInstance?.executeRecaptcha('submit')
-	// values.googleReCaptchaToken = token
-
+	await recaptchaInstance?.recaptchaLoaded()
+	const token = await recaptchaInstance?.executeRecaptcha('submit')
+	values.googleReCaptchaToken = token
+	
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
 		formData.append(key, value)
 	})
-
 	try {
-		const response = await fetch(configContentful.public.newt.formEndpoint!, {
+		const response = await useFetch(configContentful.public.newt.formEndpoint!, {
 			method: 'POST',
 			body: formData,
 			headers: {
@@ -97,7 +95,7 @@ const onSubmit = handleSubmit(async (values) => {
 			}
 		})
 
-		if (response.ok) {
+		if (response.data.value.success) {
 			await navigateTo('/thanks')
 		} else {
 			await navigateTo('/error')
