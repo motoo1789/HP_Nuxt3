@@ -70,7 +70,6 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    origin: 'https://motoo1789.net/' // vercelのデプロイに必要
   },
 
   redirect: {
