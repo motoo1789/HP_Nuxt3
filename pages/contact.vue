@@ -81,7 +81,7 @@ const onSubmit = handleSubmit(async (values) => {
 	await recaptchaInstance?.recaptchaLoaded()
 	const token = await recaptchaInstance?.executeRecaptcha('submit')
 	values.googleReCaptchaToken = token
-	
+
 	const formData = new FormData()
 	Object.entries(values).forEach(([key, value]) => {
 		formData.append(key, value)
