@@ -27,7 +27,7 @@ export const animeContents = () => {
 					console.log("Not contens ...");
 				}
 				/**
-				 *  domain部分に正規化お願い
+				 *  domain部分に正規化
 				*/
 				await animerepository.saveToState(response.value!);
 				const viewanime = await animerepository.findByState();
