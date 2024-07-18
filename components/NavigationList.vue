@@ -9,7 +9,7 @@
                     <v-list-item-icon>
                         <v-icon > {{ sidelist.icon }}</v-icon>
                     </v-list-item-icon>
-                    <span :class="{outage: sidelist.path === '/contact' ? true : false}">{{ sidelist.titleJP }}</span>
+                    {{ sidelist.titleJP }}
                 </NuxtLink>
             </v-list-item> 
         </v-list>
@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-
 
 	const sidelists = [
 		{titleJP: "ホーム", titleENG: "Home", path: "/",  icon:"mdi-home-outline"},
