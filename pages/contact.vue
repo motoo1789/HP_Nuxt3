@@ -51,7 +51,6 @@ useHead({
 import { useForm } from 'vee-validate'
 import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 import * as yup from "yup"
-definePageMeta({ middleware: 'auth' })
 
 const configContentful = useRuntimeConfig();
 
