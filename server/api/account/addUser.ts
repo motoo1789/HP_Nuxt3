@@ -25,16 +25,11 @@ export default defineEventHandler(async (event) => {
 
         await sql`INSERT INTO users (user_id,username,password,email,is_active) 
                                     VALUES ( ${lines}, ${name},${hash},${email},false);`;
-        
         await sql`INSERT INTO password_security_info (user_id,password_hash,password_salt) 
                 VALUES (${lines},${hash},${salt});`;
-	
-
-        
-
+                
         return "success";
     }
-
 
     return "Bodyがないよ"
 })
