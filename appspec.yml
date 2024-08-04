@@ -1,5 +1,6 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /codeloploy
+  - source: ./
+    destination: /codedeploy/test/HP_Nuxt3
+file_exists_behavior: OVERWRITE
