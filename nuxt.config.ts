@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
 
   imports: {
@@ -6,6 +7,10 @@ export default defineNuxtConfig({
       'composables/**'
     ]
   },
+
+  plugins: [
+    '~/plugins/vuetify.ts'
+  ],
 
   runtimeConfig: {
     public: {
@@ -30,6 +35,11 @@ export default defineNuxtConfig({
   },
   typescript: {
     shim: false,
+    tsConfig: {
+      compilerOptions: {
+        types: ["vitest/globals"] // globalsのTypeScriptサポート
+      }
+    }
   },
 
   ssr: false,
@@ -65,7 +75,22 @@ export default defineNuxtConfig({
     "@nuxtjs/prismic",
     "@sidebase/nuxt-auth",
     // 'nuxt-vitest'
+    '@nuxt/test-utils/module',
+    async (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    },
   ],
+
+  testUtils: {
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+  },
 
 
   auth: {
