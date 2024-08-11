@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
-
   imports: {
     dirs: [
       'composables/**'
@@ -33,6 +32,7 @@ export default defineNuxtConfig({
       mainFields: ["main", "browser"],
     },
   },
+
   typescript: {
     shim: false,
     tsConfig: {
@@ -43,6 +43,7 @@ export default defineNuxtConfig({
   },
 
   ssr: false,
+
   css: [
     "vuetify/styles",
     "@mdi/font/css/materialdesignicons.css",
@@ -53,6 +54,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify", "@vuepic/vue-datepicker"],
   },
+
   buildModules: [
     // Simple usage
     "@nuxtjs/vuetify",
@@ -92,11 +94,10 @@ export default defineNuxtConfig({
     },
   },
 
-
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
     // origin: 'https://motoo1789.net/' // vercelのデプロイに必要
-    origin: 'https://motoo-lab.com/' // ec2用origin
+    // origin: 'https://motoo-lab.com/' // ec2用origin
   },
 
   redirect: {
@@ -109,6 +110,7 @@ export default defineNuxtConfig({
   prismic: {
     endpoint: "hp-nuxt",
   },
+
   proxy: {
     // ファイルのPOSTがうまくいかなかったら
     // options:[
@@ -130,4 +132,6 @@ export default defineNuxtConfig({
     //     },
     // ]
   },
+
+  compatibilityDate: "2024-08-08",
 });
