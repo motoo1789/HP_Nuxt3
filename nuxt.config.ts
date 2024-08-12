@@ -77,13 +77,13 @@ export default defineNuxtConfig({
     "@nuxtjs/prismic",
     "@sidebase/nuxt-auth",
     // 'nuxt-vitest'
-    '@nuxt/test-utils/module',
-    async (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
-    },
+    // '@nuxt/test-utils/module',
+    // async (_options, nuxt) => {
+    //   nuxt.hooks.hook('vite:extendConfig', (config) => {
+    //     // @ts-expect-error
+    //     config.plugins.push(vuetify({ autoImport: true }))
+    //   })
+    // },
   ],
 
   testUtils: {
