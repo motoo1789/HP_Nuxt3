@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   imports: {
     dirs: [
@@ -26,11 +27,9 @@ export default defineNuxtConfig({
     resolve: {
       mainFields: ["main", "browser"],
     },
+
   },
 
-  typescript: {
-    shim: false,
-  },
 
   ssr: false,
 
@@ -42,7 +41,7 @@ export default defineNuxtConfig({
   ],
 
   build: {
-    transpile: ["vuetify", "@vuepic/vue-datepicker"],
+    transpile: ["vuetify"],
   },
 
   buildModules: [
@@ -66,6 +65,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/prismic",
     "@sidebase/nuxt-auth",
+    "@nuxt/test-utils/module"
     // 'nuxt-vitest'
   ],
 
