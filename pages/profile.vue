@@ -195,6 +195,12 @@ import { ref } from "vue";
             title: 'A Tool for Supporting Round-Trip Engineering with the Ability to Avoid Unintended Design Changes',
             url: "https://www.insticc.org/node/TechnicalProgram/modelsward/2023/presentationDetails/116675"
         },
+        {
+            id : 4,
+            date: '2024-09-06',
+            title: 'UMLDS: A Round-Trip Engineering Support Tool to Avoid Unintended Design Changes',
+            url: "https://link.springer.com/chapter/10.1007/978-3-031-66339-0_5"
+        }
     ];
 
 
