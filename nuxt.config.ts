@@ -70,11 +70,7 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    isEnabled: true,
-    baseURL: "https://hp-nuxt3.vercel.app/",
-    provider: {
-      type: 'authjs'
-    },
+    origin: 'https://hp-nuxt3.vercel.app/'
     // origin: 'https://motoo1789.net/' // vercelのデプロイに必要
     // origin: 'https://motoo-lab.com/' // ec2用origin
   },
