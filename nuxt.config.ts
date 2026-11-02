@@ -11,9 +11,8 @@ const viteCacheDir = resolve(
 );
 
 /**
- * サーバー起動時 assertOrigin 用（空だと AUTH_NO_ORIGIN）。
- * ブラウザの session URL は plugins/auth-origin.client.ts が window.location.origin で上書き。
- * Vercel では VERCEL_* のみ（Dashboard の誤 NUXT_PUBLIC_AUTH_ORIGIN は使わない）。
+ * サーバー専用 runtimeConfig.auth.origin（assertOrigin 用・非空必須）。
+ * クライアントは hooks で public.auth.origin を空にし /api/auth を相対 URL にする。
  */
 function resolveAuthOrigin(): string {
   if (process.env.VERCEL) {
@@ -158,6 +157,17 @@ export default defineNuxtConfig({
     // 'nuxt-vitest'
   ],
 
+  hooks: {
+    "modules:done"(nuxt) {
+      const publicAuth = nuxt.options.runtimeConfig.public?.auth as
+        | { origin?: string }
+        | undefined;
+      if (publicAuth) {
+        // git-* / *-hash* など Preview 別名 URL でも常に同じオリジンへ
+        publicAuth.origin = "";
+      }
+    },
+  },
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
