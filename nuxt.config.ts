@@ -11,12 +11,22 @@ const viteCacheDir = resolve(
 );
 
 /**
- * サーバー側 next-auth 用。クライアントは plugins/auth-origin.client.ts で上書き。
- * Vercel では空 → /api/auth は相対 URL（誤った NUXT_PUBLIC_AUTH_ORIGIN を焼き込まない）。
+ * サーバー起動時 assertOrigin 用（空だと AUTH_NO_ORIGIN）。
+ * ブラウザの session URL は plugins/auth-origin.client.ts が window.location.origin で上書き。
+ * Vercel では VERCEL_* のみ（Dashboard の誤 NUXT_PUBLIC_AUTH_ORIGIN は使わない）。
  */
 function resolveAuthOrigin(): string {
   if (process.env.VERCEL) {
-    return "";
+    if (
+      process.env.VERCEL_ENV === "production" &&
+      process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ) {
+      return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    }
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
+    return "https://hp-nuxt3.vercel.app";
   }
   const fromEnv = process.env.NUXT_PUBLIC_AUTH_ORIGIN?.replace(/\/$/, "");
   if (fromEnv) {
