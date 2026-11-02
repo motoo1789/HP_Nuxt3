@@ -23,7 +23,9 @@
     "@sidebase/nuxt-auth": "^1.4.0",
     "@slicemachine/adapter-nuxt": "^0.3.1",
     "@types/node": "^22.10.0",
+    "jose": "4.15.9",
     "next-auth": "4.21.1",
+    "uuid": "^8.3.2",
     "nuxt": "^4.6.3",
     "sass": "^1.83.0",
     "slice-machine-ui": "^1.3.0",
@@ -34,6 +36,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.26.0",
+    "@panva/hkdf": "^1.2.1",
     "@prismicio/client": "^7.23.0",
     "@types/bcrypt": "^5.0.0",
     "@vercel/postgres": "^0.10.0",
