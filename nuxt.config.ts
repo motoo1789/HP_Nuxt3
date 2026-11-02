@@ -104,15 +104,22 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    // next-auth/core を Nitro バンドルに混ぜると @babel/runtime interop が壊れ
-    // Vercel: `_interopRequireDefault$1 is not a function`
+    // Vercel: external にすると node_modules に載らず ERR_MODULE_NOT_FOUND
+    // inline で next-auth + @babel/runtime を関数に同梱（interop も runtime ごと）
     externals: {
-      external: [
+      inline: [
         "next-auth",
         "@babel/runtime",
         "@babel/runtime/helpers/interopRequireDefault",
-        "bcrypt",
+        "@babel/runtime/helpers/interopRequireWildcard",
       ],
+      traceInclude: [
+        "node_modules/next-auth/**",
+        "node_modules/@babel/runtime/**",
+      ],
+    },
+    commonJS: {
+      include: [/next-auth/, /@babel\/runtime/],
     },
   },
 
