@@ -10,24 +10,35 @@ const viteCacheDir = resolve(
   "vite",
 );
 
-/** Preview はデプロイ URL ごとに auth API の origin が異なる（本番 URL 固定だと CORS） */
+/**
+ * nuxt-auth の session URL はビルド時に origin が固定される。
+ * Vercel では NUXT_PUBLIC_AUTH_ORIGIN（古い別ドメイン等）より VERCEL_* を優先し CORS を防ぐ。
+ */
 function resolveAuthOrigin(): string {
-  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+  const trimTrailingSlash = (url: string) => url.replace(/\/$/, "");
+
+  if (process.env.VERCEL) {
+    if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
+    if (process.env.VERCEL_ENV === "production") {
+      if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+        return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+      }
+      if (process.env.VERCEL_URL) {
+        return `https://${process.env.VERCEL_URL}`;
+      }
+    }
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
   }
+
   if (process.env.NUXT_PUBLIC_AUTH_ORIGIN) {
-    return process.env.NUXT_PUBLIC_AUTH_ORIGIN;
+    return trimTrailingSlash(process.env.NUXT_PUBLIC_AUTH_ORIGIN);
   }
-  if (
-    process.env.VERCEL_ENV === "production" &&
-    process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  return "https://hp-nuxt3-motoo1789.vercel.app";
+
+  return "https://hp-nuxt3.vercel.app";
 }
 
 export default defineNuxtConfig({
@@ -156,8 +167,9 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    // ローカル: .env の NUXT_PUBLIC_AUTH_ORIGIN=http://localhost:3000
-    // Vercel Preview: ビルド時の VERCEL_URL（NUXT_PUBLIC_AUTH_ORIGIN より優先）
+    // サーバー: リクエスト Host を信頼（Preview の複数 URL 対応）
+    trustHost: true,
+    // ビルド時 origin（plugins/auth-origin.client.ts でブラウザ側は上書き）
     origin: resolveAuthOrigin(),
   },
 
