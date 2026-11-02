@@ -164,11 +164,14 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { getProjectContents } from "~/composables/application/project/project";
+import {
+  getProjectContents,
+  type ViewProjectFormat,
+} from "~/composables/application/project/project";
 
 const { projectContents } = getProjectContents();
 const loading = ref(true);
-const projects = ref<Awaited<ReturnType<ReturnType<typeof projectContents>>>>([]);
+const projects = ref<ViewProjectFormat[]>([]);
 
 onMounted(async () => {
     try {

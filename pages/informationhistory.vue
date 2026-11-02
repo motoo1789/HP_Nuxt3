@@ -31,7 +31,16 @@ const { currentpage, updatePage } =  useCurrentPage();
 //const { getContent } =  getCMSContent();
 const { parseUpdateInformation } = useUpdateInformation();
 
-const  informationhisotory  =  await parseUpdateInformation();
+const loading = ref(true);
+const informationhisotory = ref<Awaited<ReturnType<typeof parseUpdateInformation>>>([]);
+
+onMounted(async () => {
+  try {
+    informationhisotory.value = await parseUpdateInformation();
+  } finally {
+    loading.value = false;
+  }
+});
 
 
 const pushPagination = () => {

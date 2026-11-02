@@ -1,54 +1,44 @@
-import { Project } from "./Project"
-import { ProjectFactory } from "./ProjectFactory"
+import type { ContentfulEntryCollection } from "~/types/contentful-cms";
+import { Project } from "./Project";
+import { ProjectFactory } from "./ProjectFactory";
 
 export interface BaseRepository {
-    findByState() : Promise<Array<Project>>
-    findByCMS() :  Promise<data> | undefined
-    saveToState(cmsContents : Array<Object>) : Object;
-    saveToCMS() : Object;
+  findByState(): Promise<Array<Project> | undefined>;
+  findByCMS(): Promise<ContentfulEntryCollection | undefined>;
+  saveToState(cmsContents: ContentfulEntryCollection): void;
+  saveToCMS(): Record<string, never>;
 }
 
 export class ProjectRepository implements BaseRepository {
-    
-    private repository : Array<Project> | undefined;
+  private repository: Array<Project> | undefined;
 
-    constructor() {
+  constructor() {
+    this.repository = undefined;
+  }
 
-        this.repository = undefined;
+  async findByState(): Promise<Array<Project> | undefined> {
+    return this.repository;
+  }
+
+  async findByCMS(): Promise<ContentfulEntryCollection | undefined> {
+    try {
+      return await $fetch<ContentfulEntryCollection>("/api/project/GetProjectContents");
+    } catch {
+      return undefined;
     }
+  }
 
-    async findByState() : Promise<Array<Project>>  {
-
-        if(this.repository === undefined) {
-            return undefined;
-        }
-
-        return this.repository;
+  saveToState(cmsContents: ContentfulEntryCollection): void {
+    try {
+      const projectEntryFactory = new ProjectFactory();
+      this.repository = projectEntryFactory.create(cmsContents);
+    } catch (err) {
+      console.log("saveToState error");
+      console.log(err);
     }
+  }
 
-    async findByCMS() {
-        try {
-            return await $fetch("/api/project/GetProjectContents");
-        } catch {
-            return undefined;
-        }
-    }
-
-    saveToState(cmsContents : Array<Object>) : Object {
-
-        try {
-            const projectEntryFactory : ProjectFactory = new ProjectFactory();
-            this.repository = projectEntryFactory.create(cmsContents);
-        } catch(err){
-            console.log("saveToState error");
-            console.log(err)
-        }
-        
-        return {}
-    }
-
-    saveToCMS() : Object {
-        return {}
-    }
-
+  saveToCMS(): Record<string, never> {
+    return {};
+  }
 }

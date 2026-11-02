@@ -80,7 +80,6 @@ const dateDialog = ref(false);
 const imagetype = ["png", "jpeg", "jpg"];
 
 import * as yup from "yup"
-import { DatePickerType } from 'vuetify';
 
 const schema = yup.object({
 	abstract: yup.string().required(),
@@ -129,7 +128,7 @@ const onSubmit = handleSubmit(async (values) => {
 			}
 		})
 
-		if (response.data.value === "success") {
+		if (String(response.data.value) === "success") {
 			overlay.value = false;
 			prograssCircular.value = false;
 			notifySuccess.value = true;

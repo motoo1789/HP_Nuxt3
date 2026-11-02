@@ -45,13 +45,9 @@ export default defineNuxtConfig({
     },
   },
 
-  configureWebpack: {
-    resolve: {
-      mainFields: ["main", "browser"],
-    },
-  },
   typescript: {
     shim: false,
+    strict: true,
   },
 
   ssr: false,
@@ -65,10 +61,6 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify", "@vuepic/vue-datepicker"],
   },
-  buildModules: [
-    // Simple usage
-    "@nuxtjs/vuetify",
-  ],
 
   vite: {
     define: {
@@ -94,13 +86,6 @@ export default defineNuxtConfig({
     },
   },
 
-  serverMiddleware: [
-    { path: "api/anime", handler: "~/server/api/anime" },
-    { path: "api/contentful", handler: "~/server/api/contentful" },
-    { path: "api/hobby/anime", handler: "~/server/api/hobby/anime" },
-    // { path: "api/contentful/migrationAnime", handler: "~/server/api/contentful/migrationAnime" }, // Entityを追加するようapi通常時は使わない
-  ],
-
   modules: ["@nuxtjs/prismic", "@sidebase/nuxt-auth"],
 
   auth: {
@@ -111,35 +96,7 @@ export default defineNuxtConfig({
       "https://hp-nuxt3-motoo1789.vercel.app",
   },
 
-  redirect: {
-    login: "/login",
-    logout: "/",
-    callback: false,
-    home: "/",
-  },
-
   prismic: {
     endpoint: "hp-nuxt",
-  },
-  proxy: {
-    // ファイルのPOSTがうまくいかなかったら
-    // options:[
-    //     {
-    //         target: process.env.API_HOST_URL,
-    //         changeOrigin: true,
-    //         pathRewrite: {
-    //             "^/api/media/upload": "/api/v1/upload",
-    //         },
-    //         pathFilter: ["/api/media/upload"],
-    //     },
-    //     {
-    //         target: process.env.API_HOST_URL,
-    //         changeOrigin: true,
-    //         pathRewrite: {
-    //             "^/api/product/": "/api/v1/product",
-    //         },
-    //         pathFilter: ["/api/product"],
-    //     },
-    // ]
   },
 });

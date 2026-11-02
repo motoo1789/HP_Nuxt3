@@ -1,99 +1,96 @@
 import { resolveInformationContentType } from "~/utils/contentfulContentTypes";
 
-/**
- * このファイルはinformationの作成の際に呼ばれるのみ
- * 現状componentとpagesで機能がまたがっているから共通の場所として使っていると思われる
- */
-export const useCMSContents = async () => {
-    const CONTENS_LIMIT = 500;
-    const { $client } = useNuxtApp();
-    const contentType = resolveInformationContentType(
-        useRuntimeConfig().public.contentfulInformationType,
-    );
-
-    if (!$client || !contentType) {
-        return [];
-    }
-
-    const getContents = await $client.getEntries({
-        content_type: contentType,
-        limit: CONTENS_LIMIT,
-    });
-
-    const contents = getContents?.items;
-    if (!contents) {
-        return [];
-    }
-    return contents.map((item) => item.fields);
+export type InformationFields = Record<string, unknown> & {
+  updateDate?: string;
+  abstract?: string;
+  detaile?: string;
 };
 
-export const useCMSContent = () => {
-    const cmsComtents = useState("cmsComtents" , () => useCMSContents() );
-    return { 
-        cmsComtents: readonly(cmsComtents),
-    }
+function normalizeInformationFields(
+  items: Array<{ fields: Record<string, unknown> }> | undefined,
+): InformationFields[] {
+  if (!items?.length) {
+    return [];
+  }
+  return items.map((item) => item.fields as InformationFields);
 }
 
-export const useUpdateInformation = () => { 
-    const parseUpdateInformation = async () => {
-        const { cmsComtents } = await useCMSContent()
+/** Contentful から新着情報 fields 一覧を取得 */
+export const useCMSContents = async (): Promise<InformationFields[]> => {
+  try {
+    const response = await $fetch<{ items: Array<{ fields: Record<string, unknown> }> }>(
+      "/api/contentful/GetInformationContents",
+    );
+    return normalizeInformationFields(response.items);
+  } catch (error) {
+    console.warn("[information] API fetch failed, trying $client", error);
+  }
 
-        const contentsValueObject = await cmsComtents.value;
-        const hobbyArray = (contentsValueObject ?? []).filter((cmsContent) =>
-            cmsContent.hasOwnProperty("updateDate"),
-        );
-        const afterSortHobbyArray = hobbyArray.sort(
-            (a, b) => Date.parse(b.updateDate) - Date.parse(a.updateDate),
-        );
+  const { $client } = useNuxtApp();
+  const contentType = resolveInformationContentType(
+    useRuntimeConfig().public.contentfulInformationType,
+  );
 
+  if (!$client || !contentType) {
+    return [];
+  }
 
-        const showMaxInformation = 5;
-        const returnPageObject = []
-        const contentLength = afterSortHobbyArray.length
+  const getContents = await $client.getEntries({
+    content_type: contentType,
+    limit: 500,
+  });
 
-        for(let counterPage = 1; counterPage <= Math.ceil(contentLength / showMaxInformation); counterPage++)
-        {
-            const onePageInformation = afterSortHobbyArray.slice(0, showMaxInformation);
-            const pushPageCounterInformationContent = {
-                page: counterPage,
-                contents: onePageInformation,
-            }
-            returnPageObject.push(pushPageCounterInformationContent)
-            if(afterSortHobbyArray.length > 5)
-            {
-                for(let counterShift = 0; counterShift < showMaxInformation; counterShift++)
-                {
-                    afterSortHobbyArray.shift();
-                }
-            }
-            
-        }
-        return returnPageObject
-    };
-    return {
-        parseUpdateInformation
-    }
+  return normalizeInformationFields(getContents?.items);
+};
+
+function buildInformationPages(entries: InformationFields[]) {
+  const withDate = entries.filter(
+    (entry) => typeof entry.updateDate === "string" && entry.updateDate.trim() !== "",
+  );
+
+  const sorted = withDate.sort(
+    (a, b) => Date.parse(b.updateDate ?? "") - Date.parse(a.updateDate ?? ""),
+  );
+
+  const showMaxInformation = 5;
+  const pages: Array<{ page: number; contents: InformationFields[] }> = [];
+  let remaining = [...sorted];
+
+  while (remaining.length > 0) {
+    pages.push({
+      page: pages.length + 1,
+      contents: remaining.slice(0, showMaxInformation),
+    });
+    remaining = remaining.slice(showMaxInformation);
+  }
+
+  return pages;
 }
+
+export const useUpdateInformation = () => {
+  const parseUpdateInformation = async () => {
+    const contents = await useCMSContents();
+    return buildInformationPages(contents);
+  };
+
+  return {
+    parseUpdateInformation,
+  };
+};
 
 export const useUpdatePage = (currentpage: Ref<number>) => {
-  
-    return (nextpage: number) => (currentpage.value = nextpage);
-}
+  return (nextpage: number) => (currentpage.value = nextpage);
+};
 
 export const useCurrentPage = () => {
-  const currentpage = useState('currentpage', () => { return 1 })
-  /*
-    HACK: v-paginationのpageに0がおそらく設定できないのでcurrentpageは1じゃないといけない気がする
-          ただしInformationHistoryListでは配列でcurrentpageを0から使いたいのが問題
-  */
-  const updatePage = (currentpage: Ref<number>) => {
-    return (nextpage: number) => (currentpage.value = nextpage);
-  }
+  const currentpage = useState("currentpage", () => 1);
+
+  const updatePage = (pageRef: Ref<number>) => {
+    return (nextpage: number) => (pageRef.value = nextpage);
+  };
 
   return {
     currentpage,
     updatePage,
-  } 
-   
-}
-
+  };
+};

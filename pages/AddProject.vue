@@ -146,8 +146,9 @@ const schema = yup.object({
 	image: yup.mixed().required().test(
 		"image",
 		'imgじゃないです',
-		image => {
-			const filename: string = image[0] !== undefined ? image[0].name : "";
+		(image) => {
+			const files = image as FileList | File[] | undefined;
+			const filename: string = files?.[0]?.name ?? "";
 			const findFileType = imagetype.find((type: string) => filename.indexOf(type) !== -1);
 
 			if (findFileType) {
@@ -159,8 +160,9 @@ const schema = yup.object({
 	movie: yup.mixed().required().test(
 		'movie',
 		'movieじゃないです',
-		movie => {
-			const filename: string = movie[0] !== undefined ? movie[0].name : "";
+		(movie) => {
+			const files = movie as FileList | File[] | undefined;
+			const filename: string = files?.[0]?.name ?? "";
 			if (filename.indexOf('mp4') !== -1) {
 				return true
 			}
@@ -237,7 +239,7 @@ const onSubmit = handleSubmit(async (values) => {
 			body: postDataObject,
 		})
 
-		if (response.data.value === 'success') {
+		if (String(response.data.value) === "success") {
 			overlay.value = false;
 			prograssCircular.value = false;
 			notifySuccess.value = true;

@@ -1,72 +1,62 @@
-import { SyllabaryNormalization } from "./SyllabaryNormalization"
-import { AnimeFactory } from "./AnimeFactory"
-import { BaseFactory } from "./BaseFactory"
-import { Anime } from "./anime"
+import type { ContentfulEntryCollection } from "~/types/contentful-cms";
+import { SyllabaryNormalization } from "./SyllabaryNormalization";
+import { AnimeFactory } from "./AnimeFactory";
+import { BaseFactory } from "./BaseFactory";
 
 export interface BaseRepository {
-    findByState() : Object | undefined
-    findByCMS() : Object | boolean
-    saveToState(cmsContents : Array<Object>) : Object;
-    saveToCMS(formAnimeEntity : POSTFormat) : Promise<boolean>;
+  findByState(): Promise<SyllabaryNormalization | undefined>;
+  findByCMS(): Promise<ContentfulEntryCollection[] | undefined>;
+  saveToState(cmsContents: ContentfulEntryCollection[]): void;
+  saveToCMS(formAnimeEntity: POSTFormat): Promise<boolean>;
 }
 
 interface POSTFormat {
-    syllabary : string,
-    title : string[]
+  syllabary: string;
+  title: string[];
 }
 
 export class AnimeRepository implements BaseRepository {
-    
-    private animeRepository : SyllabaryNormalization | undefined;
+  private animeRepository: SyllabaryNormalization | undefined;
 
-    constructor() {
-        this.animeRepository = undefined;
+  constructor() {
+    this.animeRepository = undefined;
+  }
+
+  async findByState(): Promise<SyllabaryNormalization | undefined> {
+    return this.animeRepository;
+  }
+
+  async findByCMS(): Promise<ContentfulEntryCollection[] | undefined> {
+    try {
+      return await $fetch<ContentfulEntryCollection[]>("/api/hobby/anime/GetAnimeContents");
+    } catch {
+      return undefined;
     }
+  }
 
-    async findByState() : Promise<SyllabaryNormalization> {
-        if(this.animeRepository === undefined) {
-            return undefined;
-        }
-        return this.animeRepository;
+  saveToState(cmsContents: ContentfulEntryCollection[]): void {
+    try {
+      const animeEntryFactory: BaseFactory = new AnimeFactory();
+      this.animeRepository = animeEntryFactory.createEntity(cmsContents);
+    } catch (err) {
+      console.log("saveToState error");
+      console.log(err);
     }
+  }
 
-    async findByCMS() {
-        try {
-            return await $fetch("/api/hobby/anime/GetAnimeContents");
-        } catch {
-            return undefined;
-        }
+  async saveToCMS(formAnimeEntity: POSTFormat): Promise<boolean> {
+    try {
+      const result = await $fetch<string>("/api/hobby/anime/PostAnimeEntity", {
+        method: "POST",
+        body: formAnimeEntity,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      return result === "success";
+    } catch (err) {
+      console.error("[anime] saveToCMS failed", err);
+      return false;
     }
-
-    saveToState(cmsContents : Array<Object>) : Object {
-        try {
-            const animeEntryFactory : BaseFactory = new AnimeFactory();
-            this.animeRepository = animeEntryFactory.createEntity(cmsContents);
-        } catch(err){
-            console.log("saveToState error");
-            console.log(err)
-        }
-        
-        return {}
-    }
-
-    async saveToCMS(formAnimeEntity : POSTFormat) : Promise<boolean> {
-        try {
-            const response = await useFetch("/api/hobby/anime/PostAnimeEntity", {
-                method: 'POST',
-                body: formAnimeEntity,
-                headers: {
-                    Accept: 'application/json'
-                }
-            })
-    
-            if (response.data.value !== "success") {
-                return false;
-            }
-        } catch (err) {
-            await navigateTo('/error')
-        }
-        return true
-    }
-
+  }
 }

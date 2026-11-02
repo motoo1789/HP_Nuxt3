@@ -34,7 +34,7 @@ export const getProjectContents = () => {
 	}
 };
 
-interface ViewProjectFormat {
+export interface ViewProjectFormat {
 	url: String,
 	detail: String,
 	abstract: String,

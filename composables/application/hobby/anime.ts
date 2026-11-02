@@ -23,7 +23,9 @@ export const animeContents = () => {
 				return emptyAnimeView();
 			}
 
-			await animerepository.saveToState(response);
+			if (Array.isArray(response)) {
+				animerepository.saveToState(response);
+			}
 			const viewanime = await animerepository.findByState();
 			if (!viewanime) {
 				return emptyAnimeView();
