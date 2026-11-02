@@ -15,6 +15,7 @@ type NuxtAppInjections =
   InjectionType<typeof import("../../node_modules/@nuxtjs/prismic/dist/runtime/plugin.client").default> &
   InjectionType<typeof import("../../node_modules/@nuxtjs/prismic/dist/runtime/plugin").default> &
   InjectionType<typeof import("../../node_modules/nuxt/dist/app/plugins/chunk-reload.client").default> &
+  InjectionType<typeof import("../../plugins/auth-origin.client").default> &
   InjectionType<typeof import("../../plugins/contentful").default> &
   InjectionType<typeof import("../../plugins/vuetify").default>
 
