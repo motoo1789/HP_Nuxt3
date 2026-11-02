@@ -28,6 +28,20 @@
 <script setup lang="ts">
 
 const { currentpage, updatePage } =  useCurrentPage();
+// const { informationhisotory } =  useInformationHisotry();
+//const { getContent } =  getCMSContent();
+const { parseUpdateInformation } = useUpdateInformation();
+
+const loading = ref(true);
+const informationhisotory = ref<Awaited<ReturnType<typeof parseUpdateInformation>>>([]);
+
+onMounted(async () => {
+  try {
+    informationhisotory.value = await parseUpdateInformation();
+  } finally {
+    loading.value = false;
+  }
+});
 
 const { getInformationContents } = informationContents();
 const informationhisotory = await getInformationContents();

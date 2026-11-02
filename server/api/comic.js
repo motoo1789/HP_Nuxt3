@@ -1,0 +1,7 @@
+import fs from "fs";
+
+export default defineEventHandler(async (event) => {
+    const articles = JSON.parse(fs.readFileSync('assets/hobby_comic.json', 'utf-8')).comic;
+
+    return articles;
+  });

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-progress-linear v-if="loading" indeterminate color="light-blue-accent-3" class="mb-2" />
         <v-card class="my-2">
             <v-card-title class="text-center justify-center py-3  color">
                     アニメ
@@ -17,11 +18,17 @@
             </v-tabs>
 
             <v-card-text>
-                <v-window v-model="tab" v-for="(animetitles, animeskey) in animes" :key="animeskey">
-                    <v-window-item :value=animeskey> 
+                <v-window v-model="tab">
+                    <v-window-item
+                        v-for="(animetitles, syllabaryKey) in animes"
+                        :key="syllabaryKey"
+                        :value="syllabaryKey"
+                    >
                         <v-row>
-                            <v-col v-for="(animetitle, animeskey) in animetitles" :key="animeskey"
-                                lg="4"    
+                            <v-col
+                                v-for="(animetitle, titleIndex) in animetitles"
+                                :key="`${syllabaryKey}-${titleIndex}`"
+                                lg="4"
                                 md="6"
                                 sm="6"
                                 xs="12"
@@ -30,12 +37,8 @@
                                 {{ animetitle }}
                             </v-col>
                         </v-row>
-                        
-                         
                     </v-window-item>
                 </v-window>
-
-
             </v-card-text>
 
         </v-card>
@@ -84,29 +87,36 @@
 </template>
 
 <script setup lang="ts">
-    interface ViewAnimeContents {
-        "animeA"  : Array<string>, 
-        "animeKa" : Array<string>,
-        "animeSa" : Array<string>,
-        "animeTa" : Array<string>,
-        "animeNa" : Array<string>,
-        "animeHa" : Array<string>,
-        "animeMa" : Array<string>,
-        "animeYa" : Array<string>,
-        "animeRa" : Array<string>,
-        "animeWa" : Array<string>
-    } 
+    import { animeContents } from "~/composables/application/hobby/anime";
+    import { getComicContents } from "~/composables/application/hobby/comic";
+    import { getNovelContents } from "~/composables/application/hobby/novel";
+    import { emptyAnimeView, type ViewAnimeContents } from "~/composables/application/hobby/emptyAnimeView";
+
+    const loading = ref(true);
+    const animes = ref<ViewAnimeContents>(emptyAnimeView());
+    const comics = ref<string[]>([]);
+    const novels = ref<string[]>([]);
 
     const { getAnimeContents } = animeContents();
-    const animes : ViewAnimeContents | undefined = await getAnimeContents();
-
     const { comicContents } = getComicContents();
-    const comics = await comicContents();
-
     const { novelContents } = getNovelContents();
-    const novels = await novelContents();    
 
-    let tab = ref(1)
+    onMounted(async () => {
+        try {
+            const [animeData, comicData, novelData] = await Promise.all([
+                getAnimeContents(),
+                comicContents(),
+                novelContents(),
+            ]);
+            animes.value = animeData;
+            comics.value = comicData ?? [];
+            novels.value = novelData ?? [];
+        } finally {
+            loading.value = false;
+        }
+    });
+
+    const tab = ref<keyof ViewAnimeContents>("animeA")
     
     const tabitems = {
         "animeA":"あ",

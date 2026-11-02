@@ -147,7 +147,8 @@ const schema = yup.object({
 		"image",
 		'imgじゃないです',
 		image => {
-			const filename: string = image[0] !== undefined ? image[0].name : "";
+			const files = image as FileList | File[] | undefined;
+			const filename: string = files?.[0]?.name ?? "";
 			const findFileType = imagetype.find((type: string) => filename.indexOf(type) !== -1);
 
 			if (findFileType) {
@@ -160,7 +161,8 @@ const schema = yup.object({
 		'movie',
 		'movieじゃないです',
 		movie => {
-			const filename: string = movie[0] !== undefined ? movie[0].name : "";
+			const files = movie as FileList | File[] | undefined;
+			const filename: string = files?.[0]?.name ?? "";
 			if (filename.indexOf('mp4') !== -1) {
 				return true
 			}
@@ -212,7 +214,7 @@ const onSubmit = handleSubmit(async (values) => {
 			body: formData,
 		})
 
-		if (response.data.value === 'success') {
+		if (String(response.data.value) === "success") {
 			await navigateTo('/thanks')
 		} else {
 			// await navigateTo('/error')

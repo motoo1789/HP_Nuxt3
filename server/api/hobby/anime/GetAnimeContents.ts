@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
     const clientParams: CreateClientParams = {
         space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
         accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
+        environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT || "master",
     };
     const clientedClient = await clientContentful.createClient(clientParams)
 
