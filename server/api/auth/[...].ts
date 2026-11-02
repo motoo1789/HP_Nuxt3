@@ -1,12 +1,19 @@
-import GitHubProviderModule from "next-auth/providers/github";
-import CredentialsProviderModule from "next-auth/providers/credentials";
+import { createRequire } from "node:module";
 import type { User } from "next-auth";
 import type { Provider } from "next-auth/providers";
 
 import { NuxtAuthHandler } from "#auth";
 import bcrypt from "bcrypt";
 import { sql } from "@vercel/postgres";
-import { callNextAuthProvider } from "../../utils/nextAuthProvider";
+
+const require = createRequire(import.meta.url);
+
+type ProviderFactory = (options: Record<string, unknown>) => Provider;
+
+const GitHubProvider = require("next-auth/providers/github")
+  .default as ProviderFactory;
+const CredentialsProvider = require("next-auth/providers/credentials")
+  .default as ProviderFactory;
 
 type LoginCredentials = {
   email?: string;
@@ -14,11 +21,11 @@ type LoginCredentials = {
 };
 
 const providers: Provider[] = [
-  callNextAuthProvider(GitHubProviderModule, {
+  GitHubProvider({
     clientId: process.env.GITHUB_CLIENT_ID ?? "",
     clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
-  }) as Provider,
-  callNextAuthProvider(CredentialsProviderModule, {
+  }),
+  CredentialsProvider({
     name: "Credentials",
     credentials: {
       email: { label: "Email", type: "email" },
@@ -47,7 +54,7 @@ const providers: Provider[] = [
       console.error("Warning: Malicious login attempt registered, bad credentials provided");
       return null;
     },
-  }) as Provider,
+  }),
 ];
 
 export default NuxtAuthHandler({

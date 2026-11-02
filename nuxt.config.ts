@@ -1,10 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { resolve } from "node:path";
 import os from "node:os";
 
-const rootDir = dirname(fileURLToPath(import.meta.url));
 // OneDrive 配下だと node_modules/.vite の削除で ENOTEMPTY が出やすい
 const viteCacheDir = resolve(
   process.env.LOCALAPPDATA ?? os.tmpdir(),
@@ -103,16 +101,18 @@ export default defineNuxtConfig({
         },
       },
     },
-    resolve: {
-      alias: {
-        "next-auth/core": resolve(rootDir, "node_modules/next-auth/core/index.js"),
-      },
-    },
   },
 
   nitro: {
-    alias: {
-      "next-auth/core": resolve(rootDir, "node_modules/next-auth/core/index.js"),
+    // next-auth/core を Nitro バンドルに混ぜると @babel/runtime interop が壊れ
+    // Vercel: `_interopRequireDefault$1 is not a function`
+    externals: {
+      external: [
+        "next-auth",
+        "@babel/runtime",
+        "@babel/runtime/helpers/interopRequireDefault",
+        "bcrypt",
+      ],
     },
   },
 
