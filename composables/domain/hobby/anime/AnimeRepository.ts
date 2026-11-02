@@ -1,5 +1,5 @@
 import type { ContentfulEntryCollection } from "~/types/contentful-cms";
-import { SyllabaryNormalization } from "./SyllabaryNormalization";
+import type { SyllabaryNormalization } from "./SyllabaryNormalization";
 import { AnimeFactory } from "./AnimeFactory";
 import { BaseFactory } from "./BaseFactory";
 

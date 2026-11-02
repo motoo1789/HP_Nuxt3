@@ -111,9 +111,9 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'sidebase-auth' })
 
-import { VDatePicker } from 'vuetify/labs/VDatePicker'
+import { VDatePicker } from 'vuetify/components/VDatePicker'
 
 
 useHead({

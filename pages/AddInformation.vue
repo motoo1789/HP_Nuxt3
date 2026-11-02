@@ -70,11 +70,11 @@
 </template>
 
 <script lang="ts" setup>
-import { VDatePicker } from 'vuetify/labs/VDatePicker'
+import { VDatePicker } from 'vuetify/components/VDatePicker'
 import { useForm } from 'vee-validate'
 import { ref } from 'vue';
 
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'sidebase-auth' })
 
 const dateDialog = ref(false);
 const imagetype = ["png", "jpeg", "jpg"];

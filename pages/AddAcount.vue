@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'sidebase-auth' })
 
 const name = ref("");
 const email = ref("");

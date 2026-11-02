@@ -76,7 +76,7 @@ const radioSyllabarys = [
 	{ label : "わ", value : "animeWa" },
 ]
 
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'sidebase-auth' })
 
 
 const schema = yup.object({

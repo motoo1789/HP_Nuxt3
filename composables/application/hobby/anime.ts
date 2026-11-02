@@ -1,5 +1,5 @@
 import { AnimeRepository, type BaseRepository } from "../../domain/hobby/anime/AnimeRepository"
-import { SyllabaryNormalization } from "../../domain/hobby/anime/SyllabaryNormalization"
+import type { SyllabaryNormalization } from "../../domain/hobby/anime/SyllabaryNormalization"
 import { emptyAnimeView, type ViewAnimeContents } from "./emptyAnimeView"
 
 interface POSTFormat {

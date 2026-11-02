@@ -1,5 +1,5 @@
 // pluginsは server/api で使用できないのでimportが必要
-import contentful from "contentful-management";
+import { createClient } from "contentful-management";
 
 interface POSTFormat {
     createdInformationDate: string,
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
     if (event.node.req.method === 'POST') 
     {
-        const client = await contentful.createClient({
+        const client = await createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             host: "api.contentful.com" // ホストは共通なので.envに記載しない
         });

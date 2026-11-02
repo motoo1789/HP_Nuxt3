@@ -4,7 +4,7 @@ import { BaseFactory } from "./BaseFactory";
 import { Anime } from "./anime";
 import { EntryId } from "./EntryId";
 import { Title } from "./Title";
-import { SyllabaryNormalization } from "./SyllabaryNormalization";
+import type { SyllabaryNormalization } from "./SyllabaryNormalization";
 
 export class AnimeFactory extends BaseFactory {
   create(cmsContents: ContentfulEntryCollection[]): SyllabaryNormalization {
