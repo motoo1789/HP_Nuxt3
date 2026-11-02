@@ -154,20 +154,9 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/prismic",
     "@sidebase/nuxt-auth",
+    "~/modules/auth-public-origin",
     // 'nuxt-vitest'
   ],
-
-  hooks: {
-    "modules:done"(nuxt) {
-      const publicAuth = nuxt.options.runtimeConfig.public?.auth as
-        | { origin?: string }
-        | undefined;
-      if (publicAuth) {
-        // git-* / *-hash* など Preview 別名 URL でも常に同じオリジンへ
-        publicAuth.origin = "";
-      }
-    },
-  },
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
