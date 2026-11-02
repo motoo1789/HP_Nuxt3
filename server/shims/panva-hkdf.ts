@@ -1,36 +1,11 @@
 /**
  * next-auth/jwt は require("@panva/hkdf") + interopRequireDefault。
  * Nitro バンドル後に namespace import だと default が関数にならないため、CJS から明示 re-export。
+ * Vercel では node_modules に @panva/hkdf が載らないため、ビルド時に CJS を取り込む（runtime require 禁止）。
  */
-import { createRequire } from "node:module";
-import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-
-const require = createRequire(import.meta.url);
-
-/** dev (.nuxt/dev) / prod (.output) どちらでもプロジェクト直下の node_modules を指す */
-function resolveProjectRoot(): string {
-  const candidates = [
-    process.cwd(),
-    resolve(fileURLToPath(import.meta.url), "../../.."),
-  ];
-  for (const root of candidates) {
-    try {
-      require.resolve(resolve(root, "node_modules/@panva/hkdf/package.json"));
-      return root;
-    } catch {
-      // try next
-    }
-  }
-  return process.cwd();
-}
-
-const hkdfCjs = require(
-  resolve(
-    resolveProjectRoot(),
-    "node_modules/@panva/hkdf/dist/node/cjs/index.js",
-  ),
-);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error — CJS; 解決は nuxt.config の @panva/hkdf-internal alias
+import hkdfCjs from "@panva/hkdf-internal";
 
 type HkdfFn = (
   digest: string,

@@ -139,9 +139,9 @@ export default defineNuxtConfig({
         projectRoot,
         "node_modules/contentful-management/dist/es-modules/contentful-management.js",
       ),
-      // next-auth/jwt 用（Vercel: hkdf.default is not a function 対策）
+      // next-auth/jwt 用（Vercel: hkdf.default is not a function / MODULE_NOT_FOUND 対策）
       "@panva/hkdf": resolve(projectRoot, "server/shims/panva-hkdf.ts"),
-      "@panva/hkdf/dist/node/cjs/index.js": resolve(
+      "@panva/hkdf-internal": resolve(
         projectRoot,
         "node_modules/@panva/hkdf/dist/node/cjs/index.js",
       ),
