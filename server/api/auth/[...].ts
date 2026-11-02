@@ -43,33 +43,51 @@ const providers: Provider[] = [
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials: LoginCredentials | undefined): Promise<User | null> {
-      const email = credentials?.email?.trim() ?? "";
-      const password = credentials?.password ?? "";
+      try {
+        const email = credentials?.email?.trim() ?? "";
+        const password = credentials?.password ?? "";
 
-      if (email === "" || password === "") {
-        console.log("メールアドレスとパスワードどちらも未入力");
+        if (email === "" || password === "") {
+          console.log("メールアドレスとパスワードどちらも未入力");
+          return null;
+        }
+
+        const dbUserId = await getEmailUser(email);
+        if (dbUserId === "No acount") {
+          console.log("アカウントが存在しません");
+          return null;
+        }
+
+        const correctPassword = await checkPassword(dbUserId, password);
+        if (correctPassword) {
+          return { id: dbUserId, email };
+        }
+
+        console.error("Warning: Malicious login attempt registered, bad credentials provided");
+        return null;
+      } catch (error) {
+        console.error("[auth] credentials authorize failed:", error);
         return null;
       }
-
-      const dbUserId = await getEmailUser(email);
-      if (dbUserId === "No acount") {
-        console.log("アカウントが存在しません");
-        return null;
-      }
-
-      const correctPassword = await checkPassword(dbUserId, password);
-      if (correctPassword) {
-        return { id: dbUserId, email };
-      }
-
-      console.error("Warning: Malicious login attempt registered, bad credentials provided");
-      return null;
     },
   }),
 ];
 
+function resolveAuthSecret(): string {
+  const secret =
+    process.env.AUTH_SECRET ||
+    process.env.NUXT_AUTH_SECRET ||
+    process.env.NEXTAUTH_SECRET;
+  if (!secret?.trim()) {
+    throw new Error(
+      "AUTH_SECRET is not set. Add AUTH_SECRET in .env (local) and Vercel Environment Variables.",
+    );
+  }
+  return secret.trim();
+}
+
 export default NuxtAuthHandler({
-  secret: process.env.AUTH_SECRET,
+  secret: resolveAuthSecret(),
   pages: {
     signIn: "/login",
   },
@@ -83,7 +101,13 @@ const getEmailUser = async (email: string): Promise<string> => {
 
 const checkPassword = async (dbUserId: string, password: string): Promise<boolean> => {
   const { rows } = await sql`SELECT * FROM password_security_info where user_id = ${dbUserId}`;
-  const hash: string = rows[0]?.password_hash ?? "no";
-
-  return bcrypt.compareSync(password, hash);
+  const hash: string = rows[0]?.password_hash ?? "";
+  if (!hash.startsWith("$2")) {
+    return false;
+  }
+  try {
+    return bcrypt.compareSync(password, hash);
+  } catch {
+    return false;
+  }
 };

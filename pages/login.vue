@@ -40,7 +40,7 @@ definePageMeta({
 
 
 import { ref } from "vue";
-const { status, data, signIn } = useAuth()
+const { status, signIn, getSession } = useAuth()
 
 const email = ref("");
 const password = ref("");
@@ -48,17 +48,31 @@ let showAlert = ref(false);
 let showPasswaord = ref(false);
 
 const loginMailPass = async () => {
-	const result = await signIn('credentials', { email: email.value, password: password.value, redirect: false, callbackUrl: "/" })
+	showAlert.value = false
+	try {
+		const result = await signIn("credentials", {
+			email: email.value,
+			password: password.value,
+			redirect: false,
+			callbackUrl: "/",
+		})
 
-	if(status.value === 'unauthenticated')
-	{
+		// signIn は失敗時も ok: true になり得るため error を見る（nuxt-auth 1.x）
+		if (result?.error) {
+			showAlert.value = true
+			return
+		}
+
+		await getSession()
+		if (status.value === "authenticated") {
+			await navigateTo("/")
+			return
+		}
+
 		showAlert.value = true
-	}
-	else if(status.value === 'authenticated')
-	{
-		showAlert.value = false;
-		navigateTo('/')
-		
+	} catch (err) {
+		console.error("login failed", err)
+		showAlert.value = true
 	}
 }
 

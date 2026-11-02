@@ -139,6 +139,12 @@ export default defineNuxtConfig({
         projectRoot,
         "node_modules/contentful-management/dist/es-modules/contentful-management.js",
       ),
+      // next-auth/jwt 用（Vercel: hkdf.default is not a function / MODULE_NOT_FOUND 対策）
+      "@panva/hkdf": resolve(projectRoot, "server/shims/panva-hkdf.ts"),
+      "@panva/hkdf-internal": resolve(
+        projectRoot,
+        "node_modules/@panva/hkdf/dist/node/cjs/index.js",
+      ),
     },
     // Vercel: external にすると node_modules に載らず ERR_MODULE_NOT_FOUND
     // inline で next-auth + @babel/runtime を関数に同梱（interop も runtime ごと）
@@ -156,10 +162,12 @@ export default defineNuxtConfig({
       traceInclude: [
         "node_modules/next-auth/**",
         "node_modules/@babel/runtime/**",
+        "node_modules/@panva/hkdf/**",
+        "node_modules/jose/**",
       ],
     },
     commonJS: {
-      include: [/next-auth/, /@babel\/runtime/],
+      include: [/next-auth/, /@babel\/runtime/, /@panva\/hkdf/],
     },
   },
 
