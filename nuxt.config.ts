@@ -11,34 +11,27 @@ const viteCacheDir = resolve(
 );
 
 /**
- * nuxt-auth の session URL はビルド時に origin が固定される。
- * Vercel では NUXT_PUBLIC_AUTH_ORIGIN（古い別ドメイン等）より VERCEL_* を優先し CORS を防ぐ。
+ * サーバー専用 runtimeConfig.auth.origin（assertOrigin 用・非空必須）。
+ * クライアントは hooks で public.auth.origin を空にし /api/auth を相対 URL にする。
  */
 function resolveAuthOrigin(): string {
-  const trimTrailingSlash = (url: string) => url.replace(/\/$/, "");
-
   if (process.env.VERCEL) {
-    if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
-      return `https://${process.env.VERCEL_URL}`;
-    }
-    if (process.env.VERCEL_ENV === "production") {
-      if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-        return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-      }
-      if (process.env.VERCEL_URL) {
-        return `https://${process.env.VERCEL_URL}`;
-      }
+    if (
+      process.env.VERCEL_ENV === "production" &&
+      process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ) {
+      return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
     }
     if (process.env.VERCEL_URL) {
       return `https://${process.env.VERCEL_URL}`;
     }
+    return "https://hp-nuxt3.vercel.app";
   }
-
-  if (process.env.NUXT_PUBLIC_AUTH_ORIGIN) {
-    return trimTrailingSlash(process.env.NUXT_PUBLIC_AUTH_ORIGIN);
+  const fromEnv = process.env.NUXT_PUBLIC_AUTH_ORIGIN?.replace(/\/$/, "");
+  if (fromEnv) {
+    return fromEnv;
   }
-
-  return "https://hp-nuxt3.vercel.app";
+  return "http://localhost:3000";
 }
 
 export default defineNuxtConfig({
@@ -161,15 +154,13 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/prismic",
     "@sidebase/nuxt-auth",
+    "~/modules/auth-public-origin",
     // 'nuxt-vitest'
   ],
 
-
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    // サーバー: リクエスト Host を信頼（Preview の複数 URL 対応）
     trustHost: true,
-    // ビルド時 origin（plugins/auth-origin.client.ts でブラウザ側は上書き）
     origin: resolveAuthOrigin(),
   },
 
