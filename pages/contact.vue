@@ -9,6 +9,13 @@
 				</v-col>
 
 			</v-row>
+			<v-row v-if="!contactFormReady">
+				<v-col>
+					<v-alert type="warning" variant="tonal">
+						問い合わせフォームの設定（NEXT_PUBLIC_NEWT / NEXT_PUBLIC_RECAPTCHA）が .env にありません。Vercel の環境変数からコピーしてください。
+					</v-alert>
+				</v-col>
+			</v-row>
 			<v-row>
 				<v-col>
 					<form @submit="onSubmit">
@@ -53,6 +60,11 @@ import { VueReCaptcha, useReCaptcha } from 'vue-recaptcha-v3'
 import * as yup from "yup"
 
 const configContentful = useRuntimeConfig();
+const recaptchaSiteKey = configContentful.public.reCAPTCHA?.key ?? "";
+const newtFormEndpoint = configContentful.public.newt?.formEndpoint ?? "";
+const contactFormReady = computed(
+	() => Boolean(recaptchaSiteKey && newtFormEndpoint),
+);
 
 const schema = yup.object({
 	email: yup.string().email().required(),
@@ -64,19 +76,25 @@ const { useFieldModel, handleSubmit, errors } = useForm({
 })
 const [name, email, message] = useFieldModel(['name', 'email', 'message'])
 const { vueApp } = useNuxtApp()
-vueApp.use(VueReCaptcha, {
-	siteKey: configContentful.public.reCAPTCHA.key!,
-	loaderOptions: {
-		renderParameters: {
-			hl: 'ja'
-		}
-	}
-})
-const recaptchaInstance = useReCaptcha()
+let recaptchaInstance: ReturnType<typeof useReCaptcha> | undefined
 
+if (recaptchaSiteKey) {
+	vueApp.use(VueReCaptcha, {
+		siteKey: recaptchaSiteKey,
+		loaderOptions: {
+			renderParameters: {
+				hl: 'ja',
+			},
+		},
+	})
+	recaptchaInstance = useReCaptcha()
+}
 
 const onSubmit = handleSubmit(async (values) => {
-	
+	if (!contactFormReady.value || !newtFormEndpoint) {
+		return
+	}
+
 	await recaptchaInstance?.recaptchaLoaded()
 	const token = await recaptchaInstance?.executeRecaptcha('submit')
 	values.googleReCaptchaToken = token
@@ -86,7 +104,7 @@ const onSubmit = handleSubmit(async (values) => {
 		formData.append(key, value)
 	})
 	try {
-		const response = await useFetch(configContentful.public.newt.formEndpoint!, {
+		const response = await useFetch(newtFormEndpoint, {
 			method: 'POST',
 			body: formData,
 			headers: {

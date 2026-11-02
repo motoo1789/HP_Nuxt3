@@ -43,9 +43,6 @@ onMounted(async () => {
   }
 });
 
-const { getInformationContents } = informationContents();
-const informationhisotory = await getInformationContents();
-
 const pushPagination = () => {
   updatePage(currentpage)
 }

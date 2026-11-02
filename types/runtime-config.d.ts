@@ -5,6 +5,12 @@ declare module "nuxt/schema" {
     contentfulAccessToken: string;
     contentfulProject: string;
     contentfulInformationType: string;
+    newt: {
+      formEndpoint: string;
+    };
+    reCAPTCHA: {
+      key: string;
+    };
   }
 }
 

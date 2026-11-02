@@ -82,8 +82,6 @@ export const useUpdatePage = (currentpage: Ref<number>) => {
   return (nextpage: number) => (currentpage.value = nextpage);
 };
 
-export const init = (currentpage: Ref<number>) => () => currentpage.value = 1;
-
 export const useCurrentPage = () => {
   const currentpage = useState("currentpage", () => 1);
 
@@ -91,8 +89,13 @@ export const useCurrentPage = () => {
     return (nextpage: number) => (pageRef.value = nextpage);
   };
 
+  const init = () => {
+    currentpage.value = 1;
+  };
+
   return {
     currentpage,
     updatePage,
+    init,
   };
 };

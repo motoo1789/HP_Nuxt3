@@ -1,10 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from "nuxt/config";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import os from "node:os";
 
 const rootDir = dirname(fileURLToPath(import.meta.url));
+// OneDrive 配下だと node_modules/.vite の削除で ENOTEMPTY が出やすい
+const viteCacheDir = resolve(
+  process.env.LOCALAPPDATA ?? os.tmpdir(),
+  "HP_Nuxt3",
+  "vite",
+);
 
 export default defineNuxtConfig({
+
+  devServer: {
+    port: 3000,
+  },
 
   imports: {
     // domain 層 (composables/domain) は含めない — 同名 export の衝突を避ける
@@ -42,6 +54,20 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_NEWINFORMATION ||
         process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_NEWINFORMATION ||
         "",
+      newt: {
+        formEndpoint:
+          process.env.NUXT_PUBLIC_NEWT ||
+          process.env.NEXT_PUBLIC_NEWT ||
+          process.env.Newt ||
+          "",
+      },
+      reCAPTCHA: {
+        key:
+          process.env.NUXT_PUBLIC_RECAPTCHA ||
+          process.env.NEXT_PUBLIC_RECAPTCHA ||
+          process.env.NEXT_PUBLIC_SITE_KEY ||
+          "",
+      },
     },
   },
 
@@ -63,6 +89,10 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    cacheDir: viteCacheDir,
+    server: {
+      strictPort: true,
+    },
     define: {
       "process.env.DEBUG": false,
     },

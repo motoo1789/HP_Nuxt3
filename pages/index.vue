@@ -35,8 +35,6 @@
 <script setup lang="ts">
 
   const { init } = useCurrentPage();
-  (() => {
-    init()
-  })()
+  init();
 
 </script>

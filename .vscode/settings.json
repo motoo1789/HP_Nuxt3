@@ -1,0 +1,10 @@
+{
+  "typescript.tsconfig": ".nuxt/tsconfig.json",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["tsconfig.json", "tsconfig.*.json"],
+      "url": "vscode://schemas/tsconfig"
+    }
+  ]
+}
