@@ -10,6 +10,26 @@ const viteCacheDir = resolve(
   "vite",
 );
 
+/** Preview はデプロイ URL ごとに auth API の origin が異なる（本番 URL 固定だと CORS） */
+function resolveAuthOrigin(): string {
+  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  if (process.env.NUXT_PUBLIC_AUTH_ORIGIN) {
+    return process.env.NUXT_PUBLIC_AUTH_ORIGIN;
+  }
+  if (
+    process.env.VERCEL_ENV === "production" &&
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "https://hp-nuxt3-motoo1789.vercel.app";
+}
+
 export default defineNuxtConfig({
 
   devServer: {
@@ -132,10 +152,9 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    // 未設定時は本番 URL。ローカルは .env の NUXT_PUBLIC_AUTH_ORIGIN=http://localhost:3000
-    origin:
-      process.env.NUXT_PUBLIC_AUTH_ORIGIN ||
-      "https://hp-nuxt3-motoo1789.vercel.app",
+    // ローカル: .env の NUXT_PUBLIC_AUTH_ORIGIN=http://localhost:3000
+    // Vercel Preview: ビルド時の VERCEL_URL（NUXT_PUBLIC_AUTH_ORIGIN より優先）
+    origin: resolveAuthOrigin(),
   },
 
   prismic: {
