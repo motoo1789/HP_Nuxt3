@@ -129,6 +129,10 @@ export default defineNuxtConfig({
     externals: {
       inline: [
         "next-auth",
+        "next-auth/core",
+        "next-auth/jwt",
+        "next-auth/providers/github",
+        "next-auth/providers/credentials",
         "@babel/runtime",
         "@babel/runtime/helpers/interopRequireDefault",
         "@babel/runtime/helpers/interopRequireWildcard",

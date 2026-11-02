@@ -1,4 +1,5 @@
-import { createRequire } from "node:module";
+import GitHubProviderModule from "next-auth/providers/github";
+import CredentialsProviderModule from "next-auth/providers/credentials";
 import type { User } from "next-auth";
 import type { Provider } from "next-auth/providers";
 
@@ -6,14 +7,24 @@ import { NuxtAuthHandler } from "#auth";
 import bcrypt from "bcrypt";
 import { sql } from "@vercel/postgres";
 
-const require = createRequire(import.meta.url);
-
 type ProviderFactory = (options: Record<string, unknown>) => Provider;
 
-const GitHubProvider = require("next-auth/providers/github")
-  .default as ProviderFactory;
-const CredentialsProvider = require("next-auth/providers/credentials")
-  .default as ProviderFactory;
+/** CJS / ESM 混在時の default export（Vercel バンドル用・createRequire は使わない） */
+function asProviderFactory(moduleExport: unknown): ProviderFactory {
+  const withDefault = moduleExport as { default?: unknown };
+  const candidate = withDefault.default ?? moduleExport;
+  if (typeof candidate === "function") {
+    return candidate as ProviderFactory;
+  }
+  const nested = candidate as { default?: ProviderFactory };
+  if (nested && typeof nested.default === "function") {
+    return nested.default;
+  }
+  throw new TypeError("next-auth provider module is not callable");
+}
+
+const GitHubProvider = asProviderFactory(GitHubProviderModule);
+const CredentialsProvider = asProviderFactory(CredentialsProviderModule);
 
 type LoginCredentials = {
   email?: string;
