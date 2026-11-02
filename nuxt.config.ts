@@ -1,16 +1,34 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { resolve } from "node:path";
 import os from "node:os";
 
-const rootDir = dirname(fileURLToPath(import.meta.url));
 // OneDrive 配下だと node_modules/.vite の削除で ENOTEMPTY が出やすい
 const viteCacheDir = resolve(
   process.env.LOCALAPPDATA ?? os.tmpdir(),
   "HP_Nuxt3",
   "vite",
 );
+
+/** Preview はデプロイ URL ごとに auth API の origin が異なる（本番 URL 固定だと CORS） */
+function resolveAuthOrigin(): string {
+  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  if (process.env.NUXT_PUBLIC_AUTH_ORIGIN) {
+    return process.env.NUXT_PUBLIC_AUTH_ORIGIN;
+  }
+  if (
+    process.env.VERCEL_ENV === "production" &&
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "https://hp-nuxt3-motoo1789.vercel.app";
+}
 
 export default defineNuxtConfig({
 
@@ -103,16 +121,29 @@ export default defineNuxtConfig({
         },
       },
     },
-    resolve: {
-      alias: {
-        "next-auth/core": resolve(rootDir, "node_modules/next-auth/core/index.js"),
-      },
-    },
   },
 
   nitro: {
-    alias: {
-      "next-auth/core": resolve(rootDir, "node_modules/next-auth/core/index.js"),
+    // Vercel: external にすると node_modules に載らず ERR_MODULE_NOT_FOUND
+    // inline で next-auth + @babel/runtime を関数に同梱（interop も runtime ごと）
+    externals: {
+      inline: [
+        "next-auth",
+        "next-auth/core",
+        "next-auth/jwt",
+        "next-auth/providers/github",
+        "next-auth/providers/credentials",
+        "@babel/runtime",
+        "@babel/runtime/helpers/interopRequireDefault",
+        "@babel/runtime/helpers/interopRequireWildcard",
+      ],
+      traceInclude: [
+        "node_modules/next-auth/**",
+        "node_modules/@babel/runtime/**",
+      ],
+    },
+    commonJS: {
+      include: [/next-auth/, /@babel\/runtime/],
     },
   },
 
@@ -125,10 +156,9 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    // 未設定時は本番 URL。ローカルは .env の NUXT_PUBLIC_AUTH_ORIGIN=http://localhost:3000
-    origin:
-      process.env.NUXT_PUBLIC_AUTH_ORIGIN ||
-      "https://hp-nuxt3-motoo1789.vercel.app",
+    // ローカル: .env の NUXT_PUBLIC_AUTH_ORIGIN=http://localhost:3000
+    // Vercel Preview: ビルド時の VERCEL_URL（NUXT_PUBLIC_AUTH_ORIGIN より優先）
+    origin: resolveAuthOrigin(),
   },
 
   prismic: {

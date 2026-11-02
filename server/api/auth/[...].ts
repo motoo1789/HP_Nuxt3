@@ -6,7 +6,25 @@ import type { Provider } from "next-auth/providers";
 import { NuxtAuthHandler } from "#auth";
 import bcrypt from "bcrypt";
 import { sql } from "@vercel/postgres";
-import { callNextAuthProvider } from "../../utils/nextAuthProvider";
+
+type ProviderFactory = (options: Record<string, unknown>) => Provider;
+
+/** CJS / ESM 混在時の default export（Vercel バンドル用・createRequire は使わない） */
+function asProviderFactory(moduleExport: unknown): ProviderFactory {
+  const withDefault = moduleExport as { default?: unknown };
+  const candidate = withDefault.default ?? moduleExport;
+  if (typeof candidate === "function") {
+    return candidate as ProviderFactory;
+  }
+  const nested = candidate as { default?: ProviderFactory };
+  if (nested && typeof nested.default === "function") {
+    return nested.default;
+  }
+  throw new TypeError("next-auth provider module is not callable");
+}
+
+const GitHubProvider = asProviderFactory(GitHubProviderModule);
+const CredentialsProvider = asProviderFactory(CredentialsProviderModule);
 
 type LoginCredentials = {
   email?: string;
@@ -14,11 +32,11 @@ type LoginCredentials = {
 };
 
 const providers: Provider[] = [
-  callNextAuthProvider(GitHubProviderModule, {
+  GitHubProvider({
     clientId: process.env.GITHUB_CLIENT_ID ?? "",
     clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
-  }) as Provider,
-  callNextAuthProvider(CredentialsProviderModule, {
+  }),
+  CredentialsProvider({
     name: "Credentials",
     credentials: {
       email: { label: "Email", type: "email" },
@@ -47,7 +65,7 @@ const providers: Provider[] = [
       console.error("Warning: Malicious login attempt registered, bad credentials provided");
       return null;
     },
-  }) as Provider,
+  }),
 ];
 
 export default NuxtAuthHandler({

@@ -10,7 +10,6 @@ declare global {
   const assertMethod: typeof import('h3')['assertMethod']
   const cachedEventHandler: typeof import('C:/Users/motoo/OneDrive/デスクトップ/HP_Nuxt3/node_modules/nitropack/dist/runtime')['cachedEventHandler']
   const cachedFunction: typeof import('C:/Users/motoo/OneDrive/デスクトップ/HP_Nuxt3/node_modules/nitropack/dist/runtime')['cachedFunction']
-  const callNextAuthProvider: typeof import('C:/Users/motoo/OneDrive/デスクトップ/HP_Nuxt3/server/utils/nextAuthProvider')['callNextAuthProvider']
   const callNodeListener: typeof import('h3')['callNodeListener']
   const clearSession: typeof import('h3')['clearSession']
   const createApp: typeof import('h3')['createApp']
