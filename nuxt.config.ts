@@ -167,8 +167,9 @@ export default defineNuxtConfig({
 
   auth: {
     enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    // ローカル: .env の NUXT_PUBLIC_AUTH_ORIGIN=http://localhost:3000
-    // Vercel: VERCEL_* を優先（Dashboard の NUXT_PUBLIC_AUTH_ORIGIN 誤設定を無視）
+    // サーバー: リクエスト Host を信頼（Preview の複数 URL 対応）
+    trustHost: true,
+    // ビルド時 origin（plugins/auth-origin.client.ts でブラウザ側は上書き）
     origin: resolveAuthOrigin(),
   },
 
