@@ -1,5 +1,5 @@
-import clientContentful  from "contentful";
-import { CreateClientParams } from "contentful";
+import { createClient } from "contentful";
+import type { CreateClientParams } from "contentful";
 
 /**
  * CMSからプロジェクトコンテンツを持ってくる
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT || "master",
     };
 
-    const clientedClient = await clientContentful.createClient(clientParams)
+    const clientedClient = createClient(clientParams)
     const projectCntents = await clientedClient.getEntries({
         content_type: process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_PROJECT,
         limit: CONTENS_LIMIT

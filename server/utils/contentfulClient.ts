@@ -1,4 +1,4 @@
-import contentful from "contentful";
+import { createClient } from "contentful";
 import type { ContentfulClientApi, CreateClientParams } from "contentful";
 
 function envString(value: string | undefined): string | undefined {
@@ -35,5 +35,5 @@ export function createContentfulClient(): ContentfulClientApi<undefined> {
         "Contentful is not configured. Set NEXT_PUBLIC_CONTENTFUL_SPACE_ID and NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN.",
     });
   }
-  return contentful.createClient(clientParams);
+  return createClient(clientParams);
 }

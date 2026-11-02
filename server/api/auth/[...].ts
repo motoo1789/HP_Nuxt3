@@ -1,7 +1,7 @@
 import GitHubProviderModule from "next-auth/providers/github";
 import CredentialsProviderModule from "next-auth/providers/credentials";
 import type { User } from "next-auth";
-import type { Provider } from "next-auth/providers";
+import type { Provider } from "next-auth/providers/index.js";
 
 import { NuxtAuthHandler } from "#auth";
 import bcrypt from "bcrypt";

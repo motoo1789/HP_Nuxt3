@@ -1,5 +1,5 @@
 import type { ContentfulEntryCollection } from "~/types/contentful-cms";
-import { SyllabaryNormalization } from "./SyllabaryNormalization";
+import type { SyllabaryNormalization } from "./SyllabaryNormalization";
 
 export abstract class BaseFactory {
   createEntity(cmsContents: ContentfulEntryCollection[]): SyllabaryNormalization {

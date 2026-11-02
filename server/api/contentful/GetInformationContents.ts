@@ -1,4 +1,4 @@
-import contentful from "contentful";
+import { createClient } from "contentful";
 import type { CreateClientParams } from "contentful";
 
 function resolveInformationContentTypeId(): string | undefined {
@@ -34,7 +34,7 @@ export default defineEventHandler(async () => {
     environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT || "master",
   };
 
-  const client = contentful.createClient(clientParams);
+  const client = createClient(clientParams);
   return client.getEntries({
     content_type: contentType,
     limit: 500,

@@ -1,4 +1,4 @@
-import contentful from "contentful-management";
+import { createClient } from "contentful-management";
 import path from "path";
 import fs from "fs";
 
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
         const movieFileObj = await base64ToArrayBuffer(movieFileData);
 
         // 初期化
-        const client = contentful.createClient({
+        const client = createClient({
             accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
             // host: "api.contentful.com", // ホストは共通なので.envに記載しない
         });

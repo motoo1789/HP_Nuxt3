@@ -1,5 +1,5 @@
-import clientContentful  from "contentful";
-import { CreateClientParams } from "contentful";
+import { createClient } from "contentful";
+import type { CreateClientParams } from "contentful";
 
 const SyllabaryArray = [
     "animeA",
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
         environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIROMENT || "master",
     };
-    const clientedClient = await clientContentful.createClient(clientParams)
+    const clientedClient = createClient(clientParams)
 
     const contents = await Promise.all(SyllabaryArray.map( async (syllabary) => {
         const syllabaryContent = await clientedClient.getEntries({

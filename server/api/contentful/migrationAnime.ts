@@ -1,4 +1,4 @@
-import contentful from "contentful-management";
+import { createClient } from "contentful-management";
 
 const anime  = [
     /**
@@ -10,7 +10,7 @@ const anime  = [
 
 export default defineEventHandler(async (event) => {
 
-    const client = await contentful.createClient({
+    const client = await createClient({
         accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_KEY!,
         host: "api.contentful.com" // ホストは共通なので.envに記載しない
     });

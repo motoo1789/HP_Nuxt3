@@ -6,10 +6,10 @@ export default defineNuxtModule({
   setup(_options, nuxt) {
     nuxt.hook("modules:done", () => {
       const publicAuth = nuxt.options.runtimeConfig.public?.auth as
-        | { origin?: string }
+        | { baseURL?: string }
         | undefined;
       if (publicAuth) {
-        publicAuth.origin = "";
+        publicAuth.baseURL = "/api/auth";
       }
     });
   },

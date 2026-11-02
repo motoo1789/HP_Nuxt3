@@ -4,6 +4,6 @@ export default defineNuxtPlugin({
   enforce: "pre",
   setup() {
     const config = useRuntimeConfig();
-    config.public.auth.origin = "";
+    config.public.auth.baseURL = "/api/auth";
   },
 });

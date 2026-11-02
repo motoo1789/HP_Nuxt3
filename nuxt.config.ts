@@ -1,7 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const projectRoot = dirname(fileURLToPath(import.meta.url));
 import os from "node:os";
+import vuetify from "vite-plugin-vuetify";
 
 // OneDrive 配下だと node_modules/.vite の削除で ENOTEMPTY が出やすい
 const viteCacheDir = resolve(
@@ -112,6 +116,7 @@ export default defineNuxtConfig({
 
   vite: {
     cacheDir: viteCacheDir,
+    plugins: [vuetify({ autoImport: true })],
     server: {
       strictPort: true,
     },
@@ -128,6 +133,13 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    alias: {
+      // Nitro のデフォルト解決は CJS の .node.js になり named export が壊れる
+      "contentful-management": resolve(
+        projectRoot,
+        "node_modules/contentful-management/dist/es-modules/contentful-management.js",
+      ),
+    },
     // Vercel: external にすると node_modules に載らず ERR_MODULE_NOT_FOUND
     // inline で next-auth + @babel/runtime を関数に同梱（interop も runtime ごと）
     externals: {
@@ -159,9 +171,15 @@ export default defineNuxtConfig({
   ],
 
   auth: {
-    enableGlobalAppMiddleware: false, // trueの場合は最初にログインページを表示
-    trustHost: true,
-    origin: resolveAuthOrigin(),
+    isEnabled: true,
+    baseURL: `${resolveAuthOrigin()}/api/auth`,
+    provider: {
+      type: "authjs",
+      trustHost: true,
+    },
+    globalAppMiddleware: {
+      isEnabled: false,
+    },
   },
 
   prismic: {

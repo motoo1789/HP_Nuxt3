@@ -1,5 +1,5 @@
-import clientContentful  from "contentful";
-import { CreateClientParams } from "contentful";
+import { createClient } from "contentful";
+import type { CreateClientParams } from "contentful";
 
 /**
  * CMSからinformationを持ってくる
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
     };
 
-    const clientedClient = await clientContentful.createClient(clientParams)
+    const clientedClient = createClient(clientParams)
     const informationCntents = await clientedClient.getEntries({
         content_type: CONTENT_TYPE,
         limit: CONTENS_LIMIT
