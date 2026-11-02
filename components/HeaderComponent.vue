@@ -62,7 +62,7 @@
                 location="left"
                 temporary
             >
-                <NavigationList />
+                <NavigationList @navigate="showDrawer = false" />
             </v-navigation-drawer>
         </header>
         

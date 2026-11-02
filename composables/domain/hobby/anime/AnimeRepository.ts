@@ -30,12 +30,12 @@ export class AnimeRepository implements BaseRepository {
         return this.animeRepository;
     }
 
-    async findByCMS() : Promise<data> {
-		const { data : response } = await useFetch("/api/hobby/anime/GetAnimeContents")
-		if(response === undefined) {
-			return undefined;
-		}
-		return response;
+    async findByCMS() {
+        try {
+            return await $fetch("/api/hobby/anime/GetAnimeContents");
+        } catch {
+            return undefined;
+        }
     }
 
     saveToState(cmsContents : Array<Object>) : Object {

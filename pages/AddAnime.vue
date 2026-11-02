@@ -61,6 +61,7 @@
 import { useForm } from 'vee-validate'
 import { ref } from 'vue';
 import * as yup from "yup"
+import { animeContents } from "~/composables/application/hobby/anime";
 
 const radioSyllabarys = [
 	{ label : "あ", value : "animeA" },

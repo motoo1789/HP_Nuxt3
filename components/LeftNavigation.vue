@@ -2,9 +2,8 @@
 
     <v-navigation-drawer
       mobile-breakpoint="960"
-      app 
-      :location="left"
-
+      app
+      location="left"
     >
       <NavigationList />
     </v-navigation-drawer>

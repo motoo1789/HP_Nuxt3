@@ -28,16 +28,11 @@ export class ComicRepository implements BaseRepository {
         return this.repository;
     }
 
-    async findByCMS() : Promise<data> {
-
+    async findByCMS() {
         try {
-            const { data : response } = await useFetch("/api/hobby/comic/GetComicContents")
-            if(response === undefined) {
-                return undefined;
-            }
-            return response;
-        } catch(err) {
-
+            return await $fetch("/api/hobby/comic/GetComicContents");
+        } catch {
+            return undefined;
         }
     }
 

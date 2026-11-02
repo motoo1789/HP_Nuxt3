@@ -1,42 +1,31 @@
-import { Project } from "~~/.nuxt/imports";
-import { BaseRepository } from "../../domain/project/ProjectRepository"
-
+import { Project } from "../../domain/project/Project"
+import { ProjectRepository, type BaseRepository } from "../../domain/project/ProjectRepository"
 
 const repository: BaseRepository = new ProjectRepository();
 
 export const getProjectContents = () => {
-    const projectContents = async () => {
+    const projectContents = async (): Promise<Array<ViewProjectFormat>> => {
 		try {
-
-			// repositoryにコンテンツがあるかの確認
-			// あったら取得して早期リターン
 			const stateContents = await repository.findByState();
-			if(stateContents){
+			if (stateContents) {
 				return await normalizeViewContents(stateContents);
 			}
 
-			// なかったら取得　デプロイ後の最初のアクセス
-			try {
-				const response = await repository.findByCMS();
-				if (response === undefined) {
-					console.log("Not contens ...");
-				}
-				/**
-				 *  domain部分に正規化お願い
-				*/
-				await repository.saveToState(response.value!);
-				const viewcontents : Array<Project> = await repository.findByState();
-				const normalizedViewContents =  await normalizeViewContents(viewcontents);
-			
-				return normalizedViewContents;
-                
-			} catch(err){
-				console.log("Projecgt Contents error");
-				console.log(err)
+			const response = await repository.findByCMS();
+			if (!response) {
+				console.warn("[project] CMS response empty");
+				return [];
 			}
 
+			await repository.saveToState(response);
+			const viewcontents = await repository.findByState();
+			if (!viewcontents) {
+				return [];
+			}
+			return await normalizeViewContents(viewcontents);
 		} catch (err) {
-			await navigateTo('/error')
+			console.error("[project] projectContents failed", err);
+			return [];
 		}
 	}
 
@@ -60,8 +49,11 @@ interface ViewProjectFormat {
 }
 
 async function normalizeViewContents(beforeViewContents : Array<Project>) : Promise<Array<ViewProjectFormat>> {
+	if (!beforeViewContents?.length) {
+		return [];
+	}
 
-	const viewAnimeContents : Array<ViewProjectFormat> = []
+	const viewProjectContents : Array<ViewProjectFormat> = []
     beforeViewContents.forEach( (content, index) => {
 		const joinContent = {
 			projectNum: index,
@@ -78,8 +70,8 @@ async function normalizeViewContents(beforeViewContents : Array<Project>) : Prom
 			img: content.img.url,
 			movie: content.movie.url,
 		}
-        viewAnimeContents.push(joinContent);
+        viewProjectContents.push(joinContent);
     })
 	
-	return viewAnimeContents;
+	return viewProjectContents;
 }

@@ -1,18 +1,30 @@
+import { resolveInformationContentType } from "~/utils/contentfulContentTypes";
+
 /**
  * このファイルはinformationの作成の際に呼ばれるのみ
  * 現状componentとpagesで機能がまたがっているから共通の場所として使っていると思われる
  */
 export const useCMSContents = async () => {
     const CONTENS_LIMIT = 500;
-    const {$client} = useNuxtApp()
-    const { data:getContents } = await useAsyncData( () => $client.getEntries({
-        content_type: process.env.NEXT_PUBLIC_CONTENTFUL_CONTENT_TYPE_INFORMATIONL,
-        limit: CONTENS_LIMIT
-    }))
-    
-    const contents = getContents.value?.items;
-    const parseContents = contents.map(item => item.fields);
-    return parseContents
+    const { $client } = useNuxtApp();
+    const contentType = resolveInformationContentType(
+        useRuntimeConfig().public.contentfulInformationType,
+    );
+
+    if (!$client || !contentType) {
+        return [];
+    }
+
+    const getContents = await $client.getEntries({
+        content_type: contentType,
+        limit: CONTENS_LIMIT,
+    });
+
+    const contents = getContents?.items;
+    if (!contents) {
+        return [];
+    }
+    return contents.map((item) => item.fields);
 };
 
 export const useCMSContent = () => {
@@ -27,10 +39,12 @@ export const useUpdateInformation = () => {
         const { cmsComtents } = await useCMSContent()
 
         const contentsValueObject = await cmsComtents.value;
-                const hobbyArray = contentsValueObject?.filter(cmsContent => {
-            return cmsContent.hasOwnProperty('updateDate')
-        })
-        const afterSortHobbyArray = hobbyArray.sort((a,b) => Date.parse(b.updateDate) - Date.parse(a.updateDate));
+        const hobbyArray = (contentsValueObject ?? []).filter((cmsContent) =>
+            cmsContent.hasOwnProperty("updateDate"),
+        );
+        const afterSortHobbyArray = hobbyArray.sort(
+            (a, b) => Date.parse(b.updateDate) - Date.parse(a.updateDate),
+        );
 
 
         const showMaxInformation = 5;

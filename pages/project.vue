@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-progress-linear v-if="loading" indeterminate color="light-blue-accent-3" class="mb-2" />
         <v-card class="mx-auto" shaped="true" v-for="(project, key) in projects" :key="key">
             <v-container>
                 <v-row justify="start">
@@ -163,9 +164,19 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { getProjectContents } from "~/composables/application/project/project";
 
 const { projectContents } = getProjectContents();
-const projects = await projectContents();
+const loading = ref(true);
+const projects = ref<Awaited<ReturnType<ReturnType<typeof projectContents>>>>([]);
+
+onMounted(async () => {
+    try {
+        projects.value = (await projectContents()) ?? [];
+    } finally {
+        loading.value = false;
+    }
+});
 
 let dialog = ref(false)
 let selectProjectIndex = ref(-1)
@@ -192,7 +203,7 @@ const closeDialogProjectDetail = () => {
 }
 
 const openDialogProjectDetail = (project: any) => {
-    selectProjectIndex.value = projects!.indexOf(project)
+    selectProjectIndex.value = projects.value.indexOf(project)
     showDialogProject.value = Object.assign({}, project)
     dialog.value = true
 }

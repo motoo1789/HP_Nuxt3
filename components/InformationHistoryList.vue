@@ -12,7 +12,7 @@
                 <v-divider></v-divider>
                 <v-expansion-panels>
                   <v-expansion-panel
-                      v-for="(newinformation, key) in informationhisotory[currentpage - 1].contents"
+                      v-for="(newinformation, key) in currentPageContents"
                       :key="key"
                   >
 
@@ -32,6 +32,10 @@ const { parseUpdateInformation } = useUpdateInformation();
 const informationhisotory = await parseUpdateInformation();
 
 const { currentpage } = useCurrentPage();
+
+const currentPageContents = computed(
+  () => informationhisotory[currentpage.value - 1]?.contents ?? [],
+);
 
 </script>
 

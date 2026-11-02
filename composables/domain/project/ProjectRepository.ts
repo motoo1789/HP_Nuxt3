@@ -26,16 +26,11 @@ export class ProjectRepository implements BaseRepository {
         return this.repository;
     }
 
-    async findByCMS() : Promise<data> {
-
+    async findByCMS() {
         try {
-            const { data : response } = await useFetch("/api/project/GetProjectContents")
-            if(response === undefined) {
-                return undefined;
-            }
-            return response;
-        } catch(err) {
-
+            return await $fetch("/api/project/GetProjectContents");
+        } catch {
+            return undefined;
         }
     }
 

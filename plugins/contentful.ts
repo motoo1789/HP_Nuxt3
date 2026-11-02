@@ -1,33 +1,28 @@
 import { createClient } from "contentful";
-import { CreateClientParams } from "contentful";
+import { getContentfulPublicConfig } from "~/utils/contentfulPublicConfig";
 
-export default defineNuxtPlugin(async () => {
-  const configContentful = await useRuntimeConfig();
+export default defineNuxtPlugin(() => {
+  const runtimeConfig = useRuntimeConfig();
+  const params = getContentfulPublicConfig(runtimeConfig.public);
 
-  if (	configContentful.public.contentfulSpaceId 		=== undefined ||
-    		configContentful.public.contentfulAccessToken === undefined) {
+  if (!params) {
+    if (import.meta.dev) {
+      console.warn(
+        "[contentful] Contentful の Space ID / Access Token が読み込めていません。.env を保存したうえで dev サーバーを再起動し、NEXT_PUBLIC_* または NUXT_PUBLIC_* が空でないか確認してください。",
+      );
+    }
     return {
       provide: {
-        client: createClient({
-          space: "",
-          accessToken: "",
-        }),
+        client: null,
       },
     };
   }
 
-  const test: CreateClientParams = {
-    space: configContentful.public.contentfulSpaceId,
-    environment: configContentful.public.contentfulEnviroment,
-    accessToken: configContentful.public.contentfulAccessToken,
-  };
-
-  const client = await createClient(test);
+  const client = createClient(params);
 
   return {
     provide: {
-      client: client,
+      client,
     },
   };
 });
-
